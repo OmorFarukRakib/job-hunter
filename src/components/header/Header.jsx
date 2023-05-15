@@ -1,10 +1,12 @@
 // import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
 import logoImg from "../../../public/jobhunter.png";
 import clsx from "clsx";
-
+import SigninModal from "../signinModal/SigninModal";
 const Header = () => {
+  const [signinModalShow, setsigninModalShow] = useState(true);
   const navigate = useNavigate()
   let { pathname } = useLocation();
 
@@ -37,8 +39,13 @@ const Header = () => {
         </div>
       </div>
       <div className={clsx(styles["header-menu-wrapper"])}>
-        <div className={clsx(styles["header-menu-btn"])}>Sign in</div>
-        {/* <div>Settings</div> */}
+        <div className={clsx(styles["header-menu-btn"])}
+        onClick={() => setsigninModalShow(true)}
+        >Sign in</div>
+        <SigninModal
+          show={signinModalShow}
+          onHide={() => setsigninModalShow(false)}
+        />
       </div>
     </header>
   );

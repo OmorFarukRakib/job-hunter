@@ -46,7 +46,8 @@ export default function SigninBody() {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "50vh", overflow: 'hidden' }}>
+    <Box sx={{ width: "100%" }}>
+    {/* <Box sx={{ width: "100%", height: "50vh", overflow: "hidden" }}> */}
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -81,18 +82,10 @@ export default function SigninBody() {
           </div>
         </TabPanel>
       </div>
-      <div
-        style={{
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-      </div>
+
+      <TabPanel value={value} index={1}>
+        REGISTRATION FORM
+      </TabPanel>
     </Box>
   );
 }

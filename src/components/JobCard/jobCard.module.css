@@ -1,5 +1,45 @@
 .job-card-wrapper{
-    height: 400px;
+    height: 590px;
     width: 500px;
-    background-color: blueviolet;
+    /* background-color: blueviolet; */
+    /* cursor: pointer; */
+    border: 1px solid rgba(0, 0, 0, 0.146);
+    border-radius: 20px;
+    padding: 2rem;
+}
+.job-card-title{
+    font-size: 1.5rem;
+    font-weight: bolder;
+
+}
+.job-card-tags{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.507);
+   display: flex;
+   gap: 10px;
+flex-wrap: wrap;
+
+}
+.job-card-tag{
+    background-color: #F3F2F1;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    
+}
+
+.job-card-description{
+    height: 45%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.job-card-details-btn-wrapper{
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
 }

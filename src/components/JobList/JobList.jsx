@@ -6,8 +6,8 @@ const JobList = () => {
   const [jobs, setJobs] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   return (
     <div className={styles["job-list-wrapper"]}>
-      {jobs.map((job) => {
-        return <JobCard />;
+      {jobs.map((job , indx) => {
+        return <JobCard id={job}/>;
       })}
     </div>
   );

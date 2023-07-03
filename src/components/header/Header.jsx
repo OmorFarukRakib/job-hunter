@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./header.module.css";
-import logoImg from "../../../public/jobhunter.png";
+import logoImg from "../../../public/jobsearch.jpeg";
+// import logoImg from "../../../public/jobhunter.png";
 import clsx from "clsx";
 import SigninModal from "../signinModal/SigninModal";
 const Header = () => {

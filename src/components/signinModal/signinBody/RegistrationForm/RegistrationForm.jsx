@@ -4,10 +4,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import SigninForm from "./signinForm/SigninForm";
-import RegistrationForm from "./RegistrationForm/RegistrationForm";
-import styles from "./signinBody.module.css";
-// import RegistrationForm from "./RegistrationForm/EmployeeRegistrationForm/EmployeeRegistrationForm";
+import CompanyRegistrationForm from "./CompanyRegistrationForm/CompanyRegistrationForm";
+import EmployeeRegistrationForm from "./EmployeeRegistrationForm/EmployeeRegistrationForm";
+import styles from './registrationForm.module.css'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -41,7 +40,7 @@ function a11yProps(index) {
   };
 }
 
-export default function SigninBody() {
+export default function RegistrationForm() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -58,8 +57,8 @@ export default function SigninBody() {
           aria-label="basic tabs example"
           centered
         >
-          <Tab label="Login" {...a11yProps(0)} />
-          <Tab label="Registation" {...a11yProps(1)} />
+          <Tab label="Employee Registration" {...a11yProps(0)} />
+          <Tab label="Company Registration" {...a11yProps(1)} />
           {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
         </Tabs>
       </Box>
@@ -72,15 +71,15 @@ export default function SigninBody() {
         }}
       > */}
       <TabPanel value={value} index={0} component="div">
-        <SigninForm />
-        {/* <div className={styles["signinForm-wrapper"]}>
-          </div> */}
+        <div className={styles["registrationForm-wrapper"]}>
+          <EmployeeRegistrationForm />
+        </div>
       </TabPanel>
       {/* </div> */}
 
       <TabPanel value={value} index={1}>
-        <div>
-          <RegistrationForm />
+        <div className={styles["registrationForm-wrapper"]}>
+          <CompanyRegistrationForm />
         </div>
       </TabPanel>
     </Box>

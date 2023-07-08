@@ -1,0 +1,11 @@
+.registrationForm-wrapper{
+    /* height: 70vh; */
+    /* max-height: 70vh; */
+    overflow: auto;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+}

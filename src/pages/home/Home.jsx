@@ -6,6 +6,7 @@ import styles from "./home.module.css";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
+import RegistrationForm from "../../components/signinModal/signinBody/RegistrationForm/EmployeeRegistrationForm/EmployeeRegistrationForm";
 
 const CustomMUIBtn = styled(Button)({
   backgroundColor: "#4CAF50",

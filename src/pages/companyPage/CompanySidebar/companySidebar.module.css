@@ -1,0 +1,16 @@
+.companySidebar-wrapper{
+    height: 90vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    /* padding-bottom: 4vh; */
+}
+.company-logo-wrapper{
+    display: flex;
+    justify-items: center;
+    margin-bottom: 2rem;
+}
+
+.company-logo-wrapper > img{
+    width: 200px;
+    height: auto;
+}

@@ -1,0 +1,9 @@
+.jobPostCreate-wrapper{
+    margin-top: 1rem;
+    display: grid;
+    height: 10rem;
+    place-items: center;
+    -webkit-box-shadow: -3px 3px 71px -32px rgba(0, 0, 0, 0.44);
+        -moz-box-shadow: -3px 3px 71px -32px rgba(0, 0, 0, 0.44);
+        box-shadow: -3px 3px 71px -32px rgba(0, 0, 0, 0.44);
+    }

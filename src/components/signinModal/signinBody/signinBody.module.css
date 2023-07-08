@@ -1,0 +1,9 @@
+.signinForm-wrapper {
+    /* height: 80vh;
+    max-height: 80vh; */
+    overflow: auto;
+    padding-right: 20px;
+    padding-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}

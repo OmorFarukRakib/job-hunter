@@ -1,12 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import SigninBody from "./signinBody/SigninBody";
+import clsx from "clsx";
+import styles from "./signinModal.module.css";
 function SigninModal(props) {
   return (
     <Modal
       {...props}
+      // className={clsx(styles["singinBody-wrapper"])}
       //   size="sm"
-    //   dialogClassName="modal-90w"
+      //   dialogClassName="modal-90w"
+      dialogClassName="custom-modal"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

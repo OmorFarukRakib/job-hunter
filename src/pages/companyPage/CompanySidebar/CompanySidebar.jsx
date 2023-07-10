@@ -41,11 +41,13 @@ const CompanySidebar = () => {
   return (
     <div className={clsx(styles["companySidebar-wrapper"])}>
       <Sidebar
-      // rootStyles={{
-      //   width: "15vw",
-      //   color: "rgb(96, 116, 137)",
-      //   height: '100vh'
-      // }}
+        rootStyles={
+          {
+            // width: "15vw",
+            // background: "red",
+            // height: '100vh'
+          }
+        }
       >
         <div className={clsx(styles["company-logo-wrapper"])}>
           <img src={companyLogo} alt="companylogo" />
@@ -77,7 +79,7 @@ const CompanySidebar = () => {
             {" "}
             Company Information{" "}
           </MenuItem>
-          <MenuItem> Calendar </MenuItem>
+          {/* <MenuItem> Calendar </MenuItem> */}
         </Menu>
       </Sidebar>
     </div>

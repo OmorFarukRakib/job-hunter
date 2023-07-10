@@ -10,14 +10,39 @@ import styles from "./JobDetails.module.css";
 import { Button } from "@mui/material";
 import JobDetailsOptionBtn from "./jobDetailsOptionBtn/JobDetailsOptionBtn";
 import JobApplicantModal from "../JobApplicantsModal/JobApplicantsModal";
+import JobPostFormModal from "../JobPostFormModal/JobPostFormModal";
+import JobPostRemoveModal from "../JobPostRemoveModal/JobPostRemoveModal";
+
+
+const jobPostData = {
+  jobTitle: "Demo Title",
+  jobType: "Full-Time",
+  jobDescription: "Demo Description",
+  salaryEstimationStart: 100,
+  salaryEstimationEnd: 200,
+  applicationDeadline: 12/12/23,
+  skillReq: ["react", "nodejs"],
+  totalHiringNumber: 4,
+  requiredExperienceInYr: 2,
+  jobLocation: "London",
+  companyJobApplyURL: "demoComp.com"
+}
+
+
 const Job = ({ jobID }) => {
   // const { jobID } = useParams();
   const [applicantModalShow, setApplicantModalShow] = useState(false);
+  const [jobPostEditModalShow, setJobPostEditModalShow] = useState(false)
+  const [jobPostRemoveModalShow, setJobPostRemoveModalShow] = useState(false)
 
   const handleSelectOption = (selectedOption) => {
     console.log(selectedOption);
     if (selectedOption === "applicants") {
       setApplicantModalShow(true);
+    }else if(selectedOption === "edit"){
+      setJobPostEditModalShow(true)
+    } else if(selectedOption === 'remove') {
+      setJobPostRemoveModalShow(true);
     }
   };
   return (
@@ -25,6 +50,16 @@ const Job = ({ jobID }) => {
       <JobApplicantModal
         show={applicantModalShow}
         onHide={() => setApplicantModalShow(false)}
+      />
+      <JobPostFormModal
+        show={jobPostEditModalShow}
+        onHide={() => setJobPostEditModalShow(false)}
+        formData={jobPostData}
+      />
+      <JobPostRemoveModal
+        show={jobPostRemoveModalShow}
+        onHide={() => setJobPostRemoveModalShow(false)}
+        removePostID={jobID}
       />
       <div className={clsx(styles["job-page-wrapper"])}>
         <div className={clsx(styles["job-ad-wrapper"])}>

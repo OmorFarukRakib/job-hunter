@@ -2,7 +2,9 @@
     height: 90vh;
     overflow-y: hidden;
     overflow-x: hidden;
+    
     /* padding-bottom: 4vh; */
+    
 }
 .company-logo-wrapper{
     display: flex;

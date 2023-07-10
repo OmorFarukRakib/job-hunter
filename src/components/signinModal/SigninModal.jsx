@@ -20,7 +20,7 @@ function SigninModal(props) {
         </Modal.Title>
       </Modal.Header> */}
       <Modal.Body>
-        <SigninBody />
+        <SigninBody modalHideFun={props.onHide} />
       </Modal.Body>
       {/* <Modal.Footer >
         <Button onClick={props.onHide}>Close</Button>

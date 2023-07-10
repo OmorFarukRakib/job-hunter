@@ -287,7 +287,7 @@ function JobApplicantModal(props) {
     return (
       <React.Fragment>
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-          <TableCell>
+          <TableCell align="center">
             <IconButton
               aria-label="expand row"
               size="small"

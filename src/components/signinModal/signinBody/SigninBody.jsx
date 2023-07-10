@@ -41,7 +41,7 @@ function a11yProps(index) {
   };
 }
 
-export default function SigninBody() {
+export default function SigninBody(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -72,7 +72,7 @@ export default function SigninBody() {
         }}
       > */}
       <TabPanel value={value} index={0} component="div">
-        <SigninForm />
+        <SigninForm modalHideFun={props.modalHideFun} />
         {/* <div className={styles["signinForm-wrapper"]}>
           </div> */}
       </TabPanel>

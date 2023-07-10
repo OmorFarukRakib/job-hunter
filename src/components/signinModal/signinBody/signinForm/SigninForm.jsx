@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { Button } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
+import { useNavigate } from "react-router-dom";
 import styles from "./signinForm.module.css";
 
 const validationSchema = Yup.object({
@@ -15,7 +15,8 @@ const validationSchema = Yup.object({
   password: Yup.string().required("Password is required"),
 });
 
-const LoginForm = () => {
+const LoginForm = (props) => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -23,9 +24,16 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      console.log("ok");
-      console.log(JSON.stringify(values, null, 2));
-      alert(JSON.stringify(values, null, 2));
+      // console.log("ok");
+      // console.log(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      if (values.email === "company@gmail.com" && values.password === "12345") {
+        props.modalHideFun();
+        localStorage.setItem("authToken", "token");
+        navigate("/company/123");
+      } else {
+        alert("Wrong login credentials");
+      }
       setSubmitting(false);
       //   formik.resetForm();
     },

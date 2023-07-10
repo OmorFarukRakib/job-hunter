@@ -6,6 +6,8 @@ import logoImg from "../../../public/jobsearch.jpeg";
 // import logoImg from "../../../public/jobhunter.png";
 import clsx from "clsx";
 import SigninModal from "../signinModal/SigninModal";
+import { useEffect } from "react";
+import AccountMenuForCompany from "../AccountMenuForCompany/AccountMenuForCompany";
 const Header = () => {
   const [signinModalShow, setsigninModalShow] = useState(false);
   const navigate = useNavigate();
@@ -14,44 +16,55 @@ const Header = () => {
   pathname = pathname.replace(/\//g, "").replace(/\//g, "");
   console.log(pathname);
 
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    // console.log(data);
+  }, []);
+
   return (
-    <header className={clsx(styles["header-wrapper"])}>
-      <div className={clsx(styles["header-menu-wrapper"])}>
-        <div className={clsx(styles["header-logo-wrapper"])}>
-          <img src={logoImg} alt="My Image" />
+    <>
+      <SigninModal
+        show={signinModalShow}
+        onHide={() => setsigninModalShow(false)}
+      />
+      <header className={clsx(styles["header-wrapper"])}>
+        <div className={clsx(styles["header-menu-wrapper"])}>
+          <div className={clsx(styles["header-logo-wrapper"])}>
+            <img src={logoImg} alt="My Image" />
+          </div>
+          <div
+            className={clsx(
+              pathname == "" ? [styles["header-menu-btn-active"]] : null,
+              styles["header-menu-btn"]
+            )}
+            onClick={() => navigate("/")}
+          >
+            Home
+          </div>
+          <div
+            className={clsx(
+              pathname == "jobs" ? [styles["header-menu-btn-active"]] : null,
+              styles["header-menu-btn"]
+            )}
+            onClick={() => navigate("/jobs")}
+          >
+            Find Jobs
+          </div>
         </div>
-        <div
-          className={clsx(
-            pathname == "" ? [styles["header-menu-btn-active"]] : null,
-            styles["header-menu-btn"]
+        <div className={clsx(styles["header-menu-wrapper"])}>
+          {localStorage.getItem("authToken") === "token" ? (
+            <AccountMenuForCompany/>
+          ) : (
+            <div
+              className={clsx(styles["header-menu-btn"])}
+              onClick={() => setsigninModalShow(true)}
+            >
+              Sign in
+            </div>
           )}
-          onClick={() => navigate("/")}
-        >
-          Home
         </div>
-        <div
-          className={clsx(
-            pathname == "jobs" ? [styles["header-menu-btn-active"]] : null,
-            styles["header-menu-btn"]
-          )}
-          onClick={() => navigate("/jobs")}
-        >
-          Find Jobs
-        </div>
-      </div>
-      <div className={clsx(styles["header-menu-wrapper"])}>
-        <div
-          className={clsx(styles["header-menu-btn"])}
-          onClick={() => setsigninModalShow(true)}
-        >
-          Sign in
-        </div>
-        <SigninModal
-          show={signinModalShow}
-          onHide={() => setsigninModalShow(false)}
-        />
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import companyLogo from "../../../../public/jobhunter.png";
 import styles from "./companySidebar.module.css";
+import { Hidden } from "@mui/material";
 
 const CompanySidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,13 +42,14 @@ const CompanySidebar = () => {
   return (
     <div className={clsx(styles["companySidebar-wrapper"])}>
       <Sidebar
-        rootStyles={
-          {
-            // width: "15vw",
-            // background: "red",
-            // height: '100vh'
-          }
-        }
+        rootStyles={{
+          minHeight: "90vh",
+          // overflowY: 'hidden',
+
+          // width: "15vw",
+          // background: "red",
+          // height: '100vh'
+        }}
       >
         <div className={clsx(styles["company-logo-wrapper"])}>
           <img src={companyLogo} alt="companylogo" />
@@ -79,7 +81,118 @@ const CompanySidebar = () => {
             {" "}
             Company Information{" "}
           </MenuItem>
-          {/* <MenuItem> Calendar </MenuItem> */}
+          {/* <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem>
+          <MenuItem> Calendar </MenuItem> */}
         </Menu>
       </Sidebar>
     </div>

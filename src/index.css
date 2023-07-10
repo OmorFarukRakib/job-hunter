@@ -1,7 +1,8 @@
 .custom-modal {
   max-width: 800px;
   /* Adjust the max-width value according to your needs */
-  margin: 0 auto;
+  margin: 2rem auto;
+  
   /* Center the modal horizontally */
 }
 .custom-modal-for-jobApplicant{

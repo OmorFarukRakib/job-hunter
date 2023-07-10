@@ -133,6 +133,7 @@ const CompanyRegistrationForm = () => {
         <InputLabel id="industry-label">Industry</InputLabel>
         <Select
           labelId="Industry"
+          multiline
           label="Industry"
           id="industry"
           name="industry"
@@ -159,31 +160,9 @@ const CompanyRegistrationForm = () => {
       /> */}
       <TextField
         fullWidth
-        label="Company Website"
-        id="companyWebsite"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.companyWebsite}
-        error={formik.touched.companyWebsite && !!formik.errors.companyWebsite}
-        helperText={
-          formik.touched.companyWebsite && formik.errors.companyWebsite
-        }
-      />
-      <TextField
-        fullWidth
-        label="Company Address"
-        id="companyAddress"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.companyAddress}
-        error={formik.touched.companyAddress && !!formik.errors.companyAddress}
-        helperText={
-          formik.touched.companyAddress && formik.errors.companyAddress
-        }
-      />
-      <TextField
-        fullWidth
         label="Company Description"
+        multiline
+        rows={10}
         id="companyDescription"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
@@ -218,6 +197,32 @@ const CompanyRegistrationForm = () => {
           ))}
         </Select>
       </FormControl>
+      <TextField
+        fullWidth
+        label="Company Address"
+        id="companyAddress"
+        multiline
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.companyAddress}
+        error={formik.touched.companyAddress && !!formik.errors.companyAddress}
+        helperText={
+          formik.touched.companyAddress && formik.errors.companyAddress
+        }
+      />
+      <TextField
+        fullWidth
+        label="Company Website"
+        multiline
+        id="companyWebsite"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.companyWebsite}
+        error={formik.touched.companyWebsite && !!formik.errors.companyWebsite}
+        helperText={
+          formik.touched.companyWebsite && formik.errors.companyWebsite
+        }
+      />
 
       <TextField
         fullWidth
@@ -317,7 +322,7 @@ const CompanyRegistrationForm = () => {
         fullWidth
         disabled={formik.isSubmitting}
       >
-        Sign up C
+        Sign up
       </Button>
     </FormControl>
   );

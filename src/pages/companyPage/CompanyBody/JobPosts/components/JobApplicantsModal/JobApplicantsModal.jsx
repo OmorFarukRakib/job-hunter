@@ -315,11 +315,22 @@ function JobApplicantModal(props) {
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
-                  non dignissimos ex deleniti itaque ut quibusdam ad debitis
-                  soluta delectus, unde porro. Excepturi ullam iusto quis est
-                  aliquam aut nobis?
+                <Typography variant="p" gutterBottom component="div">
+                  Meet John Doe, a skilled professional in the field of Computer
+                  Science and Engineering (CSE). With a solid educational
+                  background and a graduate degree in CSE, John has developed a
+                  strong foundation in various areas of computer science. Over
+                  the past three years, John has honed his expertise while
+                  working at ABC Company. His experience in the company has
+                  allowed him to tackle complex challenges, collaborate with
+                  diverse teams, and deliver exceptional results. John's passion
+                  for technology, coupled with his strong problem-solving skills
+                  and attention to detail, has consistently driven his success.
+                  He is committed to staying up-to-date with the latest
+                  advancements in the industry, continuously expanding his
+                  knowledge and skills. With his dedication and expertise, John
+                  is poised to make significant contributions in the field of
+                  CSE.
                 </Typography>
               </Box>
             </Collapse>
@@ -352,10 +363,7 @@ function JobApplicantModal(props) {
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
-                  <TableCell
-                    align={"center"}
-                    style={{ minWidth: 150 }}
-                  >
+                  <TableCell align={"center"} style={{ minWidth: 150 }}>
                     About Applicant
                   </TableCell>
                   {columns.map((column) => (

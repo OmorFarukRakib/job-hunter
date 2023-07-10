@@ -44,6 +44,9 @@ const CompanyProfile = () => {
         show={companyPassEditModalShow}
         onHide={setCompanyPassEditModalShow}
       />
+      <h3 className={clsx(styles["companyProfile-tile"])}>
+        Company Information
+      </h3>
       <div className={clsx(styles["companyProfile-wrapper"])}>
         <div className={clsx(styles["companyProfile-Info"])}>
           <div className={clsx(styles["companyProfile-info-title"])}>

@@ -127,7 +127,7 @@ const EmployeeRegistrationForm = () => {
         fullWidth
         disabled={formik.isSubmitting}
       >
-        Sign up E
+        Sign up
       </Button>
     </FormControl>
   );

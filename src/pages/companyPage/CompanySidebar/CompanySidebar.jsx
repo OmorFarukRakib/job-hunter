@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import clsx from "clsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import companyLogo from "../../../../public/jobhunter.png";
+import companyLogo from "../../../../public/xCompany.png";
+// import companyLogo from "../../../../public/jobhunter.png";
 import styles from "./companySidebar.module.css";
 import { Hidden } from "@mui/material";
 

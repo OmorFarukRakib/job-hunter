@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import companyLogo from "../../../../public/xCompany.png";
 // import companyLogo from "../../../../public/jobhunter.png";
 import styles from "./userSidebar.module.css";
-import { Hidden } from "@mui/material";
+// import { Hidden } from "@mui/material";
 
 const UserSidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,7 +39,11 @@ const UserSidebar = () => {
   };
 
   useEffect(() => {
-    if (!searchParams.get("tab") || (searchParams.get("tab"))!== 'job-applied' &&  searchParams.get("tab") !== 'profile') {
+    if (
+      !searchParams.get("tab") ||
+      (searchParams.get("tab") !== "job-applied" &&
+        searchParams.get("tab") !== "profile")
+    ) {
       setSearchParams({
         ...searchParams,
         tab: "job-applied",

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
 // import companyLogo from "../../../../public/xCompany.png";
 // import companyLogo from "../../../../public/jobhunter.png";
-import styles from "./userSidebar.module.css";
+import styles from "./userSidebarStyle.module.css";
 // import { Hidden } from "@mui/material";
 
 const UserSidebar = () => {

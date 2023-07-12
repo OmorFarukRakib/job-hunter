@@ -33,7 +33,7 @@ const Job = () => {
             Job Title - Software Developer - {jobID}
           </h1>
           <div className={clsx(styles["job-ad-companyName"])}>
-            Company Name - Kuddus infra tech
+            Company Name - X infra tech
           </div>
           <div className={clsx(styles["job-ad-deadline"])}>
             Application deadline- 20-20-25

@@ -17,7 +17,7 @@ const JobCard = ({ id }) => {
         Job Title {id} - Software Developer
       </div>
       <div className={clsx(styles["job-card-companyName"])}>
-        Company Name - Kuddus infra tech
+        Company Name - X infra tech
       </div>
       <div className={clsx(styles["job-card-location"])}>
         location - USA, NY

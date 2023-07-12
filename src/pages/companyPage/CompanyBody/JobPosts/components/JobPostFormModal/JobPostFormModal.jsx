@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./JobPostFormModal.module.css";
 import clsx from "clsx";
 import { Button } from "@mui/material";
@@ -84,6 +84,11 @@ const JobPostFormModal = (props) => {
       typeof value === "string" ? value.split(",") : value
     );
   };
+  useEffect(() => {
+    setSelectedSkillsSet(
+      props.formData === null ? [] : props.formData.skillReq
+    );
+  }, [props]);
   const theme = useTheme();
   const formik = useFormik({
     initialValues: {
@@ -97,7 +102,7 @@ const JobPostFormModal = (props) => {
         props.formData === null ? "" : props.formData.salaryEstimationEnd,
       applicationDeadline:
         props.formData === null ? "" : props.formData.applicationDeadline,
-      skillReq: props.formData === null ? [] : props.formData.skillReq,
+      // skillReq: props.formData === null ? [] : props.formData.skillReq,
       totalHiringNumber:
         props.formData === null ? "" : props.formData.totalHiringNumber,
       requiredExperienceInYr:

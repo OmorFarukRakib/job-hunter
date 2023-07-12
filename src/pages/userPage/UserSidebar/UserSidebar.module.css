@@ -1,0 +1,19 @@
+.userSidebar-wrapper {
+    /* overflow-y: hidden; */
+    /* overflow-x: hidden; */
+    height: 90vh;
+
+    /* padding-bottom: 4vh; */
+
+}
+
+.user-logo-wrapper {
+    display: flex;
+    justify-items: center;
+    margin-bottom: 2rem;
+}
+
+.user-logo-wrapper>img {
+    width: 200px;
+    height: auto;
+}

@@ -38,7 +38,19 @@ const CompanySidebar = () => {
     });
   };
   useEffect(() => {
-    setActiveTab(searchParams.get("tab"));
+    if (
+      !searchParams.get("tab") ||
+      (searchParams.get("tab") !== "job-posts" &&
+        searchParams.get("tab") !== "profile")
+    ) {
+      setSearchParams({
+        ...searchParams,
+        tab: "job-posts",
+      });
+      setActiveTab("job-posts");
+    } else {
+      setActiveTab(searchParams.get("tab"));
+    }
   }, [searchParams]);
   return (
     <div className={clsx(styles["companySidebar-wrapper"])}>

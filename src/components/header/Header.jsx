@@ -8,6 +8,7 @@ import clsx from "clsx";
 import SigninModal from "../signinModal/SigninModal";
 import { useEffect } from "react";
 import AccountMenuForCompany from "../AccountMenuForCompany/AccountMenuForCompany";
+import AccountMenuForUser from "../AccountMenuForUser/AccountMenuForUser";
 const Header = () => {
   const [signinModalShow, setsigninModalShow] = useState(false);
   const navigate = useNavigate();
@@ -53,14 +54,20 @@ const Header = () => {
         </div>
         <div className={clsx(styles["header-menu-wrapper"])}>
           {localStorage.getItem("authToken") === "token" ? (
-            <AccountMenuForCompany/>
+            <AccountMenuForCompany />
           ) : (
-            <div
-              className={clsx(styles["header-menu-btn"])}
-              onClick={() => setsigninModalShow(true)}
-            >
-              Sign in
-            </div>
+            <>
+              {localStorage.getItem("authToken") === "userToken" ? (
+                <AccountMenuForUser/>
+              ) : (
+                <div
+                  className={clsx(styles["header-menu-btn"])}
+                  onClick={() => setsigninModalShow(true)}
+                >
+                  Sign in
+                </div>
+              )}
+            </>
           )}
         </div>
       </header>

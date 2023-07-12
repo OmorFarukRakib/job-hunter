@@ -31,6 +31,13 @@ const LoginForm = (props) => {
         props.modalHideFun();
         localStorage.setItem("authToken", "token");
         navigate("/company/123");
+      } else if (
+        values.email === "user@gmail.com" &&
+        values.password === "12345"
+      ) {
+        props.modalHideFun();
+        localStorage.setItem("authToken", "userToken");
+        navigate("/user/123");
       } else {
         alert("Wrong login credentials");
       }

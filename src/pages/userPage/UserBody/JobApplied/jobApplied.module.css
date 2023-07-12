@@ -1,0 +1,7 @@
+.job-applied-wrapper {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    height: 100%;
+    /* overflow: scroll; */
+}

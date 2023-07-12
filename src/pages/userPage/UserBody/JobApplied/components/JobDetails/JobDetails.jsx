@@ -8,46 +8,39 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import clsx from "clsx";
 import styles from "./JobDetails.module.css";
 import { Button } from "@mui/material";
-import JobDetailsOptionBtn from "./jobDetailsOptionBtn/JobDetailsOptionBtn";
-import JobApplicantModal from "../JobApplicantsModal/JobApplicantsModal";
-import JobPostFormModal from "../JobPostFormModal/JobPostFormModal";
-import JobPostRemoveModal from "../JobPostRemoveModal/JobPostRemoveModal";
 
 
-const jobPostData = {
-  jobTitle: "Demo Title",
-  jobType: "Full-Time",
-  jobDescription: "Demo Description",
-  salaryEstimationStart: 100,
-  salaryEstimationEnd: 200,
-  applicationDeadline: 12/12/23,
-  skillReq: ["react", "nodejs"],
-  totalHiringNumber: 4,
-  requiredExperienceInYr: 2,
-  jobLocation: "London",
-  companyJobApplyURL: "demoComp.com"
-}
+// const jobPostData = {
+//   jobTitle: "Demo Title",
+//   jobType: "Full-Time",
+//   jobDescription: "Demo Description",
+//   salaryEstimationStart: 100,
+//   salaryEstimationEnd: 200,
+//   applicationDeadline: 12/12/23,
+//   skillReq: ["react", "nodejs"],
+//   totalHiringNumber: 4,
+//   requiredExperienceInYr: 2,
+//   jobLocation: "London",
+//   companyJobApplyURL: "demoComp.com"
+// }
 
 
 const Job = ({ jobID }) => {
   // const { jobID } = useParams();
-  const [applicantModalShow, setApplicantModalShow] = useState(false);
-  const [jobPostEditModalShow, setJobPostEditModalShow] = useState(false)
-  const [jobPostRemoveModalShow, setJobPostRemoveModalShow] = useState(false)
 
-  const handleSelectOption = (selectedOption) => {
-    console.log(selectedOption);
-    if (selectedOption === "applicants") {
-      setApplicantModalShow(true);
-    }else if(selectedOption === "edit"){
-      setJobPostEditModalShow(true)
-    } else if(selectedOption === 'remove') {
-      setJobPostRemoveModalShow(true);
-    }
-  };
+  // const handleSelectOption = (selectedOption) => {
+  //   console.log(selectedOption);
+  //   if (selectedOption === "applicants") {
+  //     setApplicantModalShow(true);
+  //   }else if(selectedOption === "edit"){
+  //     setJobPostEditModalShow(true)
+  //   } else if(selectedOption === 'remove') {
+  //     setJobPostRemoveModalShow(true);
+  //   }
+  // };
   return (
     <>
-      <JobApplicantModal
+      {/* <JobApplicantModal
         show={applicantModalShow}
         onHide={() => setApplicantModalShow(false)}
       />
@@ -60,18 +53,18 @@ const Job = ({ jobID }) => {
         show={jobPostRemoveModalShow}
         onHide={() => setJobPostRemoveModalShow(false)}
         removePostID={jobID}
-      />
+      /> */}
       <div className={clsx(styles["job-page-wrapper"])}>
         <div className={clsx(styles["job-ad-wrapper"])}>
           <p style={{ textAlign: "center", color: "rgba(0, 0, 0, 0.419)" }}>
-            This is how your Job Ad will be shown to everyone
+            You have already applied to this Job
           </p>
           <h1 style={{ textAlign: "center" }}>
             Job Title - Software Developer - {jobID}
           </h1>
-          <div className={clsx(styles["jobDetailsOptionBtn-wrapper"])}>
+          {/* <div className={clsx(styles["jobDetailsOptionBtn-wrapper"])}>
             <JobDetailsOptionBtn handleSelectOption={handleSelectOption} />
-          </div>
+          </div> */}
           <div className={clsx(styles["job-ad-companyName"])}>
             Company Name - X infra tech
           </div>
@@ -79,8 +72,12 @@ const Job = ({ jobID }) => {
             Application deadline- 20-20-25
           </div>
           <div className={clsx(styles["job-ad-apply-btn-wrapper"])}>
-            <Button variant="contained">Apply From Company Site</Button>
-            <Button variant="contained">Apply From Job-hunter</Button>
+            <Button variant="contained" disabled>
+              Apply From Company Site
+            </Button>
+            <Button variant="contained" disabled>
+              Apply From Job-hunter
+            </Button>
           </div>
           <div className={clsx(styles["job-ad-description-wrapper"])}>
             <div className={clsx(styles["job-ad-tags-wrapper"])}>

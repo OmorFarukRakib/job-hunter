@@ -21,7 +21,7 @@ const JobCard = ({ id }) => {
     // });
     navigate({
       // pathname: "",
-      search: `?tab=job-posts&jobId=${id}`,
+      search: `?tab=job-applied&jobId=${id}`,
     });
   }
 

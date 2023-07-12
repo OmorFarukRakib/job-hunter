@@ -1,0 +1,14 @@
+.jobAppliedShowingComp-wrapper {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.jobAppliedShowingComp-header {
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #5a89be5c;
+    font-family: Tahoma, sans-serif;
+    
+
+}

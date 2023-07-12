@@ -6,21 +6,21 @@ import CompanyBody from "./CompanyBody/CompanyBody";
 import clsx from "clsx";
 import styles from "./companyPage.module.css";
 const CompanyPage = () => {
-  const { compID } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  useEffect(() => {
-    if (
-      searchParams.get("tab") !== "job-posts" &&
-      searchParams.get("tab") !== "profile"
-    ) {
-      setSearchParams({
-        ...searchParams,
-        tab: "job-posts",
-      });
-    }
-  }, []);
+  // const { compID } = useParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // useEffect(() => {
+  //   if (
+  //     searchParams.get("tab") !== "job-posts" &&
+  //     searchParams.get("tab") !== "profile"
+  //   ) {
+  //     setSearchParams({
+  //       ...searchParams,
+  //       tab: "job-posts",
+  //     });
+  //   }
+  // }, []);
 
-  console.log("on Company page", searchParams.get("tab"));
+  // console.log("on Company page", searchParams.get("tab"));
   return (
     <div className={clsx(styles["companyPage-wrapper"])}>
       <CompanySidebar />

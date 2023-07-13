@@ -53,8 +53,8 @@ function JobApplyModal(props) {
   const [error, setError] = useState("");
   useEffect(() => {
     console.log(cvPdfFile?.size)
-    if (cvPdfFile?.size >= "3912004") {
-      setError("PDF file size can not exceed 2mb");
+    if (cvPdfFile?.size >= "4012004") {
+      setError("PDF file size can not exceed 4MB");
     }else{
         setError("");
     }
@@ -67,6 +67,7 @@ function JobApplyModal(props) {
       currentCompany: "",
       totalExperience: "",
       expectedSalary: "",
+      aboutMe: "",
       email: "",
       phoneNumber: "",
       cvPdfFile: null,
@@ -205,6 +206,19 @@ function JobApplyModal(props) {
           <TextField
             required
             fullWidth
+            id="aboutMe"
+            label="About Me"
+            multiline
+            rows={10}
+            value={formik.values.aboutMe}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.aboutMe && !!formik.errors.aboutMe}
+            helperText={formik.touched.aboutMe && formik.errors.aboutMe}
+          />
+          <TextField
+            required
+            fullWidth
             id="email"
             label="Contact Email"
             value={formik.values.email}
@@ -239,8 +253,8 @@ function JobApplyModal(props) {
               ),
             }}
           />
-          <Button variant="contained" component="label">
-            CV Upload
+          <Button variant="outlined" component="label">
+            Upload CV (pdf)
             <input
               hidden
               id="file-upload"
@@ -250,8 +264,9 @@ function JobApplyModal(props) {
               //   inputProps={{ accept: "application/pdf" }}
             />
           </Button>
-          {cvPdfFile? <>{cvPdfFile.name} has been uploaded</>: ""}
-          {error}
+          {cvPdfFile ? <>{cvPdfFile.name} has been uploaded</> : ""}
+          <br />
+          {error && <div style={{ color: "red" }}>{error}</div>}
           {/* <FormControl>
             <InputLabel htmlFor="file-upload">Select PDF File</InputLabel>
             <Input
@@ -278,7 +293,7 @@ function JobApplyModal(props) {
             type="submit"
             variant="contained"
             fullWidth
-            disabled={formik.isSubmitting}
+            disabled={formik.isSubmitting || error.length > 0}
           >
             Apply
           </Button>

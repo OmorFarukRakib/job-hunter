@@ -61,6 +61,20 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
+    id: "email",
+    label: "Email",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "phone",
+    label: "Phone",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
     id: "downloadCVbtn",
     label: "Download CV",
     minWidth: 170,
@@ -76,7 +90,10 @@ function createData(
   LastEducationDegree,
   currentCompany,
   totalExp,
-  expectedSalary
+  expectedSalary,
+  aboutMe,
+  email,
+  phone,
 ) {
   //   const density = population / size;
   return {
@@ -87,6 +104,9 @@ function createData(
     currentCompany,
     totalExp,
     expectedSalary,
+    aboutMe,
+    email,
+    phone,
   };
 }
 
@@ -98,7 +118,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION 1",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "2",
@@ -107,7 +130,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION 2",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "3",
@@ -116,7 +142,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION 3",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "4",
@@ -125,7 +154,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION 4",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "5",
@@ -134,7 +166,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "6",
@@ -143,7 +178,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "7",
@@ -152,7 +190,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "8",
@@ -161,7 +202,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "9",
@@ -170,7 +214,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "10",
@@ -179,7 +226,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "11",
@@ -188,7 +238,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "12",
@@ -197,7 +250,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "13",
@@ -206,7 +262,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "14",
@@ -215,7 +274,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "15",
@@ -224,7 +286,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "16",
@@ -233,7 +298,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "17",
@@ -242,7 +310,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "18",
@@ -251,7 +322,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
   createData(
     "19",
@@ -260,7 +334,10 @@ const rows = [
     "Bsc at CSE",
     "ABC Company",
     "3 years",
-    "50,000"
+    "50,000",
+    "ABOUT ME SECTION",
+    "USER@gmail.com",
+    "11111111111"
   ),
 ];
 
@@ -305,6 +382,8 @@ function JobApplicantModal(props) {
           <TableCell align="center">{row.currentCompany}</TableCell>
           <TableCell align="center">{row.totalExp}</TableCell>
           <TableCell align="center">{row.expectedSalary}</TableCell>
+          <TableCell align="center">{row.email}</TableCell>
+          <TableCell align="center">{row.phone}</TableCell>
           <TableCell align="center">
             <Button variant="contained" endIcon={<CloudDownloadIcon />}>
               Download
@@ -316,21 +395,7 @@ function JobApplicantModal(props) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="p" gutterBottom component="div">
-                  Meet John Doe, a skilled professional in the field of Computer
-                  Science and Engineering (CSE). With a solid educational
-                  background and a graduate degree in CSE, John has developed a
-                  strong foundation in various areas of computer science. Over
-                  the past three years, John has honed his expertise while
-                  working at ABC Company. His experience in the company has
-                  allowed him to tackle complex challenges, collaborate with
-                  diverse teams, and deliver exceptional results. John's passion
-                  for technology, coupled with his strong problem-solving skills
-                  and attention to detail, has consistently driven his success.
-                  He is committed to staying up-to-date with the latest
-                  advancements in the industry, continuously expanding his
-                  knowledge and skills. With his dedication and expertise, John
-                  is poised to make significant contributions in the field of
-                  CSE.
+                  {row.aboutMe}
                 </Typography>
               </Box>
             </Collapse>

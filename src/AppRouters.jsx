@@ -7,10 +7,12 @@ import Job from "./pages/Job/Job";
 // import Employer from "./pages/employer/Employer";
 import UserPage from "./pages/userPage/UserPage";
 import CompanyPage from "./pages/companyPage/CompanyPage";
+import AdminPage from './pages/AdminPage/AdminPage'
 const AppRouters = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/admin" element={<AdminPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/jobs" element={<Jobs />} />
       <Route path="/job/:jobID" element={<Job />} />

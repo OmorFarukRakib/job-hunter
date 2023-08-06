@@ -1,0 +1,10 @@
+.adminPage-wrapper{
+    display: flex;
+        gap: 2rem;
+        width: 100%;
+        /* position: fixed; */
+        /* overflow: none; */
+        height: 100%;
+        /* background-color: red; */
+        overflow: hidden;
+}

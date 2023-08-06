@@ -1,7 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRouters from "./AppRouters";
 import { Routes, Route } from "react-router-dom";
-
 // Styles
 import styles from "./App.module.css";
 import Header from "./components/header/Header";
@@ -15,6 +14,7 @@ function App() {
             <AppRouters />
           </div>
         </div>
+        
       </BrowserRouter>
     </>
   );

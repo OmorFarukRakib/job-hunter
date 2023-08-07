@@ -9,6 +9,7 @@ import { Hidden } from "@mui/material";
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { GrProductHunt } from "react-icons/gr";
 import { MdProductionQuantityLimits } from "react-icons/md";
+import { AiOutlineOrderedList } from "react-icons/ai";
 const AdminSidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
@@ -44,7 +45,8 @@ const AdminSidebar = () => {
       !searchParams.get("tab") ||
       (searchParams.get("tab") !== "dashboard" &&
         searchParams.get("tab") !== "companyList" &&
-        searchParams.get("tab") !== "userList")
+        searchParams.get("tab") !== "userList" && 
+        searchParams.get("tab") !== "jobList")
     ) {
       setSearchParams({
         ...searchParams,
@@ -117,6 +119,16 @@ const AdminSidebar = () => {
           >
             {" "}
             User List
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleMenuItemSelect("jobList")}
+            icon={<AiOutlineOrderedList />}
+            rootStyles={
+              activeTab === "jobList" ? selectedMenuItemStyle : menuItemStyle
+            }
+          >
+            {" "}
+            Job List
           </MenuItem>
           {/* <MenuItem> Calendar </MenuItem>
           <MenuItem> Calendar </MenuItem>

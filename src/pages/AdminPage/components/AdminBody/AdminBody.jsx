@@ -6,6 +6,7 @@ import styles from "./adminBody.module.css";
 import AdminDashboard from "../../tabs/AdminDashboard/AdminDashboard";
 import AdminCompanytList from "../../tabs/AdminProductList/AdminCompanyList";
 import AdminUserList from "../../tabs//AdminUserList/AdminUserList";
+import AdminJobList from "../../tabs/AdminJobList/AdminJobList";
 const AdminBody = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedTab, setSelectedTab] = useState(null);
@@ -20,6 +21,8 @@ const AdminBody = () => {
       return <AdminCompanytList />;
     } else if (selectedTab === "userList") {
       return <AdminUserList />;
+    } else if (selectedTab === "jobList") {
+      return <AdminJobList />;
     } else {
       return <>SOMETHING WENT WRONG</>;
     }

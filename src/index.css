@@ -13,6 +13,14 @@
     overflow: auto;
     /* Center the modal horizontally */
 }
+.custom-modal-for-companyDetails{
+    max-width: 80vw;
+    /* Adjust the max-width value according to your needs */
+    /* margin: 0 auto; */
+    max-height: 80vh;
+    overflow: hidden;
+    /* Center the modal horizontally */
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

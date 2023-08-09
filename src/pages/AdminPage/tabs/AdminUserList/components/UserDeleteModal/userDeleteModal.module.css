@@ -1,0 +1,8 @@
+.custom-modal-for-userDeleteModal {
+    max-width: 30vw;
+    /* Adjust the max-width value according to your needs */
+    /* margin: 0 auto; */
+    max-height: 80vh;
+    overflow: hidden;
+    /* Center the modal horizontally */
+}

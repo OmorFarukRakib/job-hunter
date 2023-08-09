@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import styles from "./adminBody.module.css";
 import AdminDashboard from "../../tabs/AdminDashboard/AdminDashboard";
-import AdminCompanytList from "../../tabs/AdminProductList/AdminCompanyList";
+import AdminCompanytList from "../../tabs/AdminCompanyList/AdminCompanyList";
 import AdminUserList from "../../tabs//AdminUserList/AdminUserList";
 import AdminJobList from "../../tabs/AdminJobList/AdminJobList";
 const AdminBody = () => {

@@ -9,94 +9,92 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
-import UserDetailsModal from "../UserDetailsModal/UserDetailsModal";
-import UserDeleteModal from "../UserDeleteModal/UserDeleteModal";
+import CompanyDetailsModal from "../CompanyDetailsModal/CompanyDetailsModal";
+import CompanyDeleteModal from '../CompanyDeleteModal/CompanyDeleteModal'
 const columns = [
-  { id: "firstName", label: "First Name", minWidth: 100, align: "center" },
-  { id: "lastName", label: "Last Name", minWidth: 100, align: "center" },
+  { id: "companyName", label: "Company Name", minWidth: 100, align: "center" },
+  { id: "industry", label: "Industry", minWidth: 100, align: "center" },
   {
-    id: "aimedIndustry",
-    label: "Industry",
+    id: "companyAddress",
+    label: "Company Address",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "email",
-    label: "Email",
+    id: "contactPersonName",
+    label: "Contact Person Name",
     minWidth: 100,
     align: "center",
     format: (value) => value.toFixed(2),
   },
   {
-    id: "phone",
-    label: "Phone",
+    id: "contactEmail",
+    label: "Contact Email",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
-function createData(firstName, lastName, aimedIndustry, email, phone) {
+function createData(
+  companyName,
+  industry,
+  companyAddress,
+  contactPersonName,
+  contactEmail
+) {
   return {
-    firstName,
-    lastName,
-    aimedIndustry,
-    email,
-    phone,
+    companyName,
+    industry,
+    companyAddress,
+    contactPersonName,
+    contactEmail,
   };
 }
 
 const rows = [
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
 ];
 
-export default function UserListTable() {
-  const [userDetailsData, setUserDetailsData] = useState({});
-  const [userDetailsModalShow, setUserDetailsModalShow] = useState(false);
-const [userIDForDelete, setUserIDForDelete] = useState();
-const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
+export default function CompanyListTable() {
+  const [companyDetailsData, setCompanyDetailsData] = useState({});
+  const [companyDetailsModalShow, setCompanyDetailsModalShow] = useState(false);
+  const [companyIDForDelete, setCompanyIDForDelete] = useState();
+  const [companyDeleteModalShow, setCompanyDeleteModalShow] = useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const openUserDetailsModalHandler = (row) => {
-    setUserDetailsModalShow(true);
-    setUserDetailsData(row);
+  const openCompanyDetailsModalHandler = (row) => {
+    setCompanyDetailsModalShow(true);
+    setCompanyDetailsData(row);
   };
-   const openUserDeleteModalHandler = (userID) => {
-     setUserDeleteModalShow(true);
-     setUserIDForDelete(userID);
-   };
-
+  const openCompanyDeleteModalHandler = (companyID) => {
+    setCompanyDeleteModalShow(true);
+    setCompanyIDForDelete(companyID);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -109,16 +107,17 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
 
   return (
     <>
-      <UserDetailsModal
-        show={userDetailsModalShow}
-        onHide={() => setUserDetailsModalShow(false)}
-        userData={userDetailsData}
+      <CompanyDetailsModal
+        show={companyDetailsModalShow}
+        onHide={() => setCompanyDetailsModalShow(false)}
+        companyDetailsData={companyDetailsData}
       />
-      <UserDeleteModal
-        show={userDeleteModalShow}
-        onHide={() => setUserDeleteModalShow(false)}
-        userID={userIDForDelete}
+      <CompanyDeleteModal
+        show={companyDeleteModalShow}
+        onHide={() => setCompanyDeleteModalShow(false)}
+        companyID={companyIDForDelete}
       />
+
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: "70vh" }}>
           <Table stickyHeader aria-label="sticky table">
@@ -177,16 +176,14 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                         >
                           <Button
                             variant="outlined"
-                            onClick={() => openUserDetailsModalHandler(row)}
+                            onClick={() => openCompanyDetailsModalHandler(row)}
                           >
                             Details
                           </Button>
                           <Button
                             variant="outlined"
                             color="error"
-                            onClick={() =>
-                              openUserDeleteModalHandler(row.firstName)
-                            }
+                            onClick={() => openCompanyDeleteModalHandler(row.companyName)}
                           >
                             Delete
                           </Button>

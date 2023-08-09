@@ -1,0 +1,38 @@
+
+
+.userProfile-wrapper {
+    width: 90%;
+    /* justify-content: center; */
+    margin: 0 auto;
+    margin-bottom: 4rem;
+    max-height: 70vh;
+    overflow: auto;
+}
+
+.userProfile-Info {
+    display: flex;
+    /* gap: 5rem; */
+    min-height: 4rem;
+    align-items: center;
+    padding-left: 1rem;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.186);
+
+}
+
+.userProfile-info-title {
+    min-width: 20rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.userProfile-info-value {
+    padding: 1rem
+}
+
+.userProfile-actionbtn-wrapper {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: center;
+    gap: 4rem;
+}

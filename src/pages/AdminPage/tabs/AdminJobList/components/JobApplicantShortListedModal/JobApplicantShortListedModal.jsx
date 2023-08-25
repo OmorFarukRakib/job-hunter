@@ -2,7 +2,7 @@
 import Modal from "react-bootstrap/Modal";
 // import SigninBody from "./signinBody/SigninBody";
 import clsx from "clsx";
-import styles from "./jobApplicantModal.module.css";
+import styles from "./jobApplicantShortListedModal.module.css";
 
 // Table
 import * as React from "react";
@@ -17,7 +17,7 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import GradingIcon from "@mui/icons-material/Grading";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -25,8 +25,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
-import AddToShortListModal from "./AddToShortListModal";
-
+import RemoveFromShortListModal from "./RemoveFromShortListModal";
+import { useEffect } from "react";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 50, align: "start" },
@@ -87,13 +87,13 @@ const columns = [
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
-  {
-    id: "actions",
-    label: "Actions",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
+  // {
+  //   id: "action",
+  //   label: "Action",
+  //   minWidth: 170,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
 ];
 
 function createData(
@@ -375,13 +375,15 @@ const rows = [
   ),
 ];
 
-function JobApplicantModal(props) {
+function JobApplicantShortListedModal(props) {
+
   //   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [showAddToShortListModal, setShowAddToShortListModal] = React.useState(false)
-  const [selectedApplicantData, setSelectedApplicantData ] =  React.useState({})
+  const [showRemoveFromShortListModal, setShowRemoveFromShortListModal] =
+    React.useState(false);
+  const [selectedApplicantData, setSelectedApplicantData] = React.useState({});
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -391,15 +393,17 @@ function JobApplicantModal(props) {
     setPage(0);
   };
 
-
-  const handleAddToShortListBtn = (applicantData) => {
-    setSelectedApplicantData(applicantData)
-     setShowAddToShortListModal(true)
-  }
+  const handleRemoveFromShortListBtn = (applicantData) => {
+    setSelectedApplicantData(applicantData);
+    setShowRemoveFromShortListModal(true);
+  };
   React.useEffect(() => {
-setSelectedApplicantData({})
-  }, showAddToShortListModal)
+    setSelectedApplicantData({});
+  }, [showRemoveFromShortListModal]);
 
+useEffect(() => {
+ console.log("short-list-modal called")
+}, [])
   // Row component Render
   function Row(props) {
     const { row } = props;
@@ -437,27 +441,16 @@ setSelectedApplicantData({})
               Download
             </Button>
           </TableCell>
-          <TableCell align="center">
-            {row.isShortListed === true ? (
-              <Button
-                variant="contained"
-                disabled
-                size="small"
-                endIcon={<CheckBoxIcon />}
-              >
-                Short-listed
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                size="small"
-                endIcon={<GradingIcon />}
-                onClick={() => handleAddToShortListBtn(row)}
-              >
-                Add to Shortlist
-              </Button>
-            )}
-          </TableCell>
+          {/* <TableCell align="center">
+            <Button
+              variant="contained"
+              size="small"
+              endIcon={<DeleteForeverIcon />}
+              onClick={() => handleRemoveFromShortListBtn(row)}
+            >
+              Remove
+            </Button>
+          </TableCell> */}
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
@@ -524,53 +517,62 @@ setSelectedApplicantData({})
       backdrop="static"
       keyboard="false"
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter" centered>
-          All applicants list
+      <Modal.Header className="px-4" closeButton>
+        <Modal.Title
+          className="ms-auto"
+          id="contained-modal-title-vcenter"
+          centered
+        >
+         Short listed Applicants
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <>
-        <AddToShortListModal show={showAddToShortListModal} onHide={() => setShowAddToShortListModal(false)} applicantData={selectedApplicantData} />
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align={"center"} style={{ minWidth: 150 }}>
-                    About Applicant
-                  </TableCell>
-                  {columns.map((column) => (
-                    <TableCell
-                    key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                      >
-                      {column.label}
+          <RemoveFromShortListModal
+            show={showRemoveFromShortListModal}
+            onHide={() => setShowRemoveFromShortListModal(false)}
+            applicantData={selectedApplicantData}
+          />
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align={"center"} style={{ minWidth: 150 }}>
+                      About Applicant
                     </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <Row key={row.id} row={row} />
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
                     ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows
+                    .filter((row) => row.isShortListed === true)
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <Row key={row.id} row={row} />
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
-        </Paper>
-            </>
+          </Paper>
+        </>
       </Modal.Body>
       {/* <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
@@ -579,4 +581,4 @@ setSelectedApplicantData({})
   );
 }
 
-export default JobApplicantModal;
+export default JobApplicantShortListedModal;

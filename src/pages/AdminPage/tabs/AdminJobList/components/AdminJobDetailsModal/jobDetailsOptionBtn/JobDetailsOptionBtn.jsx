@@ -89,14 +89,15 @@ export default function CustomizedMenus(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleClose("edit")} disableRipple>
+        {/* <MenuItem onClick={() => handleClose("edit")} disableRipple>
           <EditIcon />
           Edit
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={() => handleClose("applicants")} disableRipple>
           <FormatListBulletedIcon />
           All Applicants
         </MenuItem>
+        <Divider sx={{ my: 0.5 }} />
         <MenuItem
           onClick={() => handleClose("short-listed-applicant")}
           disableRipple
@@ -104,11 +105,10 @@ export default function CustomizedMenus(props) {
           <ChecklistIcon />
           Short-listed Applicants
         </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose("remove")} disableRipple>
+        {/* <MenuItem onClick={() => handleClose("remove")} disableRipple>
           <DeleteForeverIcon />
           Remove
-        </MenuItem>
+        </MenuItem> */}
         {/* <MenuItem onClick={handleClose} disableRipple>
           <MoreHorizIcon />
           More

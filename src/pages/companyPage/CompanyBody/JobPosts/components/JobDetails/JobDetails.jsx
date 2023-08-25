@@ -12,7 +12,7 @@ import JobDetailsOptionBtn from "./jobDetailsOptionBtn/JobDetailsOptionBtn";
 import JobApplicantModal from "../JobApplicantsModal/JobApplicantsModal";
 import JobPostFormModal from "../JobPostFormModal/JobPostFormModal";
 import JobPostRemoveModal from "../JobPostRemoveModal/JobPostRemoveModal";
-
+import JobApplicantShortListedModal from "../JobApplicantShortListedModal/JobApplicantShortListedModal";
 
 const jobPostData = {
   jobTitle: "Demo Title",
@@ -31,17 +31,23 @@ const jobPostData = {
 
 const Job = ({ jobID }) => {
   // const { jobID } = useParams();
-  const [applicantModalShow, setApplicantModalShow] = useState(false);
   const [jobPostEditModalShow, setJobPostEditModalShow] = useState(false)
   const [jobPostRemoveModalShow, setJobPostRemoveModalShow] = useState(false)
+  const [applicantModalShow, setApplicantModalShow] = useState(false);
+  const [showJobApplicantShortListedModal, setShowJobApplicantShortListedModal] = useState(false)
 
   const handleSelectOption = (selectedOption) => {
     console.log(selectedOption);
     if (selectedOption === "applicants") {
       setApplicantModalShow(true);
-    }else if(selectedOption === "edit"){
+    }
+    else if(selectedOption === "edit"){
       setJobPostEditModalShow(true)
-    } else if(selectedOption === 'remove') {
+    } 
+    else if (selectedOption === "short-listed-applicant") {
+      // here will 
+      setShowJobApplicantShortListedModal(true)
+    } else if (selectedOption === "remove") {
       setJobPostRemoveModalShow(true);
     }
   };
@@ -50,6 +56,10 @@ const Job = ({ jobID }) => {
       <JobApplicantModal
         show={applicantModalShow}
         onHide={() => setApplicantModalShow(false)}
+      />
+      <JobApplicantShortListedModal
+        show={showJobApplicantShortListedModal}
+        onHide={() => setShowJobApplicantShortListedModal(false)}
       />
       <JobPostFormModal
         show={jobPostEditModalShow}

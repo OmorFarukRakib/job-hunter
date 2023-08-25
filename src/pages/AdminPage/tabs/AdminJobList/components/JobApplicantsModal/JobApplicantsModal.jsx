@@ -87,13 +87,13 @@ const columns = [
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
-  {
-    id: "actions",
-    label: "Actions",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
+  // {
+  //   id: "actions",
+  //   label: "Actions",
+  //   minWidth: 170,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
 ];
 
 function createData(
@@ -437,7 +437,7 @@ setSelectedApplicantData({})
               Download
             </Button>
           </TableCell>
-          <TableCell align="center">
+          {/* <TableCell align="center">
             {row.isShortListed === true ? (
               <Button
                 variant="contained"
@@ -457,7 +457,7 @@ setSelectedApplicantData({})
                 Add to Shortlist
               </Button>
             )}
-          </TableCell>
+          </TableCell> */}
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
@@ -523,54 +523,63 @@ setSelectedApplicantData({})
       centered
       backdrop="static"
       keyboard="false"
+      
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter" centered>
+      <Modal.Header className="px-4" closeButton>
+        <Modal.Title
+          className="ms-auto"
+          id="contained-modal-title-vcenter"
+          centered
+        >
           All applicants list
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <>
-        <AddToShortListModal show={showAddToShortListModal} onHide={() => setShowAddToShortListModal(false)} applicantData={selectedApplicantData} />
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align={"center"} style={{ minWidth: 150 }}>
-                    About Applicant
-                  </TableCell>
-                  {columns.map((column) => (
-                    <TableCell
-                    key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                      >
-                      {column.label}
+          <AddToShortListModal
+            show={showAddToShortListModal}
+            onHide={() => setShowAddToShortListModal(false)}
+            applicantData={selectedApplicantData}
+          />
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align={"center"} style={{ minWidth: 150 }}>
+                      About Applicant
                     </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <Row key={row.id} row={row} />
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
                     ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <Row key={row.id} row={row} />
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
-        </Paper>
-            </>
+          </Paper>
+        </>
       </Modal.Body>
       {/* <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>

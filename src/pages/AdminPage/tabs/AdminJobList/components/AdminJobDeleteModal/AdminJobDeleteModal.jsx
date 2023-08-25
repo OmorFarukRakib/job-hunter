@@ -2,10 +2,10 @@
 import Modal from "react-bootstrap/Modal";
 // import SigninBody from "./signinBody/SigninBody";
 import clsx from "clsx";
-import styles from "./companyDeleteModal.module.css";
+import styles from "./adminJobDeleteModal.module.css";
 import { Button } from "@mui/material";
 
-function CompanyDeleteModal({ show, onHide, companyID }) {
+function adminJobDeleteModal({ show, onHide, jobID }) {
   return (
     <Modal
       show={show}
@@ -30,9 +30,11 @@ function CompanyDeleteModal({ show, onHide, companyID }) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        ARE YOU SURE YOU WANT TO DELETE THE SELECTED COMPANY PROFILE?
+        ARE YOU SURE YOU WANT TO DELETE THE SELECTED Job Ad?
         <br />
-        Company Name: {companyID}
+        Job Tittle: {jobID}
+        <br />
+        company Name: X-Company
         <br />
         Note: This can not be undone.
       </Modal.Body>
@@ -48,4 +50,4 @@ function CompanyDeleteModal({ show, onHide, companyID }) {
   );
 }
 
-export default CompanyDeleteModal;
+export default adminJobDeleteModal;

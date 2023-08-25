@@ -31,14 +31,18 @@ function UserDeleteModal({ show, onHide, userID }) {
       </Modal.Header>
       <Modal.Body>
         ARE YOU SURE YOU WANT TO DELETE THE SELECTED USER PROFILE?
-        <br/>
+        <br />
         USER Name: {userID}
         <br />
         Note: This can not be undone.
       </Modal.Body>
-      <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
-        <Button onClick={() => onHide()}>DELETE</Button>
-        <Button onClick={() => onHide()}>DISCARD</Button>
+      <Modal.Footer style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <Button color="error" variant="outlined" onClick={() => onHide()}>
+          DELETE
+        </Button>
+        <Button variant="outlined" onClick={() => onHide()}>
+          DISCARD
+        </Button>
       </Modal.Footer>
     </Modal>
   );

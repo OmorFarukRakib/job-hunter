@@ -11,6 +11,8 @@
     /* margin: 0 auto; */
     max-height: 80vh;
     overflow: auto;
+    background-color: rgba(96, 96, 92, 0.186);
+    backdrop-filter: blur(8px);
     /* Center the modal horizontally */
 }
 .custom-modal-for-companyDetails{

@@ -10,6 +10,9 @@ import { LuLayoutDashboard } from 'react-icons/lu';
 import { GrProductHunt } from "react-icons/gr";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { AiOutlineOrderedList } from "react-icons/ai";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import RecentActorsIcon from "@mui/icons-material/RecentActors";
 const AdminSidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   // const navigate = useNavigate();
@@ -43,16 +46,17 @@ const AdminSidebar = () => {
   useEffect(() => {
     if (
       !searchParams.get("tab") ||
-      (searchParams.get("tab") !== "dashboard" &&
+      // (searchParams.get("tab") !== "dashboard" &&
+      (
         searchParams.get("tab") !== "companyList" &&
         searchParams.get("tab") !== "userList" && 
         searchParams.get("tab") !== "jobList")
     ) {
       setSearchParams({
         ...searchParams,
-        tab: "dashboard",
+        tab: "companyList",
       });
-      setActiveTab("dashboard");
+      setActiveTab("companyList");
     } else {
       setActiveTab(searchParams.get("tab"));
     }
@@ -78,9 +82,9 @@ const AdminSidebar = () => {
             <MenuItem active={activeItem === 'Home'} onClick={handleMenuItemSelect}> Job posts </MenuItem>
             <MenuItem active={activeItem === 'Dashboard'} onClick={handleMenuItemSelect}> Create new Job post </MenuItem>
           </SubMenu> */}
-          <MenuItem
+          {/* <MenuItem
             onClick={() => handleMenuItemSelect("dashboard")}
-            icon={<LuLayoutDashboard />}
+            icon={<DashboardIcon />}
             rootStyles={
               activeTab === "dashboard" ? selectedMenuItemStyle : menuItemStyle
             }
@@ -97,10 +101,10 @@ const AdminSidebar = () => {
             // }}
           >
             Dashboard
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             onClick={() => handleMenuItemSelect("companyList")}
-            icon={<GrProductHunt />}
+            icon={<ApartmentIcon />}
             rootStyles={
               activeTab === "companyList"
                 ? selectedMenuItemStyle
@@ -112,7 +116,7 @@ const AdminSidebar = () => {
           </MenuItem>
           <MenuItem
             onClick={() => handleMenuItemSelect("userList")}
-            icon={<MdProductionQuantityLimits />}
+            icon={<RecentActorsIcon />}
             rootStyles={
               activeTab === "userList" ? selectedMenuItemStyle : menuItemStyle
             }

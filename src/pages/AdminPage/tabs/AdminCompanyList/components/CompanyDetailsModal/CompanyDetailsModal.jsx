@@ -3,9 +3,8 @@ import Modal from "react-bootstrap/Modal";
 // import SigninBody from "./signinBody/SigninBody";
 import clsx from "clsx";
 import styles from "./companyDetailsModal.module.css";
-
-
-
+import { Button } from "@mui/material";
+import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
 
 function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
   return (
@@ -27,12 +26,11 @@ function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
           id="contained-modal-title-vcenter"
           centered
         >
-          
-            Company Information
-          
+          Company Information
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        
         <div className={clsx(styles["companyProfile-wrapper"])}>
           <div className={clsx(styles["companyProfile-Info"])}>
             <div className={clsx(styles["companyProfile-info-title"])}>
@@ -40,6 +38,15 @@ function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
             </div>
             <div className={clsx(styles["companyProfile-info-value"])}>
               {companyDetailsData.companyName}
+            </div>
+          </div>
+          <div className={clsx(styles["companyProfile-Info"])}>
+            <div className={clsx(styles["companyProfile-info-title"])}>
+              Status
+            </div>
+            <div className={clsx(styles["companyProfile-status-wrapper"])}>
+              <StatusDiv statusType={companyDetailsData.status} />
+              
             </div>
           </div>
           <div className={clsx(styles["companyProfile-Info"])}>
@@ -164,9 +171,11 @@ function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
           </div>
         </div>
       </Modal.Body>
-      {/* <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer> */}
+      <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+        <Button variant="outlined" size="large" onClick={onHide}>
+          Close
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }

@@ -10,7 +10,10 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import CompanyDetailsModal from "../CompanyDetailsModal/CompanyDetailsModal";
-import CompanyDeleteModal from '../CompanyDeleteModal/CompanyDeleteModal'
+import CompanyDeleteModal from "../CompanyDeleteModal/CompanyDeleteModal";
+import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
+import CompanyStatusChangeOpt from "./CompanyStatusChangeOpt/CompanyStatusChangeOpt";
+import styles from "./companyListTable.module.css";
 const columns = [
   { id: "companyName", label: "Company Name", minWidth: 100, align: "center" },
   { id: "industry", label: "Industry", minWidth: 100, align: "center" },
@@ -35,6 +38,13 @@ const columns = [
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value,
+  },
 ];
 
 function createData(
@@ -42,7 +52,8 @@ function createData(
   industry,
   companyAddress,
   contactPersonName,
-  contactEmail
+  contactEmail,
+  status
 ) {
   return {
     companyName,
@@ -50,33 +61,107 @@ function createData(
     companyAddress,
     contactPersonName,
     contactEmail,
+    status,
   };
 }
 
 const rows = [
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
-  createData("X-Company", "IT", "138-street", "Mr Jhon", "jhon@xcompany.com"),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "pending"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "active"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "rejected"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "pending"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "active"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "rejected"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "pending"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "active"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "rejected"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "pending"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "active"
+  ),
+  createData(
+    "X-Company",
+    "IT",
+    "138-street",
+    "Mr Jhon",
+    "jhon@xcompany.com",
+    "rejected"
+  ),
 ];
 
 export default function CompanyListTable() {
@@ -132,6 +217,7 @@ export default function CompanyListTable() {
                     {column.label}
                   </TableCell>
                 ))}
+
                 <TableCell
                   key={"action"}
                   align={"center"}
@@ -154,11 +240,23 @@ export default function CompanyListTable() {
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
+                        console.log(value);
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
+                            {/* {column.format && typeof value === "number"
                               ? column.format(value)
-                              : value}
+                              : value} */}
+                            {column.id === "status" ? (
+                              <div className={styles["statusColumn-wrapper"]}>
+                                <StatusDiv statusType={value} />
+                                <CompanyStatusChangeOpt
+                                  companyID={row['companyName']}
+                                  currentStatus={value}
+                                />
+                              </div>
+                            ) : (
+                              value
+                            )}
                           </TableCell>
                         );
                       })}
@@ -183,7 +281,9 @@ export default function CompanyListTable() {
                           <Button
                             variant="outlined"
                             color="error"
-                            onClick={() => openCompanyDeleteModalHandler(row.companyName)}
+                            onClick={() =>
+                              openCompanyDeleteModalHandler(row.companyName)
+                            }
                           >
                             Delete
                           </Button>

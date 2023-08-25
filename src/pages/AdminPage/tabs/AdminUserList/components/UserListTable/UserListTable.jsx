@@ -11,6 +11,9 @@ import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import UserDetailsModal from "../UserDetailsModal/UserDetailsModal";
 import UserDeleteModal from "../UserDeleteModal/UserDeleteModal";
+import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
+import UserStatusChangeOpt from './UserStatusChangeOpt/UserStatusChangeOpt'
+import styles from './userListTable.module.css'
 const columns = [
   { id: "firstName", label: "First Name", minWidth: 100, align: "center" },
   { id: "lastName", label: "Last Name", minWidth: 100, align: "center" },
@@ -35,49 +38,49 @@ const columns = [
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value,
+  },
 ];
 
-function createData(firstName, lastName, aimedIndustry, email, phone) {
+function createData(firstName, lastName, aimedIndustry, email, phone, status) {
   return {
     firstName,
     lastName,
     aimedIndustry,
     email,
     phone,
+    status
   };
 }
 
 const rows = [
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999"),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
+  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
+  
 ];
 
 export default function UserListTable() {
@@ -157,9 +160,20 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
+                            {/* {column.format && typeof value === "number"
                               ? column.format(value)
-                              : value}
+                              : value} */}
+                            {column.id === "status" ? (
+                              <div className={styles["statusColumn-wrapper"]}>
+                                <StatusDiv statusType={value} />
+                                <UserStatusChangeOpt
+                                  userID={row["firstName"]}
+                                  currentStatus={value}
+                                />
+                              </div>
+                            ) : (
+                              value
+                            )}
                           </TableCell>
                         );
                       })}

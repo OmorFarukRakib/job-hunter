@@ -1,0 +1,17 @@
+.statusDiv-pending {
+    background-color: rgba(128, 128, 128, 0.618);
+    padding: 0.5rem 0.1rem;
+    width: 5rem;
+}
+
+.statusDiv-active {
+    background-color: rgba(0, 128, 0, 0.607);
+    padding: 0.5rem 0.1rem;
+    width: 5rem;
+}
+
+.statusDiv-rejected {
+    background-color: rgba(255, 0, 0, 0.526);
+    padding: 0.5rem 0.1rem;
+    width: 5rem;
+}

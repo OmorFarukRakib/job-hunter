@@ -12,6 +12,8 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ChecklistIcon from "@mui/icons-material/Checklist";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -65,6 +67,46 @@ export default function CustomizedMenus(props) {
     setAnchorEl(null);
     props.handleSelectOption(option);
   };
+  const changeStatus = (newStatus) => {
+    console.log('this will be the new status', newStatus)
+    console.log("company name", props.companyID);
+  }
+
+  const ActionOptions = (currentStatus) => {
+    if (currentStatus === "pending") {
+      return (
+        <div>
+          <MenuItem onClick={() => changeStatus("active")} disableRipple>
+            <CheckIcon />
+            Accept
+          </MenuItem>
+          <Divider sx={{ my: 0.5 }} />
+          <MenuItem onClick={() => changeStatus("reject")} disableRipple>
+            <ClearIcon />
+            Reject
+          </MenuItem>
+        </div>
+      );
+    } else if (currentStatus === "active") {
+      return (
+        <div>
+          <MenuItem onClick={() => changeStatus("reject")} disableRipple>
+            <ClearIcon />
+            Reject
+          </MenuItem>
+        </div>
+      );
+    } else if (currentStatus === "rejected") {
+      return (
+        <div>
+          <MenuItem onClick={() => changeStatus("active")} disableRipple>
+            <CheckIcon />
+            Accept
+          </MenuItem>
+        </div>
+      );
+    }
+  };
 
   return (
     <div>
@@ -78,7 +120,7 @@ export default function CustomizedMenus(props) {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        Options
+        action
       </Button>
       <StyledMenu
         id="demo-customized-menu"
@@ -89,26 +131,30 @@ export default function CustomizedMenus(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleClose("edit")} disableRipple>
-          <EditIcon />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={() => handleClose("applicants")} disableRipple>
-          <FormatListBulletedIcon />
-          All Applicants
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleClose("short-listed-applicant")}
-          disableRipple
-        >
-          <ChecklistIcon />
-          Short-listed Applicants
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={() => handleClose("remove")} disableRipple>
+        {ActionOptions(props.currentStatus)}
+        {/* {props.currentStatus === "prending" ? (
+          <>
+            <MenuItem onClick={() => handleClose("applicants")} disableRipple>
+              <CheckIcon />
+              Accept
+            </MenuItem>
+            <Divider sx={{ my: 0.5 }} />
+            <MenuItem
+              onClick={() => handleClose("short-listed-applicant")}
+              disableRipple
+            >
+              <ClearIcon />
+              Rejected
+            </MenuItem>
+          </>
+        ) : (
+          <></>
+        )} */}
+
+        {/* <MenuItem onClick={() => handleClose("remove")} disableRipple>
           <DeleteForeverIcon />
           Remove
-        </MenuItem>
+        </MenuItem> */}
         {/* <MenuItem onClick={handleClose} disableRipple>
           <MoreHorizIcon />
           More

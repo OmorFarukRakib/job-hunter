@@ -107,7 +107,7 @@ function UserDetailsModal({ show, onHide, userData }) {
         </div>
       </Modal.Body>
       <Modal.Footer style={{display: 'flex', justifyContent: 'center'}}>
-        <Button onClick={onHide}>Close</Button>
+        <Button variant="outlined" size='large' onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -10,7 +10,7 @@ function SigninModal(props) {
       // className={clsx(styles["singinBody-wrapper"])}
       //   size="sm"
       //   dialogClassName="modal-90w"
-      dialogClassName="custom-modal"
+      dialogClassName="custom-modal-login"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

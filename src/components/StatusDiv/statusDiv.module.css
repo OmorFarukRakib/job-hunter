@@ -1,17 +1,23 @@
 .statusDiv-pending {
-    background-color: rgba(128, 128, 128, 0.618);
+    background-color: rgba(128, 128, 128, 0.765);
     padding: 0.5rem 0.1rem;
-    width: 5rem;
+    width: 5.5rem;
+    color: white;
+    border-radius: 8px;
 }
 
 .statusDiv-active {
-    background-color: rgba(0, 128, 0, 0.607);
+    background-color: rgba(0, 128, 0, 0.738);
     padding: 0.5rem 0.1rem;
-    width: 5rem;
+    width: 5.5rem;
+    color: white;
+    border-radius: 8px;
 }
 
 .statusDiv-rejected {
-    background-color: rgba(255, 0, 0, 0.526);
+    background-color: rgba(255, 0, 0, 0.731);
     padding: 0.5rem 0.1rem;
-    width: 5rem;
+    width: 5.5rem;
+    color: white;
+    border-radius: 8px;
 }

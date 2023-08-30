@@ -88,6 +88,18 @@ const LoginForm = (props) => {
         variant="contained"
         fullWidth
         disabled={formik.isSubmitting}
+        sx={{
+          padding: "0.7rem",
+          borderRadius: "20px",
+          background: "#F6953F",
+          color: "white",
+          "&:hover": {
+            backgroundColor: "#f6943fbc",
+
+            borderColor: "#0062cc",
+            boxShadow: "none",
+          },
+        }}
       >
         Log in
       </Button>

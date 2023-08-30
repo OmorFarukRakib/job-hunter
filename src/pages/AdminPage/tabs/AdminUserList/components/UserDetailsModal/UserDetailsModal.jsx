@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import clsx from "clsx";
 import styles from "./userDetailsModal.module.css";
 import { Button } from "@mui/material";
-
+import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
 
 
 
@@ -47,6 +47,12 @@ function UserDetailsModal({ show, onHide, userData }) {
             </div>
             <div className={clsx(styles["userProfile-info-value"])}>
               {userData.lastName}
+            </div>
+          </div>
+          <div className={clsx(styles["userProfile-Info"])}>
+            <div className={clsx(styles["userProfile-info-title"])}>Status</div>
+            <div className={clsx(styles["userProfile-status-wrapper"])}>
+              <StatusDiv statusType={userData.status} />
             </div>
           </div>
           <div className={clsx(styles["userProfile-Info"])}>
@@ -106,8 +112,10 @@ function UserDetailsModal({ show, onHide, userData }) {
           </div>
         </div>
       </Modal.Body>
-      <Modal.Footer style={{display: 'flex', justifyContent: 'center'}}>
-        <Button variant="outlined" size='large' onClick={onHide}>Close</Button>
+      <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>
+        <Button variant="outlined" size="large" onClick={onHide}>
+          Close
+        </Button>
       </Modal.Footer>
     </Modal>
   );

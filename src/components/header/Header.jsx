@@ -64,7 +64,7 @@ const Header = () => {
                   className={clsx(styles["header-menu-btn"])}
                   onClick={() => setsigninModalShow(true)}
                 >
-                  Sign in
+                  Sign in/Registration
                 </div>
               )}
             </>

@@ -2,6 +2,7 @@
     /* overflow-y: hidden; */
     /* overflow-x: hidden; */
     height: 90vh;
+    background-color: #1E1F22;
     
     /* padding-bottom: 4vh; */
     
@@ -9,7 +10,9 @@
 .company-logo-wrapper{
     display: flex;
     justify-items: center;
-    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    background-color: #1E1F22;
+    
 }
 
 .company-logo-wrapper > img{

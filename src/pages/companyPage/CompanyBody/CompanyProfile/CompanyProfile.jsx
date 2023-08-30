@@ -140,10 +140,40 @@ const CompanyProfile = () => {
           </div>
         </div>
         <div className={clsx(styles["companyProfile-actionbtn-wrapper"])}>
-          <Button variant="contained" onClick={companyInfoEditHandler}>
+          <Button
+            variant="contained"
+            onClick={companyInfoEditHandler}
+            sx={{
+              padding: "0.7rem",
+              borderRadius: "20px",
+              background: "#F6953F",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#f6943fbc",
+
+                borderColor: "#0062cc",
+                boxShadow: "none",
+              },
+            }}
+          >
             Edit Information
           </Button>
-          <Button variant="contained" onClick={companyPassEditHandler}>
+          <Button
+            variant="contained"
+            onClick={companyPassEditHandler}
+            sx={{
+              padding: "0.7rem",
+              borderRadius: "20px",
+              background: "#643393",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#653393cf",
+
+                borderColor: "#0062cc",
+                boxShadow: "none",
+              },
+            }}
+          >
             Change Password
           </Button>
         </div>

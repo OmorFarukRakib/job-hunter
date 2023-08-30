@@ -2,7 +2,7 @@
     max-width: 70vw;
         /* Adjust the max-width value according to your needs */
         /* margin: 0 auto; */
-        max-height: 80vh;
+        max-height: 60vh;
         overflow: hidden;
         
 }
@@ -48,7 +48,7 @@
 
 .job-ad-description-wrapper {
     padding: 1rem;
-    height: 70vh;
+    height: 50vh;
     overflow: auto;
     text-align: start;
 }

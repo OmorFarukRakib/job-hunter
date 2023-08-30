@@ -53,19 +53,61 @@ const JobCard = ({ id }) => {
       <div className={clsx(styles["job-card-description"])}>
         We are seeking a Full Stack Developer Intern to work with us throughout
         the school year. This internship will be a flexible schedule of 20-25
-        hours a week during business hours. This will be 100% remote.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem architecto fuga consectetur accusamus eligendi. Consectetur, voluptates itaque.
+        hours a week during business hours. This will be 100% remote. Lorem
+        ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem
+        incidunt repudiandae optio veritatis delectus assumenda asperiores
+        sequi, voluptatibus numquam ducimus rem architecto fuga consectetur
+        accusamus eligendi. Consectetur, voluptates itaque. Lorem ipsum dolor,
+        sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae
+        optio veritatis delectus assumenda asperiores sequi, voluptatibus
+        numquam ducimus rem architecto fuga consectetur accusamus eligendi.
+        Consectetur, voluptates itaque. Lorem ipsum dolor, sit amet consectetur
+        adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis
+        delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem
+        architecto fuga consectetur accusamus eligendi. Consectetur, voluptates
+        itaque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste
+        dolorem incidunt repudiandae optio veritatis delectus assumenda
+        asperiores sequi, voluptatibus numquam ducimus rem architecto fuga
+        consectetur accusamus eligendi. Consectetur, voluptates itaque. Lorem
+        ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem
+        incidunt repudiandae optio veritatis delectus assumenda asperiores
+        sequi, voluptatibus numquam ducimus rem architecto fuga consectetur
+        accusamus eligendi. Consectetur, voluptates itaque. Lorem ipsum dolor,
+        sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae
+        optio veritatis delectus assumenda asperiores sequi, voluptatibus
+        numquam ducimus rem architecto fuga consectetur accusamus eligendi.
+        Consectetur, voluptates itaque. Lorem ipsum dolor, sit amet consectetur
+        adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis
+        delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem
+        architecto fuga consectetur accusamus eligendi. Consectetur, voluptates
+        itaque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste
+        dolorem incidunt repudiandae optio veritatis delectus assumenda
+        asperiores sequi, voluptatibus numquam ducimus rem architecto fuga
+        consectetur accusamus eligendi. Consectetur, voluptates itaque. Lorem
+        ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem
+        incidunt repudiandae optio veritatis delectus assumenda asperiores
+        sequi, voluptatibus numquam ducimus rem architecto fuga consectetur
+        accusamus eligendi. Consectetur, voluptates itaque.
       </div>
       <div className={clsx(styles["job-card-details-btn-wrapper"])}>
-        <Button onClick={() => navigate(`/job/${id}`)}>View Details</Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate(`/job/${id}`)}
+          sx={{
+            padding: "0.7rem",
+            borderRadius: "20px",
+            background: "#232758",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#232758c7",
+
+              borderColor: "#0062cc",
+              boxShadow: "none",
+            },
+          }}
+        >
+          View Details
+        </Button>
       </div>
     </div>
   );

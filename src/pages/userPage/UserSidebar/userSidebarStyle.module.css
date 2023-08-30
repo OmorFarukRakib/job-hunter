@@ -1,19 +1,22 @@
 .userSidebar-wrapper {
     /* overflow-y: hidden; */
     /* overflow-x: hidden; */
-    height: 90vh;
-
+    height: 100vh;
+background-color: #1E1F22;
     /* padding-bottom: 4vh; */
 
 }
 
 .user-logo-wrapper {
     display: flex;
-    justify-items: center;
-    margin-bottom: 2rem;
+        justify-items: center;
+        justify-content: center;
+        background-color: #313338;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
 }
 
-.user-logo-wrapper>img {
+.user-logo-wrapper > img {
     width: 200px;
     height: auto;
 }

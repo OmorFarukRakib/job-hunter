@@ -1,7 +1,18 @@
+/* #F8974A #643393 #232758 */
+
 .custom-modal {
   max-width: 800px;
   /* Adjust the max-width value according to your needs */
   margin: 2rem auto;
+ 
+  
+  /* Center the modal horizontally */
+}
+.custom-modal-login {
+  max-width: 650px;
+  /* Adjust the max-width value according to your needs */
+  margin: 2rem auto;
+ 
   
   /* Center the modal horizontally */
 }
@@ -16,9 +27,13 @@
     /* Center the modal horizontally */
 }
 .custom-modal-for-companyDetails{
-    max-width: 80vw;
+    max-width: 60vw;
     /* Adjust the max-width value according to your needs */
     /* margin: 0 auto; */
+    display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     max-height: 80vh;
     overflow: hidden;
     /* Center the modal horizontally */

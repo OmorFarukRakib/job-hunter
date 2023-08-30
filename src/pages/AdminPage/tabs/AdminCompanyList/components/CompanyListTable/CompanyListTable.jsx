@@ -250,7 +250,7 @@ export default function CompanyListTable() {
                               <div className={styles["statusColumn-wrapper"]}>
                                 <StatusDiv statusType={value} />
                                 <CompanyStatusChangeOpt
-                                  companyID={row['companyName']}
+                                  companyID={row["companyName"]}
                                   currentStatus={value}
                                 />
                               </div>
@@ -273,8 +273,18 @@ export default function CompanyListTable() {
                           }}
                         >
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={() => openCompanyDetailsModalHandler(row)}
+                            sx={{
+                              background: "#F6953F",
+                              color: "white",
+                              "&:hover": {
+                                backgroundColor: "#f6943fbc",
+
+                                borderColor: "#0062cc",
+                                boxShadow: "none",
+                              },
+                            }}
                           >
                             Details
                           </Button>

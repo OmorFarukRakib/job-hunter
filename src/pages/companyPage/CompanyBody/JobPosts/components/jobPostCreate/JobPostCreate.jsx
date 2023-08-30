@@ -33,13 +33,25 @@ const JobPostCreate = () => {
         variant="contained"
         size="large"
         onClick={() => setJobPostCreateModalShow(true)}
+        sx={{
+          padding: "0.7rem",
+          borderRadius: "20px",
+          background: "#F6953F",
+          color: "white",
+          "&:hover": {
+            backgroundColor: "#f6943fbc",
+
+            borderColor: "#0062cc",
+            boxShadow: "none",
+          },
+        }}
       >
         Add a new Job Circular
       </Button>
       <JobPostFormModal
         show={jobPostCreateModalShow}
         onHide={() => setJobPostCreateModalShow(false)}
-        formData = {null}
+        formData={null}
       />
     </div>
   );

@@ -16,6 +16,8 @@ import { Button } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "react-phone-number-input/style.css";
+import TermAndConditions from "../../../../TermsAndConditions/TermAndConditions";
+import { useState } from "react";
 
 const validationSchema = Yup.object({
   companyName: Yup.string()
@@ -71,6 +73,8 @@ const companySizeOptions = [
 ];
 
 const CompanyRegistrationForm = () => {
+  const [openTermsAndConditions, setOpenTermsAndConditions] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       companyName: "",
@@ -94,25 +98,33 @@ const CompanyRegistrationForm = () => {
       //   formik.resetForm();
     },
   });
+  const handleOpenTermsAndConditions = () => {
+    setOpenTermsAndConditions(true);
+  };
   // const customtextFieldComp = <TextField fullWidth id="contactPhone" />;
   return (
-    <FormControl
-      className={clsx(styles["employeeRegistrationForm-control"])}
-      component="form"
-      onSubmit={formik.handleSubmit}
-      fullWidth
-    >
-      <TextField
-        fullWidth
-        label="Company Name"
-        id="companyName"
-        value={formik.values.companyName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.companyName && !!formik.errors.companyName}
-        helperText={formik.touched.companyName && formik.errors.companyName}
+    <>
+      <TermAndConditions
+        show={openTermsAndConditions}
+        onHide={() => setOpenTermsAndConditions(false)}
       />
-      {/* <TextField
+      <FormControl
+        className={clsx(styles["employeeRegistrationForm-control"])}
+        component="form"
+        onSubmit={formik.handleSubmit}
+        fullWidth
+      >
+        <TextField
+          fullWidth
+          label="Company Name"
+          id="companyName"
+          value={formik.values.companyName}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.companyName && !!formik.errors.companyName}
+          helperText={formik.touched.companyName && formik.errors.companyName}
+        />
+        {/* <TextField
         select
         fullWidth
         label="Industry"
@@ -122,33 +134,33 @@ const CompanyRegistrationForm = () => {
         value={formik.values.industry}
         error={formik.touched.industry && !!formik.errors.industry}
         helperText={formik.touched.industry && formik.errors.industry}
-      >
+        >
         {industryOptions.map((option) => (
           <MenuItem key={option.value} value={option.value}>
-            {option.label}
+          {option.label}
           </MenuItem>
-        ))}
-      </TextField> */}
-      <FormControl fullWidth>
-        <InputLabel id="industry-label">Industry</InputLabel>
-        <Select
-          labelId="Industry"
-          multiline
-          label="Industry"
-          id="industry"
-          name="industry"
-          value={formik.values.industry}
-          onChange={formik.handleChange}
-          error={formik.touched.industry && Boolean(formik.errors.industry)}
-        >
-          {industryOptions.map((category) => (
-            <MenuItem key={category.value} value={category.value}>
-              {category.label}
-            </MenuItem>
           ))}
-        </Select>
-      </FormControl>
-      {/* <TextField
+        </TextField> */}
+        <FormControl fullWidth>
+          <InputLabel id="industry-label">Industry</InputLabel>
+          <Select
+            labelId="Industry"
+            multiline
+            label="Industry"
+            id="industry"
+            name="industry"
+            value={formik.values.industry}
+            onChange={formik.handleChange}
+            error={formik.touched.industry && Boolean(formik.errors.industry)}
+          >
+            {industryOptions.map((category) => (
+              <MenuItem key={category.value} value={category.value}>
+                {category.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* <TextField
         fullWidth
         label="Industry"
         id="industry"
@@ -158,173 +170,204 @@ const CompanyRegistrationForm = () => {
         error={formik.touched.industry && !!formik.errors.industry}
         helperText={formik.touched.industry && formik.errors.industry}
       /> */}
-      <TextField
-        fullWidth
-        label="Company Description"
-        multiline
-        rows={10}
-        id="companyDescription"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.companyDescription}
-        error={
-          formik.touched.companyDescription &&
-          !!formik.errors.companyDescription
-        }
-        helperText={
-          formik.touched.companyDescription && formik.errors.companyDescription
-        }
-      />
-      <FormControl fullWidth>
-        <InputLabel id="company-label">Company Size</InputLabel>
-        <Select
-          labelId="Company Size"
-          label="Company Size"
-          id="companySize"
-          name="companySize"
+        <TextField
+          fullWidth
+          label="Company Description"
+          multiline
+          rows={10}
+          id="companyDescription"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.companySize}
+          value={formik.values.companyDescription}
           error={
-            formik.touched.companySize && Boolean(formik.errors.companySize)
+            formik.touched.companyDescription &&
+            !!formik.errors.companyDescription
           }
-          helperText={formik.touched.companySize && formik.errors.companySize}
-        >
-          {companySizeOptions.map((category) => (
-            <MenuItem key={category.value} value={category.value}>
-              {category.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <TextField
-        fullWidth
-        label="Company Address"
-        id="companyAddress"
-        multiline
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.companyAddress}
-        error={formik.touched.companyAddress && !!formik.errors.companyAddress}
-        helperText={
-          formik.touched.companyAddress && formik.errors.companyAddress
-        }
-      />
-      <TextField
-        fullWidth
-        label="Company Website"
-        multiline
-        id="companyWebsite"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.companyWebsite}
-        error={formik.touched.companyWebsite && !!formik.errors.companyWebsite}
-        helperText={
-          formik.touched.companyWebsite && formik.errors.companyWebsite
-        }
-      />
+          helperText={
+            formik.touched.companyDescription &&
+            formik.errors.companyDescription
+          }
+        />
+        <FormControl fullWidth>
+          <InputLabel id="company-label">Company Size</InputLabel>
+          <Select
+            labelId="Company Size"
+            label="Company Size"
+            id="companySize"
+            name="companySize"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.companySize}
+            error={
+              formik.touched.companySize && Boolean(formik.errors.companySize)
+            }
+            helperText={formik.touched.companySize && formik.errors.companySize}
+          >
+            {companySizeOptions.map((category) => (
+              <MenuItem key={category.value} value={category.value}>
+                {category.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField
+          fullWidth
+          label="Company Address"
+          id="companyAddress"
+          multiline
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.companyAddress}
+          error={
+            formik.touched.companyAddress && !!formik.errors.companyAddress
+          }
+          helperText={
+            formik.touched.companyAddress && formik.errors.companyAddress
+          }
+        />
+        <TextField
+          fullWidth
+          label="Company Website"
+          multiline
+          id="companyWebsite"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.companyWebsite}
+          error={
+            formik.touched.companyWebsite && !!formik.errors.companyWebsite
+          }
+          helperText={
+            formik.touched.companyWebsite && formik.errors.companyWebsite
+          }
+        />
 
-      <TextField
-        fullWidth
-        label="Contact Person Name"
-        id="contactPersonName"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.contactPersonName}
-        error={
-          formik.touched.contactPersonName && !!formik.errors.contactPersonName
-        }
-        helperText={
-          formik.touched.contactPersonName && formik.errors.contactPersonName
-        }
-      />
-      <TextField
-        fullWidth
-        label="Contact Email"
-        id="contactEmail"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <EmailIcon />
-            </InputAdornment>
-          ),
-        }}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.contactEmail}
-        error={formik.touched.contactEmail && !!formik.errors.contactEmail}
-        helperText={formik.touched.contactEmail && formik.errors.contactEmail}
-      />
-      {/* <PhoneInput
+        <TextField
+          fullWidth
+          label="Contact Person Name"
+          id="contactPersonName"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.contactPersonName}
+          error={
+            formik.touched.contactPersonName &&
+            !!formik.errors.contactPersonName
+          }
+          helperText={
+            formik.touched.contactPersonName && formik.errors.contactPersonName
+          }
+        />
+        <TextField
+          fullWidth
+          label="Contact Email"
+          id="contactEmail"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.contactEmail}
+          error={formik.touched.contactEmail && !!formik.errors.contactEmail}
+          helperText={formik.touched.contactEmail && formik.errors.contactEmail}
+        />
+        {/* <PhoneInput
         id="contactPhone"
         placeholder="Enter phone number"
         // value={formik.values.contactPhone}
         // onChange={formik.handleChange}
         // error={formik.touched.contactPhone && !!formik.errors.contactPhone}
       /> */}
-      <TextField
-        fullWidth
-        label="Contact Phone"
-        id="contactPhone"
-        type="number"
-        // inputProps={{
-        //   pattern: "[0-9]{3}-[0-9]{3}-[0-9]{4}",
-        //   title: "Phone number format: XXX-XXX-XXXX",
-        // }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <PhoneIcon />
-            </InputAdornment>
-          ),
-        }}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.contactPhone}
-        error={formik.touched.contactPhone && !!formik.errors.contactPhone}
-        helperText={formik.touched.contactPhone && formik.errors.contactPhone}
-      />
+        <TextField
+          fullWidth
+          label="Contact Phone"
+          id="contactPhone"
+          type="number"
+          // inputProps={{
+          //   pattern: "[0-9]{3}-[0-9]{3}-[0-9]{4}",
+          //   title: "Phone number format: XXX-XXX-XXXX",
+          // }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PhoneIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.contactPhone}
+          error={formik.touched.contactPhone && !!formik.errors.contactPhone}
+          helperText={formik.touched.contactPhone && formik.errors.contactPhone}
+        />
 
-      <TextField
-        fullWidth
-        type="password"
-        label="Password"
-        id="password"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-        error={formik.touched.password && !!formik.errors.password}
-        helperText={formik.touched.password && formik.errors.password}
-      />
-      <TextField
-        fullWidth
-        label="ConfirmPassword"
-        type="password"
-        id="confirmPassword"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.confirmPassword}
-        error={
-          formik.touched.confirmPassword && !!formik.errors.confirmPassword
-        }
-        helperText={
-          formik.touched.confirmPassword && formik.errors.confirmPassword
-        }
-      />
-      <FormControlLabel
-        required
-        control={<Checkbox />}
-        label="I have read and agree to the terms"
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        fullWidth
-        disabled={formik.isSubmitting}
-      >
-        Sign up
-      </Button>
-    </FormControl>
+        <TextField
+          fullWidth
+          type="password"
+          label="Password"
+          id="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
+          error={formik.touched.password && !!formik.errors.password}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <TextField
+          fullWidth
+          label="ConfirmPassword"
+          type="password"
+          id="confirmPassword"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.confirmPassword}
+          error={
+            formik.touched.confirmPassword && !!formik.errors.confirmPassword
+          }
+          helperText={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+          }
+        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <FormControlLabel
+            required
+            control={<Checkbox />}
+            label="I have read and agree to the terms"
+          />
+          <div
+            style={{
+              textDecoration: "underline",
+              color: "#643393",
+              cursor: "pointer",
+            }}
+            onClick={handleOpenTermsAndConditions}
+          >
+            show terms & conditions
+          </div>
+        </div>
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          disabled={formik.isSubmitting}
+          sx={{
+            padding: "0.7rem",
+            borderRadius: "20px",
+            background: "#F6953F",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#f6943fbc",
+
+              borderColor: "#0062cc",
+              boxShadow: "none",
+            },
+          }}
+        >
+          Sign up
+        </Button>
+      </FormControl>
+    </>
   );
 };
 

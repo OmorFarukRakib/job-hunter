@@ -190,8 +190,19 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                           }}
                         >
                           <Button
-                            variant="outlined"
+                            color="inherit"
+                            variant="contained"
                             onClick={() => openUserDetailsModalHandler(row)}
+                            sx={{
+                              background: "#F6953F",
+                              color: "white",
+                              "&:hover": {
+                                backgroundColor: "#f6943fbc",
+
+                                borderColor: "#0062cc",
+                                boxShadow: "none",
+                              },
+                            }}
                           >
                             Details
                           </Button>

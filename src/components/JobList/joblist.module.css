@@ -1,7 +1,9 @@
 .job-list-wrapper{
+    margin-right: 3rem;
+    margin-left: 3rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    grid-gap: 5rem;
+    grid-gap: 1rem;
     justify-content: center;
     justify-items: center;
     align-items: center;

@@ -37,7 +37,7 @@ function UserDeleteModal({ show, onHide, userID }) {
         Note: This can not be undone.
       </Modal.Body>
       <Modal.Footer style={{ display: "flex", justifyContent: "space-evenly" }}>
-        <Button color="error" variant="outlined" onClick={() => onHide()}>
+        <Button color="error" variant="contained" onClick={() => onHide()}>
           DELETE
         </Button>
         <Button variant="outlined" onClick={() => onHide()}>

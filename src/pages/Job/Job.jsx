@@ -24,7 +24,7 @@ const Job = () => {
     }
   };
   return (
-    <>
+    <div className={clsx(styles["page-wrapper"])}>
       <JobApplyModal show={showJobApplyModal} onHide={setShowJobApplyModal} />
       <SigninModal show={showSignInModal} onHide={setShowSignInModal} />
       <div className={clsx(styles["job-page-wrapper"])}>
@@ -39,8 +39,39 @@ const Job = () => {
             Application deadline- 20-20-25
           </div>
           <div className={clsx(styles["job-ad-apply-btn-wrapper"])}>
-            <Button variant="contained">Apply From Company Site</Button>
-            <Button variant="contained" onClick={handleApplyJobFromJobSpace}>
+            <Button
+              variant="contained"
+              sx={{
+                padding: "0.7rem",
+                borderRadius: "20px",
+                background: "#F6953F",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#f6943fbc",
+
+                  borderColor: "#0062cc",
+                  boxShadow: "none",
+                },
+              }}
+            >
+              Apply From Company Site
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleApplyJobFromJobSpace}
+              sx={{
+                padding: "0.7rem",
+                borderRadius: "20px",
+                background: "#643393",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#653393cf",
+
+                  borderColor: "#0062cc",
+                  boxShadow: "none",
+                },
+              }}
+            >
               Apply From Job-Space
             </Button>
           </div>
@@ -213,7 +244,7 @@ const Job = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

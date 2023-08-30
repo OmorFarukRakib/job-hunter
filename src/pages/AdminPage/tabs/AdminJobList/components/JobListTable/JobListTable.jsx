@@ -206,8 +206,18 @@ export default function JobListTable() {
                           }}
                         >
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             onClick={handleJobDetailsModalOpen}
+                            sx={{
+                              background: "#F6953F",
+                              color: "white",
+                              "&:hover": {
+                                backgroundColor: "#f6943fbc",
+
+                                borderColor: "#0062cc",
+                                boxShadow: "none",
+                              },
+                            }}
                           >
                             Details
                           </Button>

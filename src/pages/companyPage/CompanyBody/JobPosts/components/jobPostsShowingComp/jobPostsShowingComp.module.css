@@ -5,9 +5,16 @@
 }
 
 .jobPostsShowingComp-header{
-    text-align: center;
+text-align: center;
     text-transform: uppercase;
-    background-color: #5a89be5c;
+    background-color: #643393;
+    color: white;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: Tahoma, sans-serif;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
 
 }

@@ -13,22 +13,23 @@ const CompanySidebar = () => {
   const [activeTab, setActiveTab] = React.useState("");
 
   const menuItemStyle = {
-    backgroundColor: "#FBFBFB",
-    color: "black",
-    ":hover": {
-      backgroundColor: "#FBFBFB",
-      color: "#1565C0",
+    // backgroundColor: "#FBFBFB",
+    color: "white",
+    "&:hover": {
+      background: "#313338",
+      color: "black",
     },
   };
 
   const selectedMenuItemStyle = {
-    backgroundColor: "#1565C0",
+    backgroundColor: "#F6953F",
     color: "white",
     "&:hover": {
-      background: "#262424",
-      color: "#1565C0",
+      backgroundColor: "#f6943fbc",
+      color: "black",
     },
   };
+
 
   const handleMenuItemSelect = (tabValue) => {
     // navigate(`?tab=${tabValue}`)

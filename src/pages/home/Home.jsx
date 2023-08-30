@@ -53,7 +53,44 @@ const Home = () => {
         <Lottie animationData={jobMarketGif} loop={true} />
       </div>
       <div>
-        <CustomMUIBtn variant="contained" onClick={() => navigate("/jobs")}>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/jobs")}
+          sx={{
+            padding: "0.7rem",
+            borderRadius: "20px",
+            background: "#F6953F",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#f6943fbc",
+
+              borderColor: "#0062cc",
+              boxShadow: "none",
+            },
+          }}
+        >
+          Find Your Dream Job
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/jobs")}
+          style={{ marginLeft: "2rem" }}
+          sx={{
+            padding: "0.7rem",
+            borderRadius: "20px",
+            background: "#643393",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#653393cf",
+
+              borderColor: "#0062cc",
+              boxShadow: "none",
+            },
+          }}
+        >
+          Post a job circular
+        </Button>
+        {/* <CustomMUIBtn variant="contained" onClick={() => navigate("/jobs")}>
           Find Your Dream Job
         </CustomMUIBtn>
         <CustomMUIBtn
@@ -62,7 +99,7 @@ const Home = () => {
           style={{ marginLeft: "2rem" }}
         >
           Post a job circular
-        </CustomMUIBtn>
+        </CustomMUIBtn> */}
       </div>
     </div>
   );

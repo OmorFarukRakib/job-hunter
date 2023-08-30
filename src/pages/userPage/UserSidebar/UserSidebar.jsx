@@ -13,20 +13,20 @@ const UserSidebar = () => {
   const [activeTab, setActiveTab] = React.useState("job-applied");
 
   const menuItemStyle = {
-    backgroundColor: "#FBFBFB",
-    color: "black",
-    ":hover": {
-      backgroundColor: "#FBFBFB",
-      color: "#1565C0",
+    // backgroundColor: "#FBFBFB",
+    color: "white",
+    "&:hover": {
+      background: "#313338",
+      color: "black",
     },
   };
 
   const selectedMenuItemStyle = {
-    backgroundColor: "#1565C0",
+    backgroundColor: "#F6953F",
     color: "white",
     "&:hover": {
-      background: "#262424",
-      color: "#1565C0",
+      backgroundColor: "#f6943fbc",
+      color: "black",
     },
   };
 
@@ -68,6 +68,10 @@ const UserSidebar = () => {
         {/* <div className={clsx(styles["user-logo-wrapper"])}>
           <img src={companyLogo} alt="companylogo" />
         </div> */}
+        <div className={clsx(styles["user-logo-wrapper"])}>
+          {/* <img src={companyLogo} alt="companylogo" /> */}
+          <h2 style={{ color: "white" }}>User Panel</h2>
+        </div>
         <Menu className={clsx(styles["userSidebar-wrapper"])}>
           {/* <SubMenu label="Job section">
             <MenuItem active={activeItem === 'Home'} onClick={handleMenuItemSelect}> Job posts </MenuItem>

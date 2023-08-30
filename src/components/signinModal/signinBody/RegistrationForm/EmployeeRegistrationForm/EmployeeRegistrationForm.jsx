@@ -8,6 +8,8 @@ import styles from "./employeeRegistrationForm.module.css";
 import { Button } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import TermAndConditions from '../../../../TermsAndConditions/TermAndConditions'
+import { useState } from "react";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -28,6 +30,7 @@ const validationSchema = Yup.object({
 });
 
 const EmployeeRegistrationForm = () => {
+  const [openTermsAndConditions, setOpenTermsAndConditions] = useState(false)
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -45,91 +48,125 @@ const EmployeeRegistrationForm = () => {
       //   formik.resetForm();
     },
   });
+  const handleOpenTermsAndConditions = () => {
+    setOpenTermsAndConditions(true)
+  }
   return (
-    <FormControl
-      className={clsx(styles["employeeRegistrationForm-control"])}
-      component="form"
-      onSubmit={formik.handleSubmit}
-      fullWidth
-    >
-      <TextField
-        fullWidth
-        label="First Name"
-        id="firstName"
-        value={formik.values.firstName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.firstName && !!formik.errors.firstName}
-        helperText={formik.touched.firstName && formik.errors.firstName}
+    <>
+      <TermAndConditions
+        show={openTermsAndConditions}
+        onHide={() => setOpenTermsAndConditions(false)}
       />
-      <TextField
+      <FormControl
+        className={clsx(styles["employeeRegistrationForm-control"])}
+        component="form"
+        onSubmit={formik.handleSubmit}
         fullWidth
-        label="Last Name"
-        id="lastName"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.lastName}
-        error={formik.touched.lastName && !!formik.errors.lastName}
-        helperText={formik.touched.lastName && formik.errors.lastName}
-      />
-      <TextField
-        fullWidth
-        label="Email"
-        id="email"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <EmailIcon />
-            </InputAdornment>
-          ),
-        }}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-        error={formik.touched.email && !!formik.errors.email}
-        helperText={formik.touched.email && formik.errors.email}
-      />
-
-      <TextField
-        fullWidth
-        label="Password"
-        type="password"
-        id="password"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-        error={formik.touched.password && !!formik.errors.password}
-        helperText={formik.touched.password && formik.errors.password}
-      />
-      <TextField
-        fullWidth
-        label="ConfirmPassword"
-        type="password"
-        id="confirmPassword"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.confirmPassword}
-        error={
-          formik.touched.confirmPassword && !!formik.errors.confirmPassword
-        }
-        helperText={
-          formik.touched.confirmPassword && formik.errors.confirmPassword
-        }
-      />
-      <FormControlLabel
-        required
-        control={<Checkbox />}
-        label="I have read and agree to the terms"
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        fullWidth
-        disabled={formik.isSubmitting}
       >
-        Sign up
-      </Button>
-    </FormControl>
+        <TextField
+          fullWidth
+          label="First Name"
+          id="firstName"
+          value={formik.values.firstName}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.firstName && !!formik.errors.firstName}
+          helperText={formik.touched.firstName && formik.errors.firstName}
+        />
+        <TextField
+          fullWidth
+          label="Last Name"
+          id="lastName"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.lastName}
+          error={formik.touched.lastName && !!formik.errors.lastName}
+          helperText={formik.touched.lastName && formik.errors.lastName}
+        />
+        <TextField
+          fullWidth
+          label="Email"
+          id="email"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+          error={formik.touched.email && !!formik.errors.email}
+          helperText={formik.touched.email && formik.errors.email}
+        />
+
+        <TextField
+          fullWidth
+          label="Password"
+          type="password"
+          id="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
+          error={formik.touched.password && !!formik.errors.password}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <TextField
+          fullWidth
+          label="ConfirmPassword"
+          type="password"
+          id="confirmPassword"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.confirmPassword}
+          error={
+            formik.touched.confirmPassword && !!formik.errors.confirmPassword
+          }
+          helperText={
+            formik.touched.confirmPassword && formik.errors.confirmPassword
+          }
+        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <FormControlLabel
+            required
+            control={<Checkbox />}
+            label="I have read and agree to the terms"
+          />
+          <div
+            style={{
+              textDecoration: "underline",
+              color: "#643393",
+              cursor: "pointer",
+            }}
+            onClick={handleOpenTermsAndConditions}
+          >
+            show terms & conditions
+          </div>
+        </div>
+
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          disabled={formik.isSubmitting}
+          sx={{
+            padding: "0.7rem",
+            borderRadius: "20px",
+            background: "#F6953F",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#f6943fbc",
+
+              borderColor: "#0062cc",
+              boxShadow: "none",
+            },
+          }}
+        >
+          Sign up
+        </Button>
+      </FormControl>
+    </>
   );
 };
 

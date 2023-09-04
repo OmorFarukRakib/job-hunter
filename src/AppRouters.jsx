@@ -8,10 +8,14 @@ import Job from "./pages/Job/Job";
 import UserPage from "./pages/userPage/UserPage";
 import CompanyPage from "./pages/companyPage/CompanyPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import VerifyRegistratiob from "./pages/VerifyRegistration/VerifyRegistration";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 const AppRouters = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/verify_registration" element={<VerifyRegistratiob />} />
+      <Route path="/forgot_password" element={<ForgotPassword />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/jobs" element={<Jobs />} />

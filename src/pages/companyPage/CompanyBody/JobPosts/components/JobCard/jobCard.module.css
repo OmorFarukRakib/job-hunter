@@ -43,3 +43,39 @@ flex-wrap: wrap;
     justify-content: center;
     margin-top: 1.5rem;
 }
+
+.newJobCard-wrapper{
+    /* font-family: ; */
+    /* height: 6rem; */
+    height: fit-content;
+    background-color: #F3F3F3;
+    width: 95%;
+    min-width: 900px;
+    border-radius: 20px;
+    padding: 1rem;
+    box-shadow: 6px 9px 9px -12px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 6px 9px 9px -12px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 6px 9px 9px -12px rgba(0, 0, 0, 0.75);
+        display: flex;
+        justify-content: space-around;
+        gap: 2rem;
+        font-size: 0.9em;
+}
+.newJobCard-items-wrapper{
+    /* word-break: break-all; */
+    /* background-color: ; */
+    max-width: 15rem;
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.newJobCard-item{
+    /* min-width: 100%; */
+    /* justify-self: center;
+    align-items: center; */
+}
+.newJobCard-item-title{
+    font-weight: 600;
+}

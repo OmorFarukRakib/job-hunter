@@ -6,3 +6,16 @@
     padding-right: 3rem;
     
 }
+
+.forgot_password_text{
+    text-align: right;
+    cursor: pointer;
+    color: blue;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: 1rem;
+
+}
+.forgot_password_text:hover{
+    color: rgba(0, 0, 255, 0.564);
+}

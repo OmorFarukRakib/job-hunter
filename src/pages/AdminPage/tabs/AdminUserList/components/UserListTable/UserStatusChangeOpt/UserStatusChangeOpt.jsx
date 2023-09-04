@@ -14,6 +14,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
+import PauseIcon from "@mui/icons-material/Pause";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -96,6 +97,12 @@ export default function CustomizedMenus(props) {
             <ClearIcon />
             Reject
           </MenuItem>
+          <Divider sx={{ my: 0.5 }} />
+
+          <MenuItem onClick={() => changeStatus("pending")} disableRipple>
+            <PauseIcon />
+            Pending
+          </MenuItem>
         </div>
       );
     } else if (currentStatus === "rejected") {
@@ -104,6 +111,12 @@ export default function CustomizedMenus(props) {
           <MenuItem onClick={() => changeStatus("active")} disableRipple>
             <CheckIcon />
             Accept
+          </MenuItem>
+          <Divider sx={{ my: 0.5 }} />
+
+          <MenuItem onClick={() => changeStatus("pending")} disableRipple>
+            <PauseIcon />
+            Pending
           </MenuItem>
         </div>
       );

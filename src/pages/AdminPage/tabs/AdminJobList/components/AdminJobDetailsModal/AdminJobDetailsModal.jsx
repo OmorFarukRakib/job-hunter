@@ -65,7 +65,7 @@ const [showJobApplicantShortListedModal, setShowJobApplicantShortListedModal] =
         <Modal.Body>
           <div className={clsx(styles["job-page-wrapper"])}>
             <div className={clsx(styles["job-ad-wrapper"])}>
-              <h1 style={{ textAlign: "center" }}>
+              <h1 style={{ textAlign: "center", marginTop: '2rem' }}>
                 Job Title - Software Developer
               </h1>
               <div className={clsx(styles["jobDetailsOptionBtn-wrapper"])}>

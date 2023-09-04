@@ -73,9 +73,21 @@ const Job = ({ jobID }) => {
       />
       <div className={clsx(styles["job-page-wrapper"])}>
         <div className={clsx(styles["job-ad-wrapper"])}>
-          <p style={{ textAlign: "center", color: "rgba(0, 0, 0, 0.419)" }}>
+          <div
+            style={{
+              color: '#232758',
+              // color: "white",
+              fontWeight: '500',
+              display: 'flex',
+              justifyContent: 'center',
+              justifyItems: 'center',
+              // width: '100%',
+              // textAlign: "center",
+              marginTop: "2.5rem",
+            }}
+          >
             This is how your Job Ad will be shown to everyone
-          </p>
+          </div>
           <h1 style={{ textAlign: "center" }}>
             Job Title - Software Developer - {jobID}
           </h1>

@@ -56,7 +56,10 @@ const Job = ({ jobID }) => {
       /> */}
       <div className={clsx(styles["job-page-wrapper"])}>
         <div className={clsx(styles["job-ad-wrapper"])}>
-          <p style={{ textAlign: "center", color: "rgba(0, 0, 0, 0.419)" }}>
+          <p
+            style={{ textAlign: "center", color: "#232758" }}
+           
+          >
             You have already applied to this Job
           </p>
           <h1 style={{ textAlign: "center" }}>

@@ -17,6 +17,10 @@ const validationSchema = Yup.object({
 
 const LoginForm = (props) => {
   const navigate = useNavigate();
+  const gotToForgotPasswordPage = () => {
+    props.modalHideFun();
+    navigate('/forgot_password')
+  }
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -83,6 +87,7 @@ const LoginForm = (props) => {
         helperText={formik.touched.password && formik.errors.password}
       />
       <br />
+      <div className={styles["forgot_password_text"]} onClick={gotToForgotPasswordPage}>Forgot password?</div>
       <Button
         type="submit"
         variant="contained"

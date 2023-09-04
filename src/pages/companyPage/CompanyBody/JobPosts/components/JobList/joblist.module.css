@@ -1,4 +1,16 @@
 .job-list-wrapper{
+    /* width: 100%; */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1.5rem;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 4rem;
+    /* background-color: white; */
+}
+/* .job-list-wrapper{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     grid-gap: 0.5rem;
@@ -7,5 +19,5 @@
     align-items: center;
     align-content: center;
     margin-bottom: 4rem;
-    /* background-color: white; */
-}
+   
+} */

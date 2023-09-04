@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     /* background-color: red; */
-    margin: 2rem 10rem;
+    margin: 0.5rem 10rem;
 }
 @media (max-width: 900px) {
 
@@ -44,9 +44,10 @@
 }
 .job-ad-description-wrapper{
     padding: 1rem;
-    height: 70vh;
+    height: 55vh;
     overflow: auto;
     text-align: start;
+    padding-bottom: 2rem;
 }
 
 .job-ad-tags-wrapper{

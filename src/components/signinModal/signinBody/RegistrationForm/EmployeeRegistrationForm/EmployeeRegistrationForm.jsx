@@ -1,4 +1,5 @@
 import { TextField, InputAdornment } from "@mui/material";
+import axios from "axios";
 import EmailIcon from "@mui/icons-material/Email";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl } from "@mui/material";
@@ -23,7 +24,7 @@ const validationSchema = Yup.object({
     .max(50, "Last name can not be longer than 50 letters"),
   password: Yup.string()
     .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
+    .min(6, "Password must be at least 8 characters"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
@@ -40,10 +41,25 @@ const EmployeeRegistrationForm = () => {
       confirmPassword: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: async (values, { setSubmitting }) => {
       console.log("ok");
       console.log(JSON.stringify(values, null, 2));
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      try {
+        // Make an Axios POST request with the form data
+        const response = await axios.post(
+          "https://api.example.com/submit",
+          values
+        );
+
+        // Handle the response as needed
+        console.log("Response:", response.data);
+
+        // You can also perform other actions, such as navigating to a new page
+      } catch (error) {
+        // Handle errors here
+        console.error("Error:", error);
+      }
       setSubmitting(false);
       //   formik.resetForm();
     },

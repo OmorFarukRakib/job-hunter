@@ -102,6 +102,16 @@ function CompanyInfoEditModal(props) {
       phoneNumber: props.companyData.phoneNumber,
     });
   }, [props]);
+  useEffect(() => {
+    setErrorMsg({
+      ...setErrorMsg,
+      companyInfoChangeErrorMsg: "",
+    });
+    setSuccessMsg({
+      ...successMsg,
+      companyInfoChangeSuccessMsg: "",
+    });
+  }, [props.show]);
   const handleCompanyFormDataChange = (e) => {
     const { name, value } = e.target;
     setCompanyFormData({

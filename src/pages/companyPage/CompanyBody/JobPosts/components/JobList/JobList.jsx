@@ -10,6 +10,7 @@ import RiseLoader from "react-spinners/RiseLoader";
 const JobList = () => {
   const [jobs, setJobs] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   const [allJobsList, setAllJobsList] = useState([]);
+  const [fetchAgain, setFetchAgain] = useState(1)
   const [isLoading, setLoading] = useState(true);
   const fetchAllJobsList = async () => {
     setLoading(true);
@@ -39,7 +40,7 @@ const JobList = () => {
   };
   useEffect(() => {
     fetchAllJobsList();
-  }, []);
+  }, [fetchAgain]);
   return (
     <>
       {isLoading === true ? (
@@ -57,7 +58,13 @@ const JobList = () => {
           )}
           <div className={styles["job-list-wrapper"]}>
             {allJobsList.map((job) => {
-              return <NewJobCard job={job} key={job.jobID} />;
+              return (
+                <NewJobCard
+                  job={job}
+                  key={job.jobID}
+                  setFetchAgain={setFetchAgain}
+                />
+              );
             })}
             {/* {jobs.map((job , indx) => {
         return <JobCard id={job}/>;

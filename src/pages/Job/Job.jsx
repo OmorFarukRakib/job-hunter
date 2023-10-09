@@ -16,7 +16,9 @@ const Job = () => {
   const [showJobApplyModal, setShowJobApplyModal] = useState(false);
   const { jobID } = useParams();
   const handleApplyJobFromJobSpace = () => {
-    if (localStorage.getItem("authToken") === "userToken") {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"))
+    // setShowJobApplyModal(true);
+    if (localStorage.getItem("JS_userData")) {
       setShowJobApplyModal(true);
     } else {
       setShowSignInModal(true);

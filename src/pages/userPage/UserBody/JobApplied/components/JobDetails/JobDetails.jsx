@@ -78,7 +78,7 @@ const Job = ({ jobID }) => {
             <Button variant="contained" disabled>
               Apply From Company Site
             </Button>
-            <Button variant="contained" disabled>
+            <Button variant="contained" >
               Apply From Job-hunter
             </Button>
           </div>

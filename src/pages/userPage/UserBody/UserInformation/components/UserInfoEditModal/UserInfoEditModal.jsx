@@ -13,7 +13,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import Checkbox from "@mui/material/Checkbox";
 import clsx from "clsx";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./userInfoEditModal.module.css";
@@ -23,38 +23,8 @@ import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { useEffect } from "react";
-
-
-
-const validationSchema = Yup.object({
-  userName: Yup.string()
-    .required("user name is required")
-    .max(50, "First name can not be longer than 50 letters"),
-  // industry: Yup.string()
-  //   .required("Last name is required")
-  //   .max(50, "Industry name can not be longer than 50 letters"),
-  userWebsite: Yup.string()
-    .required("Last name is required")
-    .max(50, "Last name can not be longer than 50 letters"),
-  userAddress: Yup.string()
-    .required("Last name is required")
-    .max(100, "Last name can not be longer than 100 letters"),
-  contactPhone: Yup.string()
-    .required("Last name is required")
-    .max(16, "phone number is too big"),
-  userDescription: Yup.string()
-    .required("Last name is required")
-    .max(10000, "Last name can not be longer than 10000 letters"),
-  userSize: Yup.string()
-    .required("Last name is required")
-    .max(10000, "Last name can not be longer than 10000 letters"),
-  contactPersonName: Yup.string()
-    .required("Last name is required")
-    .max(50, "Last name can not be longer than 50 letters"),
-  contactEmail: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-});
+import axios from "axios";
+import apiConfig from "../../../../../../apiConfig";
 
 const industryOptions = [
   { value: "option1", label: "Technology" },
@@ -96,8 +66,6 @@ const skills = [
   "MuleSoft",
 ];
 
-
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -108,51 +76,106 @@ function getStyles(name, personName, theme) {
 }
 
 const UserInfoEditModal = (props) => {
-  const [selectedSkillsSet, setSelectedSkillsSet] = useState([]);
-  const handleSkillsSetChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedSkillsSet(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+  const [userFormData, setUserFormData] = useState({});
+
   useEffect(() => {
-setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
-  }, [props])
-  const theme = useTheme();
-  const formik = useFormik({
-    initialValues: {
-      firstName: props.userData.firstName ? props.userData.firstName : "",
-      lastName: props.userData.lastName ? props.userData.lastName : "",
-      // skills: props.userData === null ? [] : props.userData.skills,
-      educationQualification: props.userData.educationQualification
-        ? props.userData.educationQualification
-        : "",
-      interestedIndustry: props.userData.interestedIndustry
-        ? props.userData.interestedIndustry
-        : "",
-      salaryExpectationMin: props.userData.salaryExpectationMin
-        ? props.userData.salaryExpectationMin
-        : "",
-      address: props.userData.address ? props.userData.address : "",
-      email: props.userData.email ? props.userData.email : "",
-      phoneNumber: props.userData.phoneNumber ? props.userData.phoneNumber : "",
-      // password: props.userData.password ? props.userData.password : "",
-      // confirmPassword: props.userData.confirmPassword
-      //   ? props.userData.confirmPassword
-      //   : "",
-    },
-    // validationSchema: validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      console.log("ok");
-      console.log(JSON.stringify(values, null, 2));
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-      //   formik.resetForm();
-    },
+    setUserFormData({
+      firstName: props.userData.firstName,
+      lastname: props.userData.lastname,
+      lastEducationDegree: props.userData.lastEducationDegree,
+      aimedIndustry: props.userData.aimedIndustry,
+      salaryExpMin: props.userData.salaryExpMin,
+      address: props.userData.address,
+      email: props.userData.email,
+      phoneNumber: props.userData.phoneNumber,
+    });
+  }, [props]);
+  useEffect(() => {
+    setErrorMsg({
+      ...setErrorMsg,
+      userInfoChangeErrorMsg: "",
+    });
+    setSuccessMsg({
+      ...successMsg,
+      userInfoChangeSuccessMsg: "",
+    });
+  }, [props.show]);
+  const [isLoading, setIsLoading] = useState({
+    isUserFormDataSubmitting: false,
   });
+  const [errorMsg, setErrorMsg] = useState({
+    userInfoChangeErrorMsg: "",
+  });
+  const [successMsg, setSuccessMsg] = useState({
+    userInfoChangeSuccessMsg: "",
+  });
+  const handleUserFormDataChange = (e) => {
+    const { name, value } = e.target;
+    setUserFormData({
+      ...userFormData,
+      [name]: value,
+    });
+  };
+
+  const handleUserFormSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading({
+      ...isLoading,
+      isUserFormDataSubmitting: true,
+    });
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    try {
+      const response = await axios({
+        method: "PUT",
+        url: apiConfig.baseURL + apiConfig.employee.updateInfo,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "string",
+          userType: "string",
+          // userId: userData.data.userID,
+          // userType: userData.data.userType,
+          firstName: userFormData.firstName,
+          lastname: userFormData.lastname,
+          lastEducationDegree: userFormData.lastEducationDegree,
+          aimedIndustry: userFormData.aimedIndustry,
+          salaryExpMin: userFormData.salaryExpMin,
+          address: userFormData.address,
+          email: userFormData.email,
+          phoneNumber: userFormData.phoneNumber,
+        },
+      });
+      console.log("user info change api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setSuccessMsg({
+          ...successMsg,
+          userInfoChangeSuccessMsg: "User Information has been changed!",
+        });
+        props.setFetchAgainFlag((prev) => prev + 1);
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          userInfoChangeErrorMsg:
+            "Could not Change the current information. Please Try Again Later!",
+        });
+      }
+    } catch (error) {
+      console.log("error from catch", error);
+      setErrorMsg({
+        ...errorMsg,
+        userInfoChangeErrorMsg: "Something Went Wrong! Please Try Again Later!",
+      });
+    }
+    setIsLoading({
+      ...isLoading,
+      isUserFormDataSubmitting: false,
+    });
+  };
+
   return (
     <Modal
       {...props}
@@ -174,30 +197,26 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
         <FormControl
           className={clsx(styles["userInfoEditModal-control"])}
           component="form"
-          onSubmit={formik.handleSubmit}
+          onSubmit={handleUserFormSubmit}
           fullWidth
         >
           <TextField
             fullWidth
             label="First Name"
             id="firstName"
-            value={formik.values.firstName}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.firstName && !!formik.errors.firstName}
-            helperText={formik.touched.firstName && formik.errors.firstName}
+            name="firstName"
+            value={userFormData.firstName}
+            onChange={handleUserFormDataChange}
           />
           <TextField
             fullWidth
             label="Last Name"
-            id="lastName"
-            value={formik.values.lastName}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.lastName && !!formik.errors.lastName}
-            helperText={formik.touched.lastName && formik.errors.lastName}
+            id="lastname"
+            name="lastname"
+            value={userFormData.lastname}
+            onChange={handleUserFormDataChange}
           />
-          <FormControl fullWidth>
+          {/* <FormControl fullWidth>
             <InputLabel id="skills-label">Skills set *</InputLabel>
             <Select
               required
@@ -235,22 +254,22 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
           <TextField
             fullWidth
             label="Education Qualification"
-            id="educationQualification"
-            value={formik.values.educationQualification}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.educationQualification &&
-              !!formik.errors.educationQualification
-            }
-            helperText={
-              formik.touched.educationQualification &&
-              formik.errors.educationQualification
-            }
+            id="lastEducationDegree"
+            name="lastEducationDegree"
+            value={userFormData.lastEducationDegree}
+            onChange={handleUserFormDataChange}
+          />
+          <TextField
+            fullWidth
+            label="Aimed Industry"
+            id="aimedIndustry"
+            name="aimedIndustry"
+            value={userFormData.aimedIndustry}
+            onChange={handleUserFormDataChange}
           />
           {/* <TextField
         select
@@ -269,7 +288,7 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
           </MenuItem>
         ))}
       </TextField> */}
-          <FormControl fullWidth>
+          {/* <FormControl fullWidth>
             <InputLabel id="industry-label">Industry</InputLabel>
             <Select
               labelId="Industry"
@@ -290,7 +309,7 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
           {/* <TextField
         fullWidth
         label="Industry"
@@ -305,20 +324,11 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
             fullWidth
             label="Salary Expectation"
             type="number"
-            multiline
             // rows={10}
-            id="salaryExpectationMin"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.salaryExpectationMin}
-            error={
-              formik.touched.salaryExpectationMin &&
-              !!formik.errors.salaryExpectationMin
-            }
-            helperText={
-              formik.touched.salaryExpectationMin &&
-              formik.errors.salaryExpectationMin
-            }
+            id="salaryExpMin"
+            name="salaryExpMin"
+            onChange={handleUserFormDataChange}
+            value={userFormData.salaryExpMin}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
@@ -328,37 +338,30 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
           <TextField
             fullWidth
             label="Address"
-            multiline
             // rows={10}
             id="address"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.address}
-            error={formik.touched.address && !!formik.errors.address}
-            helperText={formik.touched.address && formik.errors.address}
+            name="address"
+            onChange={handleUserFormDataChange}
+            value={userFormData.address}
           />
 
           <TextField
             fullWidth
             label="Email"
             id="email"
-            multiline
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-            error={formik.touched.email && !!formik.errors.email}
-            helperText={formik.touched.email && formik.errors.email}
+            name="email"
+            disabled
+            value={userFormData.email}
+            onChange={handleUserFormDataChange}
           />
           <TextField
             fullWidth
+            type="Number"
             label="Phone Number"
-            multiline
             id="phoneNumber"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.phoneNumber}
-            error={formik.touched.phoneNumber && !!formik.errors.phoneNumber}
-            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+            name="phoneNumber"
+            onChange={handleUserFormDataChange}
+            value={userFormData.phoneNumber}
           />
 
           {/* <TextField
@@ -392,13 +395,25 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
             control={<Checkbox />}
             label="I have read and agree to the terms"
           /> */}
+          {successMsg.userInfoChangeSuccessMsg && (
+            <Typography variant="h7" color="green" align="center">
+              {successMsg.userInfoChangeSuccessMsg}
+            </Typography>
+          )}
+          {errorMsg.userInfoChangeErrorMsg && (
+            <Typography variant="h7" color="red" align="center">
+              {errorMsg.userInfoChangeErrorMsg}
+            </Typography>
+          )}
           <Button
             type="submit"
             variant="contained"
             fullWidth
-            disabled={formik.isSubmitting}
+            disabled={isLoading.isUserFormDataSubmitting}
           >
-            Confirm the Changes
+            {isLoading.isUserFormDataSubmitting === true
+              ? "Please Wait"
+              : "Confirm the Changes"}
           </Button>
         </FormControl>
       </Modal.Body>
@@ -407,6 +422,6 @@ setSelectedSkillsSet(props.userData === null ? [] : props.userData.skills);
       </Modal.Footer> */}
     </Modal>
   );
-}
+};
 
 export default UserInfoEditModal;

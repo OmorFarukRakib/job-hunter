@@ -9,20 +9,20 @@ import UserPassEditModal from "./components/UserPassEditModal/UserPassEditModal"
 
 import axios from "axios";
 import apiConfig from "../../../../apiConfig";
-const userData = {
-  firstName: "Mr Jhon",
-  lastName: "Doe",
-  skills: ["React", "Nodejs", "Mongodb"],
-  educationQualification: "Graduated from EWU in CSE",
-  interestedIndustry: "option1",
-  salaryExpectationMin: "200",
-  address: "221B Baker Street, London",
-  email: "user@gmail.com",
-  phoneNumber: "99999999999",
-};
+// const userData = {
+//   firstName: "Mr Jhon",
+//   lastName: "Doe",
+//   skills: ["React", "Nodejs", "Mongodb"],
+//   educationQualification: "Graduated from EWU in CSE",
+//   interestedIndustry: "option1",
+//   salaryExpectationMin: "200",
+//   address: "221B Baker Street, London",
+//   email: "user@gmail.com",
+//   phoneNumber: "99999999999",
+// };
 
 const UserInformation = () => {
-  const [userData, setUserData] = useState(userData);
+  const [userData, setUserData] = useState({});
   const [fetchAgainFlag, setFetchAgainFlag] = useState(1);
 
   const { userID } = useParams();
@@ -42,20 +42,19 @@ const UserInformation = () => {
     try {
       const response = await axios({
         method: "get",
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        //   "Content-Type": "application/json",
-        // },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
         // url: "https://be.jobspace.org.uk/api/v1/User/getCompanyInfo",
         url:
           apiConfig.baseURL +
-          apiConfig.employee.getInfoByID +
-          `?userID=${userData.data.userID}`,
+          apiConfig.employee.getInfoByToken
       });
       console.log("ata user info response", response);
       const res = response.data;
       if (res.success === true) {
-        setUserData(res.data.employee);
+        setUserData(res.data.user);
       }
     } catch (error) {
       console.log("error in catch");
@@ -65,7 +64,7 @@ const UserInformation = () => {
   useEffect(() => {
     console.log("this is user profile page for user id", userID);
 
-    // fetchUserInfo();
+    fetchUserInfo();
   }, [userID, fetchAgainFlag]);
 
   return (
@@ -74,6 +73,7 @@ const UserInformation = () => {
         show={userInfoEditModalShow}
         onHide={setUserInfoEditModalShow}
         userData={userData}
+        setFetchAgainFlag={setFetchAgainFlag}
       />
       <UserPassEditModal
         show={userPassEditModalShow}
@@ -94,22 +94,21 @@ const UserInformation = () => {
             Last Name
           </div>
           <div className={clsx(styles["userProfile-info-value"])}>
-            {userData.lastName}
+            {userData.lastname}
           </div>
         </div>
-        <div className={clsx(styles["userProfile-Info"])}>
+        {/* <div className={clsx(styles["userProfile-Info"])}>
           <div className={clsx(styles["userProfile-info-title"])}>Skills</div>
           <div className={clsx(styles["userProfile-info-value"])}>
             SKILLS
-            {/* {userData.skills.join(", ")} */}
           </div>
-        </div>
+        </div> */}
         <div className={clsx(styles["userProfile-Info"])}>
           <div className={clsx(styles["userProfile-info-title"])}>
             Last Education Qualification
           </div>
           <div className={clsx(styles["userProfile-info-value"])}>
-            {userData.educationQualification}
+            {userData.lastEducationDegree}
           </div>
         </div>
         <div className={clsx(styles["userProfile-Info"])}>
@@ -117,7 +116,7 @@ const UserInformation = () => {
             Aimed Industry
           </div>
           <div className={clsx(styles["userProfile-info-value"])}>
-            {userData.interestedIndustry}
+            {userData.aimedIndustry}
           </div>
         </div>
         <div className={clsx(styles["userProfile-Info"])}>
@@ -125,7 +124,7 @@ const UserInformation = () => {
             Salary Expectations(min)
           </div>
           <div className={clsx(styles["userProfile-info-value"])}>
-            {userData.salaryExpectationMin}
+            {userData.salaryExpMin}
           </div>
         </div>
         <div className={clsx(styles["userProfile-Info"])}>

@@ -3,10 +3,71 @@ import { Button } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
 import clsx from "clsx";
 import { Typography } from "@mui/material";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import apiConfig from "../../../../../../apiConfig";
 function AddToShortListModal(props) {
-  const handleAddToShortList = () => {
-    props.onHide();
+  // const { applicantData } = props;
+  const [applicantForShortList, setApplicantForShortList] = useState({});
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  function isEmptyObject(obj) {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false; // If at least one property is found, the object is not empty
+      }
+    }
+    return true; // If no properties are found, the object is empty
+  }
+  useEffect(() => {
+    console.log(props.applicantData);
+    if (!isEmptyObject(props.applicantData)) {
+      setApplicantForShortList(props.applicantData);
+    }
+    
+  }, [props]);
+
+  
+  const handleAddToShortList = async () => {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    setIsLoading(true);
+    setErrorMsg("");
+    setSuccessMsg("");
+    try {
+      const response = await axios({
+        method: "GET",
+        url:
+          apiConfig.baseURL +
+          apiConfig.company.getAllApplicantList +
+          `?jobId=${applicantForShortList.jobId}&candidatesId=${applicantForShortList.id}&isShortlisted=${true}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("add to short list api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setSuccessMsg("Successfully added to shortlist");
+        props.setFetchAgain((prev) => prev + 1);
+      } else {
+        setErrorMsg("Something Went Wrong! Please try Again Later!");
+      }
+    } catch (error) {
+      console.log("error from catch", error);
+      setErrorMsg("Something Went Wrong! Please try Again Later!");
+    }
+    setIsLoading(false);
   };
+
+  const handleClose = () => {
+    setErrorMsg("");
+    setSuccessMsg("");
+    props.onHide()
+  }
   return (
     <Modal
       {...props}
@@ -25,19 +86,29 @@ function AddToShortListModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          justifyItems: "center",
-          width: "100%",
-        }}
+      // style={{
+      //   display: "flex",
+      //   justifyContent: "center",
+      //   justifyItems: "center",
+      //   width: "100%",
+      // }}
       >
         <Typography variant="p" component="p">
-          Do you relly wish to short list this applicant?
+          Are you sure to short list this applicant?
           <br />
-          Applicant name: {props.applicantData.firstName}{" "}
-          {props.applicantData.lastName}
+          Applicant name: {applicantForShortList.firstName}{" "}
+          {applicantForShortList.lastName}
         </Typography>
+        {errorMsg.length > 0 && (
+          <Typography variant="h7" color="red" align="">
+            {errorMsg}
+          </Typography>
+        )}
+        {successMsg.length > 0 && (
+          <Typography variant="h7" color="green" align="center">
+            {successMsg}
+          </Typography>
+        )}
       </Modal.Body>
       <Modal.Footer
         style={{
@@ -50,11 +121,12 @@ function AddToShortListModal(props) {
           variant="outlined"
           color="success"
           onClick={handleAddToShortList}
+          disabled={isLoading}
         >
           {" "}
-          Add to Short List
+          {isLoading === true ? "Please Wait" : "Add to Short List"}
         </Button>
-        <Button variant="outlined" onClick={props.onHide}>
+        <Button variant="outlined" onClick={handleClose}>
           Discard
         </Button>
       </Modal.Footer>

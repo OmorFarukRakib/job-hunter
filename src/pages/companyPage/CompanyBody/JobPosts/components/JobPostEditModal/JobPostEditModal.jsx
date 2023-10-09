@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import styles from "./JobPostFormModal.module.css";
+import styles from "./JobPostEditModal.module.css";
 import clsx from "clsx";
 import { Button } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
@@ -74,80 +74,59 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const JobPostFormModal = (props) => {
+const JobPostEditModal = (props) => {
   const [jobAddFormData, setJobAddFormData] = useState({
-    jobID: "",
-    jobType: "",
-    title: "",
-    companyName: "",
-    applicationDeadline: new Date(),
-    industry: "",
-    salaryEstimationStart: 0,
-    salaryEstimationEnd: 0,
-    totalExperienceInYears: 0,
-    skillReq: "",
-    totalHiringNumber: 0,
-    companyDescription: "",
-    jobDescription: "",
-    companyURl: "",
-    companyAddress: "",
-    jobLocation: "",
-    companyEmail: "",
-    companyPhoneNumber: "",
-    companyJobApplyUrl: "",
-    jobPostStatus: "",
+    jobID: props.formData.jobID,
+    jobType: props.formData.jobType,
+    title: props.formData.title,
+    companyName: props.formData.companyName,
+    applicationDeadline: props.formData?.applicationDeadline,
+    industry: props.formData?.industry,
+    salaryEstimationStart: props.formData.salaryEstimationStart,
+    salaryEstimationEnd: props.formData.salaryEstimationEnd,
+    totalExperienceInYears: props.formData.totalExperienceInYears,
+    skillReq: props.formData.skillReq,
+    totalHiringNumber: props.formData.totalHiringNumber,
+    companyDescription: props.formData.companyDescription,
+    jobDescription: props.formData.jobDescription,
+    companyURl: props.formData.companyURl,
+    companyAddress: props.formData.companyAddress,
+    jobLocation: props.formData.jobLocation,
+    companyEmail: props.formData.companyEmail,
+    companyPhoneNumber: props.formData.companyPhoneNumber,
+    companyJobApplyUrl: props.formData.companyJobApplyUrl,
+    jobPostStatus: props.formData.jobPostStatus,
+    jobStatus: props.formData.jobStatus,
+
     // createdAt: "2023-10-08T22:07:41.029Z",
     // updatedAt: "2023-10-08T22:07:41.029Z",
   });
   useEffect(() => {
-    if (props.formData === null) {
-      setJobAddFormData({
-        jobID: "",
-        jobType: "",
-        title: "",
-        companyName: "",
-        applicationDeadline: new Date(),
-        industry: "",
-        salaryEstimationStart: 0,
-        salaryEstimationEnd: 0,
-        totalExperienceInYears: 0,
-        skillReq: "",
-        totalHiringNumber: 0,
-        companyDescription: "",
-        jobDescription: "",
-        companyURl: "",
-        companyAddress: "",
-        jobLocation: "",
-        companyEmail: "",
-        companyPhoneNumber: "",
-        companyJobApplyUrl: "",
-        jobPostStatus: "",
-      });
-    } else {
-      setJobAddFormData({
-        jobID: props.jobID,
-        jobType: props.jobType,
-        title: props.title,
-        companyName: props.companyName,
-        applicationDeadline: props.applicationDeadline,
-        industry: props.industry,
-        salaryEstimationStart: props.salaryEstimationStart,
-        salaryEstimationEnd: props.salaryEstimationEnd,
-        totalExperienceInYears: props.totalExperienceInYears,
-        skillReq: props.skillReq,
-        totalHiringNumber: props.totalHiringNumber,
-        companyDescription: props.companyDescription,
-        jobDescription: props.jobDescription,
-        companyURl: props.companyURl,
-        companyAddress: props.companyAddress,
-        jobLocation: props.jobLocation,
-        companyEmail: props.companyEmail,
-        companyPhoneNumber: props.companyPhoneNumber,
-        companyJobApplyUrl: props.companyJobApplyUrl,
-        jobPostStatus: props.jobPostStatus,
-      });
-    }
+    setJobAddFormData({
+      jobID: props.formData.jobID,
+      jobType: props.formData.jobType,
+      title: props.formData.title,
+      companyName: props.formData.companyName,
+      applicationDeadline: props.formData.applicationDeadline,
+      industry: props.formData.industry,
+      salaryEstimationStart: props.formData.salaryEstimationStart,
+      salaryEstimationEnd: props.formData.salaryEstimationEnd,
+      totalExperienceInYears: props.formData.totalExperienceInYears,
+      skillReq: props.formData.skillReq,
+      totalHiringNumber: props.formData.totalHiringNumber,
+      companyDescription: props.formData.companyDescription,
+      jobDescription: props.formData.jobDescription,
+      companyURl: props.formData.companyURl,
+      companyAddress: props.formData.companyAddress,
+      jobLocation: props.formData.jobLocation,
+      companyEmail: props.formData.companyEmail,
+      companyPhoneNumber: props.formData.companyPhoneNumber,
+      companyJobApplyUrl: props.formData.companyJobApplyUrl,
+      jobPostStatus: props.formData.jobPostStatus,
+      jobStatus: props.formData.jobStatus
+    });
   }, [props]);
+
   const [isLoading, setIsLoading] = useState({
     isFormSubmittingLoading: false,
   });
@@ -200,54 +179,98 @@ const JobPostFormModal = (props) => {
       ...isLoading,
       isFormSubmittingLoading: true,
     });
+
+    const payload = {
+      jobID: jobAddFormData.jobID,
+      jobType: jobAddFormData.jobType,
+      title: jobAddFormData.title,
+      companyName: jobAddFormData.companyName,
+      applicationDeadline: jobAddFormData.applicationDeadline,
+      industry: jobAddFormData.industry,
+      salaryEstimationStart: jobAddFormData.salaryEstimationStart,
+      salaryEstimationEnd: jobAddFormData.salaryEstimationEnd,
+      skillReq: jobAddFormData.skillReq,
+      totalExperienceInYears: jobAddFormData.totalExperienceInYears,
+      totalHiringNumber: jobAddFormData.totalHiringNumber,
+      companyDescription: jobAddFormData.companyDescription,
+      jobDescription: jobAddFormData.jobDescription,
+      companyURl: jobAddFormData.companyURl,
+      companyAddress: jobAddFormData.companyAddress,
+      jobLocation: jobAddFormData.jobLocation,
+      companyEmail: jobAddFormData.companyEmail,
+      companyPhoneNumber: jobAddFormData.companyPhoneNumber,
+      companyJobApplyUrl: jobAddFormData.companyJobApplyUrl,
+      jobStatus: jobAddFormData.jobStatus,
+    };
+    console.log("payload", payload);
     try {
       const response = await axios({
-        method: "POST",
-        url: apiConfig.baseURL + apiConfig.company.jobCreateByCompany,
+        method: "PUT",
+        url: apiConfig.baseURL + apiConfig.company.updateJobDetails,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        data: {
-          // jobID: "",
-          jobType: jobAddFormData.jobType,
-          title: jobAddFormData.title,
-          companyName: jobAddFormData.companyName,
-          applicationDeadline: jobAddFormData.applicationDeadline,
-          industry: jobAddFormData.industry,
-          salaryEstimationStart: jobAddFormData.salaryEstimationStart,
-          salaryEstimationEnd: jobAddFormData.salaryEstimationEnd,
-          totalExperienceInYears: jobAddFormData.totalExperienceInYears,
-          skillReq: jobAddFormData.skillReq,
-          totalHiringNumber: jobAddFormData.totalHiringNumber,
-          companyDescription: jobAddFormData.companyDescription,
-          jobDescription: jobAddFormData.jobDescription,
-          companyURl: jobAddFormData.companyURl,
-          companyAddress: jobAddFormData.companyAddress,
-          jobLocation: jobAddFormData.jobLocation,
-          companyEmail: jobAddFormData.companyEmail,
-          companyPhoneNumber: jobAddFormData.companyPhoneNumber,
-          companyJobApplyUrl: jobAddFormData.companyJobApplyUrl,
-          jobPostStatus: jobAddFormData.jobPostStatus,
-          jobStatus: "Open",
-          // createdAt: "2023-10-08T22:07:41.029Z",
-          // updatedAt: "2023-10-08T22:07:41.029Z",
-        },
+        data: payload,
+        // data: {
+        //   jobID: "1401A14E-B1AF-4170-B972-09D4A781D055",
+        //   jobType: "Part-Time",
+        //   title: "software developer",
+        //   companyName: "Omor Company Ltd",
+        //   applicationDeadline: "2023-10-11T00:00:00",
+        //   industry: "IT",
+        //   salaryEstimationStart: 222,
+        //   salaryEstimationEnd: 2222,
+        //   skillReq: "react, nodejs, python",
+        //   totalExperienceInYears: null,
+        //   totalHiringNumber: 10,
+        //   companyDescription: "asdasd",
+        //   jobDescription: "asdasda",
+        //   companyURl: "asdasd",
+        //   companyAddress: "asdasd",
+        //   jobLocation: "Dhaka",
+        //   companyEmail: "asd@gmail.com",
+        //   companyPhoneNumber: "123123",
+        //   companyJobApplyUrl: "asdasd.com",
+        //   jobStatus: "Open",
+        // },
+        // jobID: "",
+        //   jobID: jobAddFormData.jobID,
+        //   jobType: jobAddFormData.jobType,
+        //   title: jobAddFormData.title,
+        //   companyName: jobAddFormData.companyName,
+        //   applicationDeadline: jobAddFormData.applicationDeadline,
+        //   industry: jobAddFormData.industry,
+        //   salaryEstimationStart: jobAddFormData.salaryEstimationStart,
+        //   salaryEstimationEnd: jobAddFormData.salaryEstimationEnd,
+        //   skillReq: jobAddFormData.skillReq,
+        //   totalExperienceInYears: jobAddFormData.totalExperienceInYears,
+        //   totalHiringNumber: jobAddFormData.totalHiringNumber,
+        //   companyDescription: jobAddFormData.companyDescription,
+        //   jobDescription: jobAddFormData.jobDescription,
+        //   companyURl: jobAddFormData.companyURl,
+        //   companyAddress: jobAddFormData.companyAddress,
+        //   jobLocation: jobAddFormData.jobLocation,
+        //   companyEmail: jobAddFormData.companyEmail,
+        //   companyPhoneNumber: jobAddFormData.companyPhoneNumber,
+        //   companyJobApplyUrl: jobAddFormData.companyJobApplyUrl,
+        //   jobStatus: jobAddFormData.jobStatus,
+        // createdAt: "2023-10-08T22:07:41.029Z",
+        // updatedAt: "2023-10-08T22:07:41.029Z",
       });
       console.log("job add api res", response);
       const res = response.data;
       if (res.success === true) {
         setSuccessMsg({
           ...successMsg,
-          jobAddSuccessMsg:
-            "Successfully added the job! Waiting for adming to approve.",
+          jobAddSuccessMsg: "Successfully Modify the job Details!",
         });
         props.setFetchAgain((prev) => prev + 1);
       } else {
         setErrorMsg({
           ...errorMsg,
           jobCreateErrorMsg:
-            "Sorry! Job could not created! Please try again later!",
+            "Sorry! Could not edit the job details! Please try again later!",
         });
       }
     } catch (error) {
@@ -255,7 +278,7 @@ const JobPostFormModal = (props) => {
       setErrorMsg({
         ...errorMsg,
         jobCreateErrorMsg:
-          "Sorry! Job could not created! Please try again later!",
+          "Sorry! Could not edit the job details! Please try again later!",
       });
     }
     setIsLoading({
@@ -595,4 +618,4 @@ const JobPostFormModal = (props) => {
     </Modal>
   );
 };
-export default JobPostFormModal;
+export default JobPostEditModal;

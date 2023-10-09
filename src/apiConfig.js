@@ -13,10 +13,19 @@ const apiConfig = {
     updatePassword: "User/UpdatePassword",
     jobCreateByCompany: "JobPost/addJobPost",
     fetchAllJobsList: "JobPost/fetchJobPostsByCompany",
+    updateJobStatus: "JobPost/updateJobStatus",
+    fetchJobDetailsByID: "JobPost/fetchJobPostById-private",
+    updateJobDetails: "JobPost/updateJobPost",
+    getAllApplicantList: "JobPost/getAllAplicantsByJob",
+    getShortListedApplicantList: "JobPost/getShortlistedApplicant",
+    deleteJobPost: "JobPost/deleteJobPost",
   },
   employee: {
     getInfoByToken: "User/getEmployeeInfo",
     getInfoByID: "User/getEmployeeById",
+    updateInfo: "User/updateEmployeeInfo",
+    updatePassword: "User/UpdatePassword",
+    fetchAllAppliedJob: "User/getAppliedJobs",
   },
 };
 

@@ -27,9 +27,12 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 import RemoveFromShortListModal from "./RemoveFromShortListModal";
 import { useEffect } from "react";
+import axios from "axios";
+import apiConfig from "../../../../../../apiConfig";
+import { useState } from "react";
 
 const columns = [
-  { id: "id", label: "Id", minWidth: 50, align: "start" },
+  // { id: "id", label: "Id", minWidth: 50, align: "start" },
   { id: "firstName", label: "First Name", minWidth: 170, align: "center" },
   {
     id: "lastName",
@@ -46,14 +49,14 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "currentCompany",
+    id: "currentCOmpany",
     label: "Current Company",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "totalExp",
+    id: "totalExperienceInYear",
     label: "Total Experience",
     minWidth: 170,
     align: "center",
@@ -67,21 +70,28 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "email",
+    id: "aboutMe",
+    label: "About Me",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "contactEmail",
     label: "Email",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "phone",
+    id: "contactPhoneNumber",
     label: "Phone",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "downloadCVbtn",
+    id: "cvLocation",
     label: "Download CV",
     minWidth: 170,
     align: "center",
@@ -376,14 +386,47 @@ const rows = [
 ];
 
 function JobApplicantShortListedModal(props) {
-
   //   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
+  const [fetchAgain, setFetchAgain] = useState(1);
+
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [showRemoveFromShortListModal, setShowRemoveFromShortListModal] =
     React.useState(false);
   const [selectedApplicantData, setSelectedApplicantData] = React.useState({});
+  const [shortlistedApplicant, setShortlistedApplicant] = useState([]);
+  const fetchShortApplicantList = async (jobID) => {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    try {
+      const response = await axios({
+        method: "GET",
+        url:
+          apiConfig.baseURL +
+          apiConfig.company.getShortListedApplicantList +
+          `?jobId=${jobID}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("short listed applicant fetch api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setShortlistedApplicant(res.data.jobs);
+      } else {
+        console.log("res -> false");
+      }
+    } catch (error) {
+      console.log("first from catch", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchShortApplicantList(props.jobID);
+  }, [props, fetchAgain]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -401,12 +444,12 @@ function JobApplicantShortListedModal(props) {
     setSelectedApplicantData({});
   }, [showRemoveFromShortListModal]);
 
-useEffect(() => {
- console.log("short-list-modal called")
-}, [])
+  useEffect(() => {
+    console.log("short-list-modal called");
+  }, []);
   // Row component Render
   function Row(props) {
-    const { row } = props;
+    const { applicant } = props;
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -423,20 +466,25 @@ useEffect(() => {
             </IconButton>
           </TableCell>
 
-          <TableCell align="center">{row.id}</TableCell>
-          <TableCell align="center">{row.firstName}</TableCell>
-          <TableCell align="center">{row.lastName}</TableCell>
-          <TableCell align="center">{row.LastEducationDegree}</TableCell>
-          <TableCell align="center">{row.currentCompany}</TableCell>
-          <TableCell align="center">{row.totalExp}</TableCell>
-          <TableCell align="center">{row.expectedSalary}</TableCell>
-          <TableCell align="center">{row.email}</TableCell>
-          <TableCell align="center">{row.phone}</TableCell>
+          <TableCell align="center">{applicant.id}</TableCell>
+          <TableCell align="center">{applicant.firstName}</TableCell>
+          <TableCell align="center">{applicant.lastName}</TableCell>
+          <TableCell align="center">{applicant.LastEducationDegree}</TableCell>
+          <TableCell align="center">{applicant.currentCOmpany}</TableCell>
+          <TableCell align="center">
+            {applicant.totalExperienceInYear}
+          </TableCell>
+          <TableCell align="center">{applicant.expectedSalary}</TableCell>
+          <TableCell align="center">{applicant.contactEmail}</TableCell>
+          <TableCell align="center">{applicant.contactPhoneNumber}</TableCell>
           <TableCell align="center">
             <Button
               variant="contained"
               size="small"
               endIcon={<CloudDownloadIcon />}
+              onClick={() =>
+                console.log("cv download link", applicant.cvLocation)
+              }
             >
               Download
             </Button>
@@ -446,7 +494,7 @@ useEffect(() => {
               variant="contained"
               size="small"
               endIcon={<DeleteForeverIcon />}
-              onClick={() => handleRemoveFromShortListBtn(row)}
+              onClick={() => handleRemoveFromShortListBtn(applicant)}
             >
               Remove
             </Button>
@@ -457,45 +505,7 @@ useEffect(() => {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="p" gutterBottom component="div">
-                  {row.aboutMe}
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-                  nisi fugit iusto nemo delectus incidunt quibusdam nihil
-                  debitis excepturi ducimus nam dolores amet explicabo, quod
-                  tenetur ipsum illum. Eius tenetur minima ipsa adipisci
-                  molestiae libero, quidem magnam, repellat a corrupti atque
-                  aspernatur quam consequuntur veniam facere dolores unde. Dicta
-                  reprehenderit reiciendis necessitatibus ipsam eius, expedita
-                  eveniet quod dolores dolor molestiae placeat quis vero vel
-                  quos amet eaque eos hic nostrum. Modi assumenda consectetur
-                  ratione asperiores quia aliquid ea! Maxime voluptatibus, earum
-                  tempora, nihil alias provident, optio iste suscipit sequi rem
-                  illum voluptas voluptatum debitis esse architecto laboriosam
-                  fugit recusandae harum. Sit culpa id odit, quisquam aperiam
-                  quasi repudiandae iure tempore voluptatibus quidem ipsa,
-                  dolore ipsam tempora nihil porro ab. Possimus odit commodi
-                  provident quos explicabo! Reprehenderit possimus fuga quam,
-                  dignissimos numquam velit praesentium, dolore blanditiis saepe
-                  aut quidem sunt fugit. Deserunt dignissimos voluptatum ea
-                  fugit ullam ducimus dicta, voluptatem delectus facere animi
-                  hic possimus enim excepturi quo at. Numquam omnis doloremque
-                  impedit cumque repellendus maiores beatae magni minima fuga
-                  debitis ipsum officiis temporibus quisquam, voluptatibus
-                  eveniet minus eligendi officia rem optio facere veritatis. Ex
-                  esse dolorem, iusto placeat ad aliquid, in saepe maiores atque
-                  nostrum eum sint quam animi a recusandae inventore, quisquam
-                  fugit! Dolore, ratione commodi. Optio nulla dolore dolorem ab
-                  quisquam eos non vero quam, ut quod officiis numquam
-                  repellendus! Voluptatem nesciunt architecto eaque, dolorem
-                  reprehenderit facere, tenetur facilis nam alias nihil,
-                  deserunt quisquam tempora corporis. Ab ad eum iusto aut,
-                  explicabo, amet iste omnis illum quam laboriosam ratione id
-                  laudantium? Quia cupiditate quasi magni odio soluta corrupti
-                  hic necessitatibus dolorem ad rem porro omnis adipisci aliquid
-                  eius, nihil beatae rerum ullam quas saepe eum modi
-                  reprehenderit. Voluptas dignissimos repellendus, laboriosam
-                  quaerat iusto cupiditate obcaecati labore aut facere, esse
-                  dolorum, consequatur ipsa dolorem debitis culpa hic repellat
-                  enim?
+                  {applicant.aboutMe}
                 </Typography>
               </Box>
             </Collapse>
@@ -519,7 +529,7 @@ useEffect(() => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" centered>
-          All applicants list
+          Shortlisted applicants list
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -529,45 +539,58 @@ useEffect(() => {
             onHide={() => setShowRemoveFromShortListModal(false)}
             applicantData={selectedApplicantData}
           />
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align={"center"} style={{ minWidth: 150 }}>
-                      About Applicant
-                    </TableCell>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ minWidth: column.minWidth }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows
-                    .filter(row => row.isShortListed === true)
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
-                      <Row key={row.id} row={row} />
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
+          {shortlistedApplicant.length === 0 ? (
+            <div>
+              <Typography variant="h7" color="initial" align="center">
+                No Short Listed Applicant Data
+              </Typography>
+            </div>
+          ) : (
+            <>
+              <Paper sx={{ width: "100%", overflow: "hidden" }}>
+                <TableContainer sx={{ maxHeight: 440 }}>
+                  <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align={"center"} style={{ minWidth: 150 }}>
+                          About Applicant
+                        </TableCell>
+                        {columns.map((column) => (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{ minWidth: column.minWidth }}
+                          >
+                            {column.label}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows
+                        .filter((row) => row.isShortListed === true)
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((row) => (
+                          <Row key={row.id} row={row} />
+                        ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TablePagination
+                  rowsPerPageOptions={[10, 25, 100]}
+                  component="div"
+                  count={rows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </Paper>
+            </>
+          )}
         </>
       </Modal.Body>
       {/* <Modal.Footer>

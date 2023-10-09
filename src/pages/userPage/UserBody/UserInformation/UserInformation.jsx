@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./userInformation.module.css";
 import clsx from "clsx";
@@ -6,6 +6,9 @@ import { Button, Divider } from "@mui/material";
 
 import UserInfoEditModal from "./components/UserInfoEditModal/UserInfoEditModal";
 import UserPassEditModal from "./components/UserPassEditModal/UserPassEditModal";
+
+import axios from "axios";
+import apiConfig from "../../../../apiConfig";
 const userData = {
   firstName: "Mr Jhon",
   lastName: "Doe",
@@ -19,11 +22,12 @@ const userData = {
 };
 
 const UserInformation = () => {
-  const { compID } = useParams();
-  const [userInfoEditModalShow, setUserInfoEditModalShow] =
-    useState(false);
-  const [userPassEditModalShow, setUserPassEditModalShow] =
-    useState(false);
+  const [userData, setUserData] = useState(userData);
+  const [fetchAgainFlag, setFetchAgainFlag] = useState(1);
+
+  const { userID } = useParams();
+  const [userInfoEditModalShow, setUserInfoEditModalShow] = useState(false);
+  const [userPassEditModalShow, setUserPassEditModalShow] = useState(false);
 
   const userInfoEditHandler = () => {
     setUserInfoEditModalShow(true);
@@ -31,6 +35,38 @@ const UserInformation = () => {
   const userPassEditHandler = () => {
     setUserPassEditModalShow(true);
   };
+
+  const fetchUserInfo = async () => {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    try {
+      const response = await axios({
+        method: "get",
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   "Content-Type": "application/json",
+        // },
+        // url: "https://be.jobspace.org.uk/api/v1/User/getCompanyInfo",
+        url:
+          apiConfig.baseURL +
+          apiConfig.employee.getInfoByID +
+          `?userID=${userData.data.userID}`,
+      });
+      console.log("ata user info response", response);
+      const res = response.data;
+      if (res.success === true) {
+        setUserData(res.data.employee);
+      }
+    } catch (error) {
+      console.log("error in catch");
+    }
+  };
+
+  useEffect(() => {
+    console.log("this is user profile page for user id", userID);
+
+    // fetchUserInfo();
+  }, [userID, fetchAgainFlag]);
 
   return (
     <>
@@ -64,7 +100,8 @@ const UserInformation = () => {
         <div className={clsx(styles["userProfile-Info"])}>
           <div className={clsx(styles["userProfile-info-title"])}>Skills</div>
           <div className={clsx(styles["userProfile-info-value"])}>
-            {userData.skills.join(", ")}
+            SKILLS
+            {/* {userData.skills.join(", ")} */}
           </div>
         </div>
         <div className={clsx(styles["userProfile-Info"])}>

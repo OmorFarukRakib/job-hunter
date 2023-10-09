@@ -1,0 +1,11 @@
+JSON.parse(localStorage.getItem("JS_userData")
+localStorage.removeItem("JS_userData")
+
+
+
+
+
+__
+company
+const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;

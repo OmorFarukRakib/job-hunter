@@ -8,7 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import { TextField, InputAdornment } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { FormControl } from "@mui/material";
+import { FormControl, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { useFormik, Field } from "formik";
 import * as Yup from "yup";
@@ -21,7 +21,8 @@ import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-
+import apiConfig from "../../../../../../apiConfig";
+import axios from "axios";
 const validationSchema = Yup.object({
   // jobTitle: Yup.string()
   //   .required("Job Title is required")
@@ -74,6 +75,142 @@ function getStyles(name, personName, theme) {
 }
 
 const JobPostFormModal = (props) => {
+  const [jobAddFormData, setJobAddFormData] = useState({
+    // jobID: "",
+    jobType: "",
+    title: "",
+    companyName: "",
+    applicationDeadline: new Date(),
+    industry: "",
+    salaryEstimationStart: 0,
+    salaryEstimationEnd: 0,
+    requiredExperienceInYr: 0,
+    skillReq: "",
+    totalHiringNumber: 0,
+    companyDescription: "",
+    jobDescription: "",
+    companyURl: "",
+    companyAddress: "",
+    jobLocation: "",
+    companyEmail: "",
+    companyPhoneNumber: "",
+    companyJobApplyUrl: "",
+    jobPostStatus: "",
+    // createdAt: "2023-10-08T22:07:41.029Z",
+    // updatedAt: "2023-10-08T22:07:41.029Z",
+  });
+  const [isLoading, setIsLoading] = useState({
+    isFormSubmittingLoading: false,
+  });
+  const [errorMsg, setErrorMsg] = useState({
+    jobCreateErrorMsg: "",
+    jobEditErrorMsg: "",
+  });
+  const [successMsg, setSuccessMsg] = useState({
+    jobAddSuccessMsg: "",
+    jobEditSuccessMsg: "",
+  });
+  useEffect(() => {
+    setErrorMsg({
+      jobCreateErrorMsg: "",
+      jobEditErrorMsg: "",
+    });
+    setSuccessMsg({
+      jobAddSuccessMsg: "",
+      jobEditSuccessMsg: "",
+    });
+  }, [props.show]);
+
+  const handleAddPostFormDataChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "applicationDeadline") {
+      const localDate = new Date(value);
+      const utcDate = new Date(
+        localDate.getUTCFullYear(),
+        localDate.getUTCMonth(),
+        localDate.getUTCDate()
+      );
+      const formattedDate = utcDate.toISOString().split("T")[0];
+      setJobAddFormData({
+        ...jobAddFormData,
+        [name]: formattedDate,
+      });
+      console.log(utcDate.toISOString());
+    } else {
+      setJobAddFormData({
+        ...jobAddFormData,
+        [name]: value,
+      });
+    }
+  };
+  const handleAddPostFormDataSubmit = async (e) => {
+    e.preventDefault();
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    setIsLoading({
+      ...isLoading,
+      isFormSubmittingLoading: true,
+    });
+    try {
+      const response = await axios({
+        method: "POST",
+        url: apiConfig.baseURL + apiConfig.company.jobCreateByCompany,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: {
+          // jobID: "",
+          jobType: jobAddFormData.jobType,
+          title: jobAddFormData.title,
+          companyName: jobAddFormData.companyName,
+          applicationDeadline: jobAddFormData.applicationDeadline,
+          industry: jobAddFormData.industry,
+          salaryEstimationStart: jobAddFormData.salaryEstimationStart,
+          salaryEstimationEnd: jobAddFormData.salaryEstimationEnd,
+          skillReq: jobAddFormData.skillReq,
+          totalHiringNumber: jobAddFormData.totalHiringNumber,
+          companyDescription: jobAddFormData.companyDescription,
+          jobDescription: jobAddFormData.jobDescription,
+          companyURl: jobAddFormData.companyURl,
+          companyAddress: jobAddFormData.companyAddress,
+          jobLocation: jobAddFormData.jobLocation,
+          companyEmail: jobAddFormData.companyEmail,
+          companyPhoneNumber: jobAddFormData.companyPhoneNumber,
+          companyJobApplyUrl: jobAddFormData.companyJobApplyUrl,
+          jobPostStatus: jobAddFormData.jobPostStatus,
+          // createdAt: "2023-10-08T22:07:41.029Z",
+          // updatedAt: "2023-10-08T22:07:41.029Z",
+        },
+      });
+      console.log("job add api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setSuccessMsg({
+          ...successMsg,
+          jobAddSuccessMsg:
+            "Successfully added the job! Waiting for adming to approve.",
+        });
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          jobCreateErrorMsg:
+            "Sorry! Job could not created! Please try again later!",
+        });
+      }
+    } catch (error) {
+      console.log("error in catch", error);
+      setErrorMsg({
+        ...errorMsg,
+        jobCreateErrorMsg:
+          "Sorry! Job could not created! Please try again later!",
+      });
+    }
+    setIsLoading({
+      ...isLoading,
+      isFormSubmittingLoading: false,
+    });
+  };
   const [selectedSkillsSet, setSelectedSkillsSet] = useState([]);
   const handleSkillsSetChange = (event) => {
     const {
@@ -90,36 +227,7 @@ const JobPostFormModal = (props) => {
     );
   }, [props]);
   const theme = useTheme();
-  const formik = useFormik({
-    initialValues: {
-      jobTitle: props.formData === null ? "" : props.formData.jobTitle,
-      jobType: props.formData === null ? "" : props.formData.jobType,
-      jobDescription:
-        props.formData === null ? "" : props.formData.jobDescription,
-      salaryEstimationStart:
-        props.formData === null ? "" : props.formData.salaryEstimationStart,
-      salaryEstimationEnd:
-        props.formData === null ? "" : props.formData.salaryEstimationEnd,
-      applicationDeadline:
-        props.formData === null ? "" : props.formData.applicationDeadline,
-      // skillReq: props.formData === null ? [] : props.formData.skillReq,
-      totalHiringNumber:
-        props.formData === null ? "" : props.formData.totalHiringNumber,
-      requiredExperienceInYr:
-        props.formData === null ? "" : props.formData.requiredExperienceInYr,
-      jobLocation: props.formData === null ? "" : props.formData.jobLocation,
-      companyJobApplyURL:
-        props.formData === null ? "" : props.formData.companyJobApplyURL,
-    },
-    // validationSchema: validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      console.log("ok");
-      console.log(JSON.stringify(values, null, 2));
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-      //   formik.resetForm();
-    },
-  });
+
   return (
     <Modal
       {...props}
@@ -146,19 +254,17 @@ const JobPostFormModal = (props) => {
         <FormControl
           className={clsx(styles["jobPostCreateForm-control"])}
           component="form"
-          onSubmit={formik.handleSubmit}
+          onSubmit={handleAddPostFormDataSubmit}
           fullWidth
         >
           <TextField
             required
             fullWidth
-            id="jobTitle"
+            id="title"
+            name="title"
             label="Job Title"
-            value={formik.values.jobTitle}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.jobTitle && !!formik.errors.jobTitle}
-            helperText={formik.touched.jobTitle && formik.errors.jobTitle}
+            value={jobAddFormData.title}
+            onChange={handleAddPostFormDataChange}
           />
           <FormControl fullWidth>
             <InputLabel id="jobType-label">Job Type *</InputLabel>
@@ -168,9 +274,8 @@ const JobPostFormModal = (props) => {
               label="Job Type *"
               id="jobType"
               name="jobType"
-              value={formik.values.jobType}
-              onChange={formik.handleChange}
-              error={formik.touched.jobType && Boolean(formik.errors.jobType)}
+              value={jobAddFormData.jobType}
+              onChange={handleAddPostFormDataChange}
             >
               {["Full-Time", "Part-Time", "Contractual"].map((category) => (
                 <MenuItem key={category} value={category}>
@@ -182,54 +287,41 @@ const JobPostFormModal = (props) => {
           <TextField
             fullWidth
             required
+            id="industry"
+            name="industry"
+            label="Industry"
+            value={jobAddFormData.industry}
+            onChange={handleAddPostFormDataChange}
+          />
+          <TextField
+            fullWidth
+            required
             id="jobDescription"
+            name="jobDescription"
             label="Job Description"
-            value={formik.values.jobDescription}
+            value={jobAddFormData.jobDescription}
             multiline
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.jobDescription && !!formik.errors.jobDescription
-            }
-            helperText={
-              formik.touched.jobDescription && formik.errors.jobDescription
-            }
+            onChange={handleAddPostFormDataChange}
           />
           <TextField
             fullWidth
             required
             type="Number"
             id="requiredExperienceInYr"
+            name="requiredExperienceInYr"
             label="Experience Required in years"
-            value={formik.values.requiredExperienceInYr}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.requiredExperienceInYr &&
-              !!formik.errors.requiredExperienceInYr
-            }
-            helperText={
-              formik.touched.requiredExperienceInYr &&
-              formik.errors.requiredExperienceInYr
-            }
+            value={jobAddFormData.requiredExperienceInYr}
+            onChange={handleAddPostFormDataChange}
           />
           <TextField
             fullWidth
             type="Number"
             required
             id="salaryEstimationStart"
+            name="salaryEstimationStart"
             label="Minimum Salary"
-            value={formik.values.salaryEstimationStart}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.salaryEstimationStart &&
-              !!formik.errors.salaryEstimationStart
-            }
-            helperText={
-              formik.touched.salaryEstimationStart &&
-              formik.errors.salaryEstimationStart
-            }
+            value={jobAddFormData.salaryEstimationStart}
+            onChange={handleAddPostFormDataChange}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
@@ -239,45 +331,47 @@ const JobPostFormModal = (props) => {
           <TextField
             fullWidth
             id="salaryEstimationEnd"
+            name="salaryEstimationEnd"
             required
             type="Number"
             label="Maximum Salary"
-            value={formik.values.salaryEstimationEnd}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.salaryEstimationEnd &&
-              !!formik.errors.salaryEstimationEnd
-            }
-            helperText={
-              formik.touched.salaryEstimationEnd &&
-              formik.errors.salaryEstimationEnd
-            }
+            value={jobAddFormData.salaryEstimationEnd}
+            onChange={handleAddPostFormDataChange}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
               ),
             }}
           />
+          {/* <Typography variant="h8" color="initial" ml={1} mb={0}>
+            {" "}
+            Application Deadline
+          </Typography> */}
+          <TextField
+            fullWidth
+            // type="datetime-local"
+            type="date"
+            id="applicationDeadline"
+            name="applicationDeadline"
+            required
+            label="Application Deadline"
+            value={jobAddFormData.applicationDeadline}
+            onChange={handleAddPostFormDataChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
           <TextField
             fullWidth
             // type="date"
-            id="applicationDeadline"
+            id="skillReq"
+            name="skillReq"
             required
-            label="Application Deadline"
-            value={formik.values.applicationDeadline}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.applicationDeadline &&
-              !!formik.errors.applicationDeadline
-            }
-            helperText={
-              formik.touched.applicationDeadline &&
-              formik.errors.applicationDeadline
-            }
+            label="Required skills, separated by commas"
+            value={jobAddFormData.skillReq}
+            onChange={handleAddPostFormDataChange}
           />
-          <FormControl fullWidth>
+          {/* <FormControl fullWidth>
             <InputLabel id="skillReq-label">Skills set *</InputLabel>
             <Select
               required
@@ -314,7 +408,7 @@ const JobPostFormModal = (props) => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
           {/* <TextField
             fullWidth
             id="skillReq"
@@ -328,46 +422,85 @@ const JobPostFormModal = (props) => {
           <TextField
             fullWidth
             type="Number"
+            required
             id="totalHiringNumber"
+            name="totalHiringNumber"
             label="Total Number Hiring"
-            value={formik.values.totalHiringNumber}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.totalHiringNumber &&
-              !!formik.errors.totalHiringNumber
-            }
-            helperText={
-              formik.touched.totalHiringNumber &&
-              formik.errors.totalHiringNumber
-            }
+            value={jobAddFormData.totalHiringNumber}
+            onChange={handleAddPostFormDataChange}
           />
           <TextField
             required
             fullWidth
             id="jobLocation"
+            name="jobLocation"
             label="Job Location"
-            value={formik.values.jobLocation}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.jobLocation && !!formik.errors.jobLocation}
-            helperText={formik.touched.jobLocation && formik.errors.jobLocation}
+            value={jobAddFormData.jobLocation}
+            onChange={handleAddPostFormDataChange}
           />
           <TextField
+            required
             fullWidth
-            id="companyJobApplyURL"
+            id="companyName"
+            name="companyName"
+            label="Company Name"
+            value={jobAddFormData.companyName}
+            onChange={handleAddPostFormDataChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="companyEmail"
+            name="companyEmail"
+            label="Company Email"
+            value={jobAddFormData.companyEmail}
+            onChange={handleAddPostFormDataChange}
+          />
+          <TextField
+            required
+            fullWidth
+            type="Number"
+            id="companyPhoneNumber"
+            name="companyPhoneNumber"
+            label="Company Phone Number"
+            value={jobAddFormData.companyPhoneNumber}
+            onChange={handleAddPostFormDataChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="companyURl"
+            name="companyURl"
+            label="Company Website Address"
+            value={jobAddFormData.companyURl}
+            onChange={handleAddPostFormDataChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="companyAddress"
+            name="companyAddress"
+            label="Company Address"
+            value={jobAddFormData.companyAddress}
+            onChange={handleAddPostFormDataChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="companyDescription"
+            name="companyDescription"
+            label="Company Description"
+            value={jobAddFormData.companyDescription}
+            onChange={handleAddPostFormDataChange}
+          />
+
+          <TextField
+            fullWidth
+            id="companyJobApplyUrl"
+            name="companyJobApplyUrl"
             label="Company Job Portal Link"
-            value={formik.values.companyJobApplyURL}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.companyJobApplyURL &&
-              !!formik.errors.companyJobApplyURL
-            }
-            helperText={
-              formik.touched.companyJobApplyURL &&
-              formik.errors.companyJobApplyURL
-            }
+            value={jobAddFormData.companyJobApplyUrl}
+            onChange={handleAddPostFormDataChange}
           />
 
           <FormControlLabel
@@ -380,11 +513,21 @@ const JobPostFormModal = (props) => {
               justifyContent: "center",
             }}
           />
+          {successMsg.jobAddSuccessMsg && (
+            <Typography variant="h7" color="green" align="center">
+              {successMsg.jobAddSuccessMsg}
+            </Typography>
+          )}
+          {errorMsg.jobCreateErrorMsg && (
+            <Typography variant="h7" color="red" align="center">
+              {errorMsg.jobCreateErrorMsg}
+            </Typography>
+          )}
           <Button
             type="submit"
             variant="contained"
             fullWidth
-            disabled={formik.isSubmitting}
+            disabled={isLoading.isFormSubmittingLoading}
           >
             {props.formData === null ? (
               <div>Create Job Ad</div>

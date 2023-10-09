@@ -2,65 +2,131 @@ import { TextField, InputAdornment } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import { FormControl } from "@mui/material";
 import clsx from "clsx";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import styles from "./signinForm.module.css";
-
-const validationSchema = Yup.object({
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  password: Yup.string().required("Password is required"),
-});
+import { useState } from "react";
+import axios from "axios";
+import apiConfig from "../../../../apiConfig";
+// const validationSchema = Yup.object({
+//   email: Yup.string()
+//     .email("Invalid email address")
+//     .required("Email is required"),
+//   password: Yup.string().required("Password is required"),
+// });
 
 const LoginForm = (props) => {
   const navigate = useNavigate();
+  const [loginFormData, setLoginFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isLoading, setIsLoading] = useState({
+    isLogginSubmitting: false,
+  });
+  const [errorMsg, setErrorMsg] = useState({
+    loginErrorMsg: "",
+  });
   const gotToForgotPasswordPage = () => {
     props.modalHideFun();
-    navigate('/forgot_password')
-  }
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      // console.log("ok");
-      // console.log(JSON.stringify(values, null, 2));
-      // alert(JSON.stringify(values, null, 2));
-      if (values.email === "company@gmail.com" && values.password === "12345") {
+    navigate("/forgot_password");
+  };
+  // const formik = useFormik({
+  //   initialValues: {
+  //     email: "",
+  //     password: "",
+  //   },
+  //   validationSchema: validationSchema,
+  //   onSubmit: (values, { setSubmitting }) => {
+  //     // console.log("ok");
+  //     // console.log(JSON.stringify(values, null, 2));
+  //     // alert(JSON.stringify(values, null, 2));
+  //     if (values.email === "company@gmail.com" && values.password === "12345") {
+  //       props.modalHideFun();
+  //       localStorage.setItem("authToken", "token");
+  //       navigate("/company/123");
+  //     } else if (
+  //       values.email === "user@gmail.com" &&
+  //       values.password === "12345"
+  //     ) {
+  //       props.modalHideFun();
+  //       localStorage.setItem("authToken", "userToken");
+  //       navigate("/user/123");
+  //     } else {
+  //       alert("Wrong login credentials");
+  //     }
+  //     setSubmitting(false);
+  //     //   formik.resetForm();
+  //   },
+  // });
+
+  const handleLoginFormChange = (e) => {
+    const { name, value } = e.target;
+    setLoginFormData({
+      ...loginFormData,
+      [name]: value,
+    });
+  };
+  const handleLoginFormSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading({
+      isLogginSubmitting: true,
+    });
+    setErrorMsg({
+      loginErrorMsg: "",
+    });
+    // API call
+    try {
+      const response = await axios({
+        method: "post",
+        url: apiConfig.baseURL + apiConfig.auth.login,
+        data: {
+          email: loginFormData.email,
+          password: loginFormData.password,
+        },
+      });
+      const res = response.data;
+      if (res.success === true) {
+        localStorage.setItem("JS_userData", JSON.stringify(res));
         props.modalHideFun();
-        localStorage.setItem("authToken", "token");
-        navigate("/company/123");
-      } else if (
-        values.email === "user@gmail.com" &&
-        values.password === "12345"
-      ) {
-        props.modalHideFun();
-        localStorage.setItem("authToken", "userToken");
-        navigate("/user/123");
+        if (res.data.userType === "Company") {
+          navigate(`/company/${res.data.userID}`);
+        }
+        else if (res.data.userType === "Employee") {
+          navigate(`/user/${res.data.userID}`);
+        }
       } else {
-        alert("Wrong login credentials");
+        setErrorMsg({
+          loginErrorMsg:
+            "Email or Password is invalid! Please Try Again later!",
+        });
       }
-      setSubmitting(false);
-      //   formik.resetForm();
-    },
-  });
+    } catch (error) {
+      setErrorMsg({
+        loginErrorMsg: "Something Went Wrong! Please Try Again later!",
+      });
+    }
+    setIsLoading({
+      isLogginSubmitting: false,
+    });
+  };
 
   return (
     <FormControl
       className={clsx(styles["loginForm-control"])}
       component="form"
-      onSubmit={formik.handleSubmit}
+      onSubmit={handleLoginFormSubmit}
       fullWidth
     >
       <TextField
         fullWidth
         label="Email"
         id="email"
+        name="email"
+        type="email"
+        required
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -68,11 +134,8 @@ const LoginForm = (props) => {
             </InputAdornment>
           ),
         }}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.email}
-        error={formik.touched.email && !!formik.errors.email}
-        helperText={formik.touched.email && formik.errors.email}
+        onChange={handleLoginFormChange}
+        value={loginFormData.email}
       />
       <br />
       <TextField
@@ -80,19 +143,29 @@ const LoginForm = (props) => {
         label="Password"
         type="password"
         id="password"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.password}
-        error={formik.touched.password && !!formik.errors.password}
-        helperText={formik.touched.password && formik.errors.password}
+        name="password"
+        required
+        onChange={handleLoginFormChange}
+        value={loginFormData.password}
       />
       <br />
-      <div className={styles["forgot_password_text"]} onClick={gotToForgotPasswordPage}>Forgot password?</div>
+      <div
+        className={styles["forgot_password_text"]}
+        onClick={gotToForgotPasswordPage}
+      >
+        Forgot password?
+      </div>
+      {errorMsg.loginErrorMsg && (
+        <Typography variant="h7" color="red" align="center">
+          {errorMsg.loginErrorMsg}
+        </Typography>
+      )}
+
       <Button
         type="submit"
         variant="contained"
         fullWidth
-        disabled={formik.isSubmitting}
+        disabled={isLoading.isLogginSubmitting}
         sx={{
           padding: "0.7rem",
           borderRadius: "20px",
@@ -106,7 +179,7 @@ const LoginForm = (props) => {
           },
         }}
       >
-        Log in
+        {isLoading.isLogginSubmitting === true ? "Please Wait.." : "Log in"}
       </Button>
     </FormControl>
   );

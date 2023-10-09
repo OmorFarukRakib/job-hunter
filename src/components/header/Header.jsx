@@ -11,6 +11,9 @@ import AccountMenuForCompany from "../AccountMenuForCompany/AccountMenuForCompan
 import AccountMenuForUser from "../AccountMenuForUser/AccountMenuForUser";
 const Header = () => {
   const [signinModalShow, setsigninModalShow] = useState(false);
+  const [userData, setUserData] = useState(
+    JSON.parse(localStorage.getItem("JS_userData"))
+  );
   const navigate = useNavigate();
   let { pathname } = useLocation();
 
@@ -18,10 +21,16 @@ const Header = () => {
   console.log(pathname);
 
   useEffect(() => {
-    const authToken = localStorage.getItem("authToken");
-    // console.log(data);
-  }, []);
+    setUserData(JSON.parse(localStorage.getItem("JS_userData")));
+  }, [localStorage.getItem("JS_userData")]);
 
+  const renderUserMenu = (userData) => {
+    if (userData.data.userType === "Company") {
+      return <AccountMenuForCompany />;
+    } else if (userData.data.userType === "Employee") {
+      return <AccountMenuForUser />;
+    }
+  };
   return (
     <>
       <SigninModal
@@ -53,12 +62,24 @@ const Header = () => {
           </div>
         </div>
         <div className={clsx(styles["header-menu-wrapper"])}>
-          {localStorage.getItem("authToken") === "token" ? (
+          {userData?.success === true ? (
+            <>{renderUserMenu(userData)}</>
+          ) : (
+            <>
+              <div
+                className={clsx(styles["header-menu-btn"])}
+                onClick={() => setsigninModalShow(true)}
+              >
+                Sign in/Registration
+              </div>
+            </>
+          )}
+          {/* {localStorage.getItem("authToken") === "token" ? (
             <AccountMenuForCompany />
           ) : (
             <>
               {localStorage.getItem("authToken") === "userToken" ? (
-                <AccountMenuForUser/>
+                <AccountMenuForUser />
               ) : (
                 <div
                   className={clsx(styles["header-menu-btn"])}
@@ -68,7 +89,7 @@ const Header = () => {
                 </div>
               )}
             </>
-          )}
+          )} */}
         </div>
       </header>
     </>

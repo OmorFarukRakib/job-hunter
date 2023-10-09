@@ -19,11 +19,13 @@ export default function AccountMenuForCompany() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (action) => {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
     setAnchorEl(null);
     if(action==='profile'){
-      navigate("/company/123?tab=job-posts");
+      // navigate("/company/123?tab=job-posts");
+      navigate(`/company/${userData.data.userID}?tab=job-posts`);
     }else if(action === 'logout') {
-      localStorage.removeItem("authToken");
+      localStorage.removeItem("JS_userData");
       navigate("/")
     }
   };

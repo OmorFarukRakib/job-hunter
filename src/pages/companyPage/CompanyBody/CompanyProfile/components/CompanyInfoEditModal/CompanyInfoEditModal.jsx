@@ -5,6 +5,7 @@ import {
   MenuItem,
   InputLabel,
   Select,
+  Typography,
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl } from "@mui/material";
@@ -16,37 +17,38 @@ import { Button } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./companyInfoEditModal.module.css";
-
-const validationSchema = Yup.object({
-  companyName: Yup.string()
-    .required("Company name is required")
-    .max(50, "First name can not be longer than 50 letters"),
-  // industry: Yup.string()
-  //   .required("Last name is required")
-  //   .max(50, "Industry name can not be longer than 50 letters"),
-  companyWebsite: Yup.string()
-    .required("Last name is required")
-    .max(50, "Last name can not be longer than 50 letters"),
-  companyAddress: Yup.string()
-    .required("Last name is required")
-    .max(100, "Last name can not be longer than 100 letters"),
-  contactPhone: Yup.string()
-    .required("Last name is required")
-    .max(16, "phone number is too big"),
-  companyDescription: Yup.string()
-    .required("Last name is required")
-    .max(10000, "Last name can not be longer than 10000 letters"),
-  companySize: Yup.string()
-    .required("Last name is required")
-    .max(10000, "Last name can not be longer than 10000 letters"),
-  contactPersonName: Yup.string()
-    .required("Last name is required")
-    .max(50, "Last name can not be longer than 50 letters"),
-  contactEmail: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  
-});
+import { useEffect, useState } from "react";
+import axios from "axios";
+import apiConfig from "../../../../../../apiConfig";
+// const validationSchema = Yup.object({
+//   companyName: Yup.string()
+//     .required("Company name is required")
+//     .max(50, "First name can not be longer than 50 letters"),
+//   // industry: Yup.string()
+//   //   .required("Last name is required")
+//   //   .max(50, "Industry name can not be longer than 50 letters"),
+//   companyWebsite: Yup.string()
+//     .required("Last name is required")
+//     .max(50, "Last name can not be longer than 50 letters"),
+//   companyAddress: Yup.string()
+//     .required("Last name is required")
+//     .max(100, "Last name can not be longer than 100 letters"),
+//   contactPhone: Yup.string()
+//     .required("Last name is required")
+//     .max(16, "phone number is too big"),
+//   companyDescription: Yup.string()
+//     .required("Last name is required")
+//     .max(10000, "Last name can not be longer than 10000 letters"),
+//   companySize: Yup.string()
+//     .required("Last name is required")
+//     .max(10000, "Last name can not be longer than 10000 letters"),
+//   contactPersonName: Yup.string()
+//     .required("Last name is required")
+//     .max(50, "Last name can not be longer than 50 letters"),
+//   contactEmail: Yup.string()
+//     .email("Invalid email address")
+//     .required("Email is required"),
+// });
 
 const industryOptions = [
   { value: "option1", label: "Technology" },
@@ -61,55 +63,108 @@ const industryOptions = [
   { value: "option11", label: "Others" },
 ];
 const companySizeOptions = [
-  { value: "1", label: "Small [less than 50]" },
-  { value: "2", label: "Medium [50-250]" },
-  { value: "3", label: "Large [more than 250]" },
+  { value: "small", label: "Small [less than 50]" },
+  { value: "medium", label: "Medium [50-250]" },
+  { value: "large", label: "Large [more than 250]" },
 ];
 
-
-
 function CompanyInfoEditModal(props) {
-    const formik = useFormik({
-      initialValues: {
-        companyName: props.companyData.companyName
-          ? props.companyData.companyName
-          : "",
-        industry: props.companyData.industry ? props.companyData.industry : "",
-        companyWebsite: props.companyData.companyWebsite
-          ? props.companyData.companyWebsite
-          : "",
-        companyAddress: props.companyData.companyAddress
-          ? props.companyData.companyAddress
-          : "",
-        companyDescription: props.companyData.companyDescription
-          ? props.companyData.companyDescription
-          : "",
-        companySize: props.companyData.companySize
-          ? props.companyData.companySize
-          : "",
-        contactPersonName: props.companyData.contactPersonName
-          ? props.companyData.contactPersonName
-          : "",
-        contactEmail: props.companyData.contactEmail
-          ? props.companyData.contactEmail
-          : "",
-        contactPhone: props.companyData.contactPhone
-          ? props.companyData.contactPhone
-          : "",
-        // password: props.companyData.password ? props.companyData.password : "",
-        // confirmPassword: props.companyData.confirmPassword
-        //   ? props.companyData.confirmPassword
-        //   : "",
-      },
-      validationSchema: validationSchema,
-      onSubmit: (values, { setSubmitting }) => {
-        console.log("ok");
-        console.log(JSON.stringify(values, null, 2));
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-        //   formik.resetForm();
-      },
+  const [companyFormData, setCompanyFormData] = useState({
+    name: props.companyData.name,
+    description: props.companyData.description,
+    companySize: props.companyData.companySize,
+    address: props.companyData.address,
+    webSite: props.companyData.webSite,
+    contactPersonName: props.companyData.contactPersonName,
+    email: props.companyData.email,
+    phoneNumber: props.companyData.phoneNumber,
+  });
+  const [isLoading, setIsLoading] = useState({
+    isCompanyFormDataSubmitting: false,
+  });
+  const [errorMsg, setErrorMsg] = useState({
+    companyInfoChangeErrorMsg: "",
+  });
+  const [successMsg, setSuccessMsg] = useState({
+    companyInfoChangeSuccessMsg: "",
+  });
+  // companyName: props.companyData.name ? props.companyData.name : "",
+  useEffect(() => {
+    setCompanyFormData({
+      ...companyFormData,
+      name: props.companyData.name,
+      description: props.companyData.description,
+      companySize: props.companyData.companySize,
+      address: props.companyData.address,
+      webSite: props.companyData.webSite,
+      contactPersonName: props.companyData.contactPersonName,
+      email: props.companyData.email,
+      phoneNumber: props.companyData.phoneNumber,
     });
+  }, [props]);
+  const handleCompanyFormDataChange = (e) => {
+    const { name, value } = e.target;
+    setCompanyFormData({
+      ...companyFormData,
+      [name]: value,
+    });
+  };
+  const handleCompanyFormDataSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading({
+      ...isLoading,
+      isCompanyFormDataSubmitting: true,
+    });
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    console.log(userData);
+    try {
+      const response = await axios({
+        method: "PUT",
+        url: apiConfig.baseURL + apiConfig.company.updateInfo,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        data: {
+          name: companyFormData.name,
+          webSite: companyFormData.webSite,
+          address: companyFormData.address,
+          description: companyFormData.description,
+          companySize: companyFormData.companySize,
+          contactPersonName: companyFormData.contactPersonName,
+          email: companyFormData.email,
+          phoneNumber: companyFormData.phoneNumber,
+        },
+      });
+      console.log("company info change api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setSuccessMsg({
+          ...successMsg,
+          companyInfoChangeSuccessMsg: "Company Information has been changed!",
+        });
+        props.setFetchAgainFlag((prev) => prev + 1);
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          companyInfoChangeErrorMsg:
+            "Could not Change the current information. Please Try Again Later!",
+        });
+      }
+    } catch (error) {
+      console.log("error from catch", error);
+      setErrorMsg({
+        ...errorMsg,
+        companyInfoChangeErrorMsg:
+          "Something Went Wrong! Please Try Again Later!",
+      });
+    }
+    setIsLoading({
+      ...isLoading,
+      isCompanyFormDataSubmitting: false,
+    });
+  };
   return (
     <Modal
       {...props}
@@ -131,18 +186,17 @@ function CompanyInfoEditModal(props) {
         <FormControl
           className={clsx(styles["companyInfoEditModal-control"])}
           component="form"
-          onSubmit={formik.handleSubmit}
+          onSubmit={handleCompanyFormDataSubmit}
           fullWidth
         >
           <TextField
             fullWidth
             label="Company Name"
-            id="companyName"
-            value={formik.values.companyName}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.companyName && !!formik.errors.companyName}
-            helperText={formik.touched.companyName && formik.errors.companyName}
+            id="name"
+            name="name"
+            required
+            value={companyFormData.name}
+            onChange={handleCompanyFormDataChange}
           />
           {/* <TextField
         select
@@ -161,7 +215,7 @@ function CompanyInfoEditModal(props) {
           </MenuItem>
         ))}
       </TextField> */}
-          <FormControl fullWidth>
+          {/* <FormControl fullWidth>
             <InputLabel id="industry-label">Industry</InputLabel>
             <Select
               labelId="Industry"
@@ -179,7 +233,7 @@ function CompanyInfoEditModal(props) {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
           {/* <TextField
         fullWidth
         label="Industry"
@@ -195,18 +249,11 @@ function CompanyInfoEditModal(props) {
             label="Company Description"
             multiline
             rows={10}
-            id="companyDescription"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.companyDescription}
-            error={
-              formik.touched.companyDescription &&
-              !!formik.errors.companyDescription
-            }
-            helperText={
-              formik.touched.companyDescription &&
-              formik.errors.companyDescription
-            }
+            id="description"
+            name="description"
+            required
+            value={companyFormData.description}
+            onChange={handleCompanyFormDataChange}
           />
           <FormControl fullWidth>
             <InputLabel id="company-label">Company Size</InputLabel>
@@ -215,15 +262,9 @@ function CompanyInfoEditModal(props) {
               label="Company Size"
               id="companySize"
               name="companySize"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.companySize}
-              error={
-                formik.touched.companySize && Boolean(formik.errors.companySize)
-              }
-              helperText={
-                formik.touched.companySize && formik.errors.companySize
-              }
+              required
+              onChange={handleCompanyFormDataChange}
+              value={companyFormData.companySize}
             >
               {companySizeOptions.map((category) => (
                 <MenuItem key={category.value} value={category.value}>
@@ -235,54 +276,39 @@ function CompanyInfoEditModal(props) {
           <TextField
             fullWidth
             label="Company Address"
-            id="companyAddress"
+            id="address"
+            name="address"
+            required
             multiline
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.companyAddress}
-            error={
-              formik.touched.companyAddress && !!formik.errors.companyAddress
-            }
-            helperText={
-              formik.touched.companyAddress && formik.errors.companyAddress
-            }
+            onChange={handleCompanyFormDataChange}
+            value={companyFormData.address}
           />
           <TextField
             fullWidth
             label="Company Website"
             multiline
-            id="companyWebsite"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.companyWebsite}
-            error={
-              formik.touched.companyWebsite && !!formik.errors.companyWebsite
-            }
-            helperText={
-              formik.touched.companyWebsite && formik.errors.companyWebsite
-            }
+            id="webSite"
+            name="webSite"
+            required
+            value={companyFormData.webSite}
+            onChange={handleCompanyFormDataChange}
           />
 
           <TextField
             fullWidth
             label="Contact Person Name"
             id="contactPersonName"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.contactPersonName}
-            error={
-              formik.touched.contactPersonName &&
-              !!formik.errors.contactPersonName
-            }
-            helperText={
-              formik.touched.contactPersonName &&
-              formik.errors.contactPersonName
-            }
+            name="contactPersonName"
+            required
+            onChange={handleCompanyFormDataChange}
+            value={companyFormData.contactPersonName}
           />
           <TextField
             fullWidth
             label="Contact Email"
-            id="contactEmail"
+            id="email"
+            name="email"
+            disabled
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -290,13 +316,8 @@ function CompanyInfoEditModal(props) {
                 </InputAdornment>
               ),
             }}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.contactEmail}
-            error={formik.touched.contactEmail && !!formik.errors.contactEmail}
-            helperText={
-              formik.touched.contactEmail && formik.errors.contactEmail
-            }
+            onChange={handleCompanyFormDataChange}
+            value={companyFormData.email}
           />
           {/* <PhoneInput
         id="contactPhone"
@@ -308,7 +329,9 @@ function CompanyInfoEditModal(props) {
           <TextField
             fullWidth
             label="Contact Phone"
-            id="contactPhone"
+            id="phoneNumber"
+            name="phoneNumber"
+            required
             type="number"
             // inputProps={{
             //   pattern: "[0-9]{3}-[0-9]{3}-[0-9]{4}",
@@ -321,13 +344,8 @@ function CompanyInfoEditModal(props) {
                 </InputAdornment>
               ),
             }}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.contactPhone}
-            error={formik.touched.contactPhone && !!formik.errors.contactPhone}
-            helperText={
-              formik.touched.contactPhone && formik.errors.contactPhone
-            }
+            onChange={handleCompanyFormDataChange}
+            value={companyFormData.phoneNumber}
           />
 
           {/* <TextField
@@ -361,13 +379,25 @@ function CompanyInfoEditModal(props) {
             control={<Checkbox />}
             label="I have read and agree to the terms"
           /> */}
+          {successMsg.companyInfoChangeSuccessMsg && (
+            <Typography variant="h7" color="green" align="center">
+              {successMsg.companyInfoChangeSuccessMsg}
+            </Typography>
+          )}
+          {errorMsg.companyInfoChangeErrorMsg && (
+            <Typography variant="h7" color="red" align="center">
+              {errorMsg.companyInfoChangeErrorMsg}
+            </Typography>
+          )}
           <Button
             type="submit"
             variant="contained"
             fullWidth
-            disabled={formik.isSubmitting}
+            disabled={isLoading.isCompanyFormDataSubmitting}
           >
-            Confirm the Changes
+            {isLoading.isCompanyFormDataSubmitting === true
+              ? "Please Wait.."
+              : "Confirm the Changes"}
           </Button>
         </FormControl>
       </Modal.Body>

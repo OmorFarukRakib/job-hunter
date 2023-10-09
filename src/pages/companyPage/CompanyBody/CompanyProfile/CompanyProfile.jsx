@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./companyProfile.module.css";
 import clsx from "clsx";
 import { Button, Divider } from "@mui/material";
 
 import CompanyInfoEditModal from "./components/CompanyInfoEditModal/CompanyInfoEditModal";
 import CompanyPassEditModal from "./components/CompanyPassEditModal/CompanyPassEditModal";
-const companyData = {
-  companyName: "ABC company",
-  industry: "option1",
-  companyDescription:
-    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet delectus corrupti velit itaque repellendus ipsa unde quo odio eligendi, fugiat consectetur blanditiis soluta quis hic corporis ipsum. Quo quod recusandae libero, error, molestias laudantium corrupti, dolorem sint explicabo voluptas eius. Ratione minus similique ea hic quasi libero alias impedit vero! Maxime expedita voluptate quam libero omnis obcaecati explicabo, accusamus asperiores amet pariatur fugiat. Sint incidunt beatae adipisci, maxime consectetur praesentium distinctio reiciendis natus quidem voluptatem officiis veniam iste iusto sunt in, similique vel nobis animi laudantium error. Consequatur quibusdam blanditiis autem est, ipsa ducimus iusto vel nemo nesciunt rerum molestias corrupti animi ratione",
-  companySize: "2",
-  companyAddress: "221B Baker Street, London",
-  companyWebsite: "company.com",
-  contactPersonName: "Mr. Brayan",
-  contactEmail: "ABCompany@gmail.com",
-  contactPhone: 880155555555,
-};
+import { useEffect } from "react";
+import apiConfig from "../../../../apiConfig";
+import axios from "axios";
+// const companyData = {
+//   companyName: "ABC company",
+//   industry: "option1",
+//   companyDescription:
+//     "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet delectus corrupti velit itaque repellendus ipsa unde quo odio eligendi, fugiat consectetur blanditiis soluta quis hic corporis ipsum. Quo quod recusandae libero, error, molestias laudantium corrupti, dolorem sint explicabo voluptas eius. Ratione minus similique ea hic quasi libero alias impedit vero! Maxime expedita voluptate quam libero omnis obcaecati explicabo, accusamus asperiores amet pariatur fugiat. Sint incidunt beatae adipisci, maxime consectetur praesentium distinctio reiciendis natus quidem voluptatem officiis veniam iste iusto sunt in, similique vel nobis animi laudantium error. Consequatur quibusdam blanditiis autem est, ipsa ducimus iusto vel nemo nesciunt rerum molestias corrupti animi ratione",
+//   companySize: "2",
+//   companyAddress: "221B Baker Street, London",
+//   companyWebsite: "company.com",
+//   contactPersonName: "Mr. Brayan",
+//   contactEmail: "ABCompany@gmail.com",
+//   contactPhone: 880155555555,
+// };
 
 const CompanyProfile = () => {
+  const [companyData, setCompanyData] = useState({});
+  const [fetchAgainFlag, setFetchAgainFlag] = useState(1);
   const { compID } = useParams();
   const [companyInfoEditModalShow, setCompanyInfoEditModalShow] =
     useState(false);
@@ -32,6 +37,34 @@ const CompanyProfile = () => {
   const companyPassEditHandler = () => {
     setCompanyPassEditModalShow(true);
   };
+  const navigate = useNavigate();
+  const fetchCompanyInfo = async () => {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    try {
+      const response = await axios({
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        // url: "https://be.jobspace.org.uk/api/v1/User/getCompanyInfo",
+        url: apiConfig.baseURL + apiConfig.company.getInfoByToken,
+      });
+      const res = response.data;
+      if (res.success === true) {
+        setCompanyData(res.data.company);
+      }
+    } catch (error) {
+      console.log("error in catch");
+    }
+  };
+
+  useEffect(() => {
+    console.log("this is company profile page for company id", compID);
+
+    fetchCompanyInfo();
+  }, [compID, fetchAgainFlag]);
 
   return (
     <>
@@ -39,10 +72,12 @@ const CompanyProfile = () => {
         show={companyInfoEditModalShow}
         onHide={setCompanyInfoEditModalShow}
         companyData={companyData}
+        setFetchAgainFlag={setFetchAgainFlag}
       />
       <CompanyPassEditModal
         show={companyPassEditModalShow}
         onHide={setCompanyPassEditModalShow}
+        setFetchAgainFlag={setFetchAgainFlag}
       />
       <h3 className={clsx(styles["companyProfile-tile"])}>
         Company Information
@@ -53,35 +88,23 @@ const CompanyProfile = () => {
             Company Name
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
-            ABC company
+            {companyData.name}
           </div>
         </div>
-        <div className={clsx(styles["companyProfile-Info"])}>
+        {/* <div className={clsx(styles["companyProfile-Info"])}>
           <div className={clsx(styles["companyProfile-info-title"])}>
             Industry
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
             Software Developer Company
           </div>
-        </div>
+        </div> */}
         <div className={clsx(styles["companyProfile-Info"])}>
           <div className={clsx(styles["companyProfile-info-title"])}>
             Company Descriptions
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet
-            delectus corrupti velit itaque repellendus ipsa unde quo odio
-            eligendi, fugiat consectetur blanditiis soluta quis hic corporis
-            ipsum. Quo quod recusandae libero, error, molestias laudantium
-            corrupti, dolorem sint explicabo voluptas eius. Ratione minus
-            similique ea hic quasi libero alias impedit vero! Maxime expedita
-            voluptate quam libero omnis obcaecati explicabo, accusamus
-            asperiores amet pariatur fugiat. Sint incidunt beatae adipisci,
-            maxime consectetur praesentium distinctio reiciendis natus quidem
-            voluptatem officiis veniam iste iusto sunt in, similique vel nobis
-            animi laudantium error. Consequatur quibusdam blanditiis autem est,
-            ipsa ducimus iusto vel nemo nesciunt rerum molestias corrupti animi
-            ratione
+            {companyData.description}
           </div>
         </div>
         <div className={clsx(styles["companyProfile-Info"])}>
@@ -89,7 +112,7 @@ const CompanyProfile = () => {
             Company Size
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
-            Medium
+            {companyData.companySize}
           </div>
         </div>
         <div className={clsx(styles["companyProfile-Info"])}>
@@ -97,7 +120,7 @@ const CompanyProfile = () => {
             Company Address
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
-            221B Baker Street, London
+            {companyData.address}
           </div>
         </div>
         <div className={clsx(styles["companyProfile-Info"])}>
@@ -111,7 +134,7 @@ const CompanyProfile = () => {
               rel="noopener noreferrer"
               style={{ color: "blue", textDecoration: "underline" }}
             >
-              company.com
+              {companyData.webSite}
             </a>
           </div>
         </div>
@@ -120,7 +143,7 @@ const CompanyProfile = () => {
             Contact Person Name
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
-            Mr. Brayan
+            {companyData.contactPersonName}
           </div>
         </div>
         <div className={clsx(styles["companyProfile-Info"])}>
@@ -128,7 +151,7 @@ const CompanyProfile = () => {
             Contact Email
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
-            ABCompany@gmail.com
+            {companyData.email}
           </div>
         </div>
         <div className={clsx(styles["companyProfile-Info"])}>
@@ -136,7 +159,7 @@ const CompanyProfile = () => {
             Contact Phone
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>
-            +880155555555
+            {companyData.phoneNumber}
           </div>
         </div>
         <div className={clsx(styles["companyProfile-actionbtn-wrapper"])}>

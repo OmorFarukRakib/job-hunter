@@ -4,6 +4,8 @@ import {
   MenuItem,
   InputLabel,
   Select,
+  Grid,
+  Typography,
 } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormControl } from "@mui/material";
@@ -18,89 +20,212 @@ import * as Yup from "yup";
 import "react-phone-number-input/style.css";
 import TermAndConditions from "../../../../TermsAndConditions/TermAndConditions";
 import { useState } from "react";
-
-const validationSchema = Yup.object({
-  companyName: Yup.string()
-    .required("Company name is required")
-    .max(50, "First name can not be longer than 50 letters"),
-  // industry: Yup.string()
-  //   .required("Last name is required")
-  //   .max(50, "Industry name can not be longer than 50 letters"),
-  companyWebsite: Yup.string()
-    .required("Last name is required")
-    .max(50, "Last name can not be longer than 50 letters"),
-  companyAddress: Yup.string()
-    .required("Last name is required")
-    .max(100, "Last name can not be longer than 100 letters"),
-  contactPhone: Yup.string()
-  .required("Last name is required")
-  .max(16, "phone number is too big"),
-  companyDescription: Yup.string()
-    .required("Last name is required")
-    .max(10000, "Last name can not be longer than 10000 letters"),
-  companySize: Yup.string()
-    .required("Last name is required")
-    .max(10000, "Last name can not be longer than 10000 letters"),
-  contactPersonName: Yup.string()
-    .required("Last name is required")
-    .max(50, "Last name can not be longer than 50 letters"),
-  contactEmail: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
-});
+import axios from "axios";
+import apiConfig from "../../../../../apiConfig";
 const industryOptions = [
-  { value: "option1", label: "Technology" },
-  { value: "option2", label: "Finance and Banking" },
-  { value: "option4", label: "Healthcare and Pharmaceuticals" },
-  { value: "option5", label: "Automotive" },
-  { value: "option6", label: "Energy and Utilities" },
-  { value: "option7", label: "Retail and E-commerce" },
-  { value: "option8", label: "Telecommunications" },
-  { value: "option9", label: "Aerospace and Defense" },
-  { value: "option10", label: "Media and Entertainment" },
-  { value: "option11", label: "Others" },
+  { value: "Technology", label: "Technology" },
+  { value: "Finance and Banking", label: "Finance and Banking" },
+  {
+    value: "Healthcare and Pharmaceuticals",
+    label: "Healthcare and Pharmaceuticals",
+  },
+  { value: "Automotive", label: "Automotive" },
+  { value: "Energy and Utilities", label: "Energy and Utilities" },
+  { value: "Retail and E-commerce", label: "Retail and E-commerce" },
+  { value: "Telecommunications", label: "Telecommunications" },
+  { value: "Aerospace and Defense", label: "Aerospace and Defense" },
+  { value: "Media and Entertainment", label: "Media and Entertainment" },
+  { value: "Others", label: "Others" },
 ];
 const companySizeOptions = [
-  { value: "1", label: "Small [less than 50]" },
-  { value: "2", label: "Medium [50-250]" },
-  { value: "3", label: "Large [more than 250]" },
+  { value: "small", label: "Small [less than 50]" },
+  { value: "medium", label: "Medium [50-250]" },
+  { value: "large", label: "Large [more than 250]" },
 ];
 
 const CompanyRegistrationForm = () => {
   const [openTermsAndConditions, setOpenTermsAndConditions] = useState(false);
-
-  const formik = useFormik({
-    initialValues: {
-      companyName: "",
-      industry: "",
-      companyWebsite: "",
-      companyAddress: "",
-      companyDescription: "",
-      companySize: "",
-      contactPersonName: "",
-      contactEmail: "",
-      contactPhone: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      console.log("ok");
-      console.log(JSON.stringify(values, null, 2));
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-      //   formik.resetForm();
-    },
+  const [regiFormData, setRegiFormData] = useState({
+    companyName: "",
+    // industry: "",
+    companyWebsite: "",
+    companyAddress: "",
+    companyDescription: "",
+    companySize: "",
+    contactPersonName: "",
+    contactEmail: "",
+    contactPhone: "",
+    password: "",
+    confirmPassword: "",
+    authCode: "",
   });
+  const [isRegiFormSubmitting, setIsRegiFormSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState({
+    verificationCodeLoading: false,
+  });
+  const [errorMsg, setErrorMsg] = useState({
+    emailCodeErrorMsg: "",
+    regiErrorMsg: "",
+  });
+  const [successMsg, setSuccessMsg] = useState({
+    emailCodeSuccessMsg: "",
+    RegiSuccessMsg: "",
+  });
+  // const formik = useFormik({
+  //   initialValues: {
+  //     companyName: "",
+  //     industry: "",
+  //     companyWebsite: "",
+  //     companyAddress: "",
+  //     companyDescription: "",
+  //     companySize: "",
+  //     contactPersonName: "",
+  //     contactEmail: "",
+  //     contactPhone: "",
+  //     password: "",
+  //     confirmPassword: "",
+  //   },
+  //   validationSchema: validationSchema,
+  //   onSubmit: (values, { setSubmitting }) => {
+  //     console.log("ok");
+  //     console.log(JSON.stringify(values, null, 2));
+  //     alert(JSON.stringify(values, null, 2));
+  //     setSubmitting(false);
+  //     //   formik.resetForm();
+  //   },
+  // });
   const handleOpenTermsAndConditions = () => {
     setOpenTermsAndConditions(true);
   };
+
+  const handleFormDataChange = (e) => {
+    const { name, value } = e.target;
+    setRegiFormData({
+      ...regiFormData,
+      [name]: value,
+    });
+  };
+
+  const handleEmailCodeSent = async () => {
+    setIsLoading({
+      ...isLoading,
+      verificationCodeLoading: true,
+    });
+    setErrorMsg({
+      ...errorMsg,
+      emailCodeErrorMsg: "",
+    });
+    setSuccessMsg({
+      ...successMsg,
+      emailCodeSuccessMsg: "",
+    });
+    // Call Email Sent Code API
+    try {
+      const response = await axios({
+        method: "post",
+        url:
+          apiConfig.baseURL +
+          apiConfig.auth.sendVerificationCode +
+          `?email=${regiFormData.contactEmail}`,
+        // data: {
+        //   email: regiFormData,
+        // },
+      });
+      console.log("email sent code api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setSuccessMsg({
+          ...successMsg,
+          emailCodeSuccessMsg:
+            "Verification Code has been sent to your email! Please check!",
+        });
+      } else {
+        setErrorMsg({
+          ...errorMsg,
+          emailCodeErrorMsg: "Something Went Wrong! Please Try Again!",
+        });
+      }
+    } catch (error) {
+      console.log("error from catch", error);
+      setErrorMsg({
+        ...errorMsg,
+        emailCodeErrorMsg: "Something Went Wrong! Please Try Again!",
+      });
+    }
+    setIsLoading({
+      ...isLoading,
+      verificationCodeLoading: false,
+    });
+    console.log("email code->");
+  };
+
+  const handleRegiFormSubmit = async (e) => {
+    e.preventDefault();
+    if (regiFormData.password !== regiFormData.confirmPassword) {
+      setErrorMsg({
+        ...errorMsg,
+        regiErrorMsg: "Sorry Password Does Not Match! Please Try Again!",
+      });
+      return;
+    }
+    setIsRegiFormSubmitting(true);
+    setErrorMsg({
+      ...errorMsg,
+      regiErrorMsg: "",
+    });
+    setSuccessMsg({
+      ...successMsg,
+      RegiSuccessMsg: "",
+    });
+    // Call API
+    try {
+      const response = await axios({
+        method: "post",
+        url: apiConfig.baseURL + apiConfig.auth.companyRegi,
+        data: {
+          name: regiFormData.companyName,
+          webSite: regiFormData.companyWebsite,
+          address: regiFormData.companyAddress,
+          description: regiFormData.companyDescription,
+          companySize: regiFormData.companySize,
+          contactPersonName: regiFormData.contactPersonName,
+          email: regiFormData.contactEmail,
+          phoneNumber: regiFormData.contactPhone,
+          password: regiFormData.password,
+          authCode: regiFormData.authCode,
+        },
+      });
+      const res = response.data;
+      console.log("submit response", res);
+      if (res.success === true) {
+        setSuccessMsg({
+          ...successMsg,
+          RegiSuccessMsg:
+            "Congratulations! Your account has been successfully created. Please login to continue",
+        });
+      } else {
+        if (res.errorCode === 102) {
+          setErrorMsg({
+            ...errorMsg,
+            regiErrorMsg: "Email Already registered! Try again with another email!",
+          });
+        } else {
+          setErrorMsg({
+            ...errorMsg,
+            regiErrorMsg: "Something Went Wrong! Please Try Again Later!",
+          });
+        }
+      }
+    } catch (error) {
+      setErrorMsg({
+        ...errorMsg,
+        regiErrorMsg: "Something Went Wrong! Please Try Again Later!",
+      });
+    }
+    console.log("regi submited");
+    setIsRegiFormSubmitting(false);
+  };
+
   // const customtextFieldComp = <TextField fullWidth id="contactPhone" />;
   return (
     <>
@@ -111,37 +236,20 @@ const CompanyRegistrationForm = () => {
       <FormControl
         className={clsx(styles["employeeRegistrationForm-control"])}
         component="form"
-        onSubmit={formik.handleSubmit}
+        onSubmit={handleRegiFormSubmit}
         fullWidth
       >
         <TextField
           fullWidth
           label="Company Name"
           id="companyName"
-          value={formik.values.companyName}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.companyName && !!formik.errors.companyName}
-          helperText={formik.touched.companyName && formik.errors.companyName}
+          required
+          name="companyName"
+          value={regiFormData.companyName}
+          onChange={handleFormDataChange}
         />
-        {/* <TextField
-        select
-        fullWidth
-        label="Industry"
-        id="industry"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.industry}
-        error={formik.touched.industry && !!formik.errors.industry}
-        helperText={formik.touched.industry && formik.errors.industry}
-        >
-        {industryOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-          {option.label}
-          </MenuItem>
-          ))}
-        </TextField> */}
-        <FormControl fullWidth>
+
+        {/* <FormControl fullWidth>
           <InputLabel id="industry-label">Industry</InputLabel>
           <Select
             labelId="Industry"
@@ -159,34 +267,18 @@ const CompanyRegistrationForm = () => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
-        {/* <TextField
-        fullWidth
-        label="Industry"
-        id="industry"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values.industry}
-        error={formik.touched.industry && !!formik.errors.industry}
-        helperText={formik.touched.industry && formik.errors.industry}
-      /> */}
+        </FormControl> */}
+
         <TextField
           fullWidth
           label="Company Description"
+          required
           multiline
           rows={10}
           id="companyDescription"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.companyDescription}
-          error={
-            formik.touched.companyDescription &&
-            !!formik.errors.companyDescription
-          }
-          helperText={
-            formik.touched.companyDescription &&
-            formik.errors.companyDescription
-          }
+          name="companyDescription"
+          onChange={handleFormDataChange}
+          value={regiFormData.companyDescription}
         />
         <FormControl fullWidth>
           <InputLabel id="company-label">Company Size</InputLabel>
@@ -195,13 +287,9 @@ const CompanyRegistrationForm = () => {
             label="Company Size"
             id="companySize"
             name="companySize"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.companySize}
-            error={
-              formik.touched.companySize && Boolean(formik.errors.companySize)
-            }
-            helperText={formik.touched.companySize && formik.errors.companySize}
+            required
+            onChange={handleFormDataChange}
+            value={regiFormData.companySize}
           >
             {companySizeOptions.map((category) => (
               <MenuItem key={category.value} value={category.value}>
@@ -214,64 +302,90 @@ const CompanyRegistrationForm = () => {
           fullWidth
           label="Company Address"
           id="companyAddress"
+          name="companyAddress"
+          required
           multiline
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.companyAddress}
-          error={
-            formik.touched.companyAddress && !!formik.errors.companyAddress
-          }
-          helperText={
-            formik.touched.companyAddress && formik.errors.companyAddress
-          }
+          onChange={handleFormDataChange}
+          value={regiFormData.companyAddress}
         />
         <TextField
           fullWidth
           label="Company Website"
           multiline
           id="companyWebsite"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.companyWebsite}
-          error={
-            formik.touched.companyWebsite && !!formik.errors.companyWebsite
-          }
-          helperText={
-            formik.touched.companyWebsite && formik.errors.companyWebsite
-          }
+          name="companyWebsite"
+          required
+          onChange={handleFormDataChange}
+          value={regiFormData.companyWebsite}
         />
 
         <TextField
           fullWidth
           label="Contact Person Name"
           id="contactPersonName"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.contactPersonName}
-          error={
-            formik.touched.contactPersonName &&
-            !!formik.errors.contactPersonName
-          }
-          helperText={
-            formik.touched.contactPersonName && formik.errors.contactPersonName
-          }
+          name="contactPersonName"
+          required
+          onChange={handleFormDataChange}
+          value={regiFormData.contactPersonName}
         />
+        <Grid
+          container
+          spacing={2}
+          justifyContent={"start"}
+          alignItems={"center"}
+        >
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Contact Email"
+              id="contactEmail"
+              name="contactEmail"
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon />
+                  </InputAdornment>
+                ),
+              }}
+              onChange={handleFormDataChange}
+              value={regiFormData.contactEmail}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Button
+              variant="outlined"
+              size="small"
+              disabled={
+                !regiFormData.contactEmail || isLoading.verificationCodeLoading
+              }
+              onClick={handleEmailCodeSent}
+            >
+              {isLoading.verificationCodeLoading === true
+                ? "Sending Verification Code.."
+                : "Send Code"}
+            </Button>
+          </Grid>
+        </Grid>
+        {successMsg.emailCodeSuccessMsg && (
+          <Typography variant="h7" color="green" align="center">
+            {successMsg.emailCodeSuccessMsg}
+          </Typography>
+        )}
+        {errorMsg.emailCodeErrorMsg && (
+          <Typography variant="h7" color="red" align="center">
+            {errorMsg.emailCodeErrorMsg}
+          </Typography>
+        )}
         <TextField
           fullWidth
-          label="Contact Email"
-          id="contactEmail"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon />
-              </InputAdornment>
-            ),
-          }}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.contactEmail}
-          error={formik.touched.contactEmail && !!formik.errors.contactEmail}
-          helperText={formik.touched.contactEmail && formik.errors.contactEmail}
+          label="Email Code"
+          // type="password"
+          id="authCode"
+          name="authCode"
+          required
+          onChange={handleFormDataChange}
+          value={regiFormData.authCode}
         />
         {/* <PhoneInput
         id="contactPhone"
@@ -284,6 +398,8 @@ const CompanyRegistrationForm = () => {
           fullWidth
           label="Contact Phone"
           id="contactPhone"
+          name="contactPhone"
+          required
           type="number"
           // inputProps={{
           //   pattern: "[0-9]{3}-[0-9]{3}-[0-9]{4}",
@@ -296,11 +412,8 @@ const CompanyRegistrationForm = () => {
               </InputAdornment>
             ),
           }}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.contactPhone}
-          error={formik.touched.contactPhone && !!formik.errors.contactPhone}
-          helperText={formik.touched.contactPhone && formik.errors.contactPhone}
+          onChange={handleFormDataChange}
+          value={regiFormData.contactPhone}
         />
 
         <TextField
@@ -308,26 +421,20 @@ const CompanyRegistrationForm = () => {
           type="password"
           label="Password"
           id="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          error={formik.touched.password && !!formik.errors.password}
-          helperText={formik.touched.password && formik.errors.password}
+          name="password"
+          required
+          onChange={handleFormDataChange}
+          value={regiFormData.password}
         />
         <TextField
           fullWidth
           label="ConfirmPassword"
           type="password"
           id="confirmPassword"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.confirmPassword}
-          error={
-            formik.touched.confirmPassword && !!formik.errors.confirmPassword
-          }
-          helperText={
-            formik.touched.confirmPassword && formik.errors.confirmPassword
-          }
+          name="confirmPassword"
+          required
+          onChange={handleFormDataChange}
+          value={regiFormData.confirmPassword}
         />
         <div style={{ display: "flex", alignItems: "center" }}>
           <FormControlLabel
@@ -346,11 +453,21 @@ const CompanyRegistrationForm = () => {
             show terms & conditions
           </div>
         </div>
+        {errorMsg.regiErrorMsg && (
+          <Typography variant="h7" color="red" align="center">
+            {errorMsg.regiErrorMsg}
+          </Typography>
+        )}
+        {successMsg.RegiSuccessMsg && (
+          <Typography variant="h7" color="green" align="center">
+            {successMsg.RegiSuccessMsg}
+          </Typography>
+        )}
         <Button
           type="submit"
           variant="contained"
           fullWidth
-          disabled={formik.isSubmitting}
+          disabled={isRegiFormSubmitting}
           sx={{
             padding: "0.7rem",
             borderRadius: "20px",
@@ -364,7 +481,7 @@ const CompanyRegistrationForm = () => {
             },
           }}
         >
-          Sign up
+          {isRegiFormSubmitting === true ? "Please Wait.." : "Sign up"}
         </Button>
       </FormControl>
     </>

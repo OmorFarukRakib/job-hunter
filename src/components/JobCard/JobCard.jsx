@@ -8,91 +8,68 @@ import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
-import { Button } from "@mui/material";
-const JobCard = ({ id }) => {
+import { Button, Typography } from "@mui/material";
+const JobCard = ({ job }) => {
   const navigate = useNavigate();
+  function formatDate(initialDate) {
+    const date = new Date(initialDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
   return (
     <div className={clsx(styles["job-card-wrapper"])}>
-      <div className={clsx(styles["job-card-title"])}>
-        Job Title {id} - Software Developer
-      </div>
+      <div className={clsx(styles["job-card-title"])}>{job.title}</div>
       <div className={clsx(styles["job-card-companyName"])}>
-        Company Name - X infra tech
+        Company Name - {job.companyName}
       </div>
       <div className={clsx(styles["job-card-location"])}>
-        location - USA, NY
+        location - {job.jobLocation}
       </div>
       <div className={clsx(styles["job-card-location"])}>
-        Deadline - 20/20/30
+        Deadline - {formatDate(job.applicationDeadline)}
       </div>
       <div className={clsx(styles["job-card-tags"])}>
         <div className={clsx(styles["job-card-tag"])}>
           <LocalAtmIcon fontSize="inherit" />
-          {` `}Estimated $100k - $200k per year
+          {` `}Estimated ${job.salaryEstimationStart} - $
+          {job.salaryEstimationEnd} per year
         </div>
-        <div className={clsx(styles["job-card-tag"])}>
+        {/* <div className={clsx(styles["job-card-tag"])}>
           <ManageAccountsIcon fontSize="inherit" />
           {` `}
           React
-        </div>
+        </div> */}
         <div className={clsx(styles["job-card-tag"])}>
           <BusinessCenterIcon fontSize="inherit" />
-          {` `}Full-Time
+          {` `}
+          {job.jobType}
         </div>
         <div className={clsx(styles["job-card-tag"])}>
           <PersonSearchIcon fontSize="inherit" />
           {` `}
-          Hiring - 4
+          Hiring - {job.totalHiringNumber}
         </div>
         <div className={clsx(styles["job-card-tag"])}>
           <WorkHistoryIcon fontSize="inherit" />
           {` `}
-          experience - 2+ years
+          experience - {job.totalExperienceInYears}+ years
         </div>
       </div>
       <div className={clsx(styles["job-card-description"])}>
-        We are seeking a Full Stack Developer Intern to work with us throughout
-        the school year. This internship will be a flexible schedule of 20-25
-        hours a week during business hours. This will be 100% remote. Lorem
-        ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem
-        incidunt repudiandae optio veritatis delectus assumenda asperiores
-        sequi, voluptatibus numquam ducimus rem architecto fuga consectetur
-        accusamus eligendi. Consectetur, voluptates itaque. Lorem ipsum dolor,
-        sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae
-        optio veritatis delectus assumenda asperiores sequi, voluptatibus
-        numquam ducimus rem architecto fuga consectetur accusamus eligendi.
-        Consectetur, voluptates itaque. Lorem ipsum dolor, sit amet consectetur
-        adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis
-        delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem
-        architecto fuga consectetur accusamus eligendi. Consectetur, voluptates
-        itaque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste
-        dolorem incidunt repudiandae optio veritatis delectus assumenda
-        asperiores sequi, voluptatibus numquam ducimus rem architecto fuga
-        consectetur accusamus eligendi. Consectetur, voluptates itaque. Lorem
-        ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem
-        incidunt repudiandae optio veritatis delectus assumenda asperiores
-        sequi, voluptatibus numquam ducimus rem architecto fuga consectetur
-        accusamus eligendi. Consectetur, voluptates itaque. Lorem ipsum dolor,
-        sit amet consectetur adipisicing elit. Iste dolorem incidunt repudiandae
-        optio veritatis delectus assumenda asperiores sequi, voluptatibus
-        numquam ducimus rem architecto fuga consectetur accusamus eligendi.
-        Consectetur, voluptates itaque. Lorem ipsum dolor, sit amet consectetur
-        adipisicing elit. Iste dolorem incidunt repudiandae optio veritatis
-        delectus assumenda asperiores sequi, voluptatibus numquam ducimus rem
-        architecto fuga consectetur accusamus eligendi. Consectetur, voluptates
-        itaque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste
-        dolorem incidunt repudiandae optio veritatis delectus assumenda
-        asperiores sequi, voluptatibus numquam ducimus rem architecto fuga
-        consectetur accusamus eligendi. Consectetur, voluptates itaque. Lorem
-        ipsum dolor, sit amet consectetur adipisicing elit. Iste dolorem
-        incidunt repudiandae optio veritatis delectus assumenda asperiores
-        sequi, voluptatibus numquam ducimus rem architecto fuga consectetur
-        accusamus eligendi. Consectetur, voluptates itaque.
+        <Typography variant="h6" color="initial">
+          Job Description
+        </Typography>
+        <Typography variant="h7" color="initial">
+          {job.jobDescription}
+        </Typography>
       </div>
       <div className={clsx(styles["job-card-details-btn-wrapper"])}>
         <Button
           variant="contained"
-          onClick={() => navigate(`/job/${id}`)}
+          onClick={() => navigate(`/job/${job.jobID}`)}
           sx={{
             padding: "0.7rem",
             borderRadius: "20px",

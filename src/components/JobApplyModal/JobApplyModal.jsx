@@ -8,7 +8,6 @@ import { Button } from "@mui/material";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 
-
 import { TextField, InputAdornment, Input, Typography } from "@mui/material";
 
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -24,7 +23,8 @@ import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-
+import axios from "axios";
+import apiConfig from "../../apiConfig";
 const validationSchema = Yup.object().shape({
   pdfFile: Yup.mixed()
     .required("PDF file is required")
@@ -49,14 +49,115 @@ const validationSchema = Yup.object().shape({
 // });
 
 function JobApplyModal(props) {
+  const [jobApplyFormData, setJobApplyFormData] = useState({
+    firstName: "",
+    lastName: "",
+    lastEducationDegree: "",
+    currentCompany: "",
+    experience: "",
+    totalExperienceInYear: "",
+    expectedSalary: "",
+    aboutMe: "",
+    email: "",
+    phoneNumber: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [cvPdfFile, setCvPdfFile] = useState(null);
   const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const handleApplyFormDataChange = (e) => {
+    const { name, value } = e.target;
+    setJobApplyFormData({
+      ...jobApplyFormData,
+      [name]: value,
+    });
+  };
   useEffect(() => {
-    console.log(cvPdfFile?.size)
-    if (cvPdfFile?.size >= "4012004") {
-      setError("PDF file size can not exceed 4MB");
-    }else{
-        setError("");
+    setIsSubmitting(false);
+    setError("");
+    setSuccessMsg("");
+    setJobApplyFormData({
+      firstName: "",
+      lastName: "",
+      lastEducationDegree: "",
+      currentCompany: "",
+      experience: "",
+      totalExperienceInYear: "",
+      expectedSalary: "",
+      aboutMe: "",
+      email: "",
+      phoneNumber: "",
+    });
+    setCvPdfFile(null);
+  }, [props.show]);
+
+  const handleApplyFormDataSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccessMsg("");
+    setIsSubmitting(true);
+    console.log("formData", jobApplyFormData);
+    console.log("cv data", cvPdfFile);
+    if (cvPdfFile === null) {
+      setError("No PDF File is uploaded");
+    }
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    console.log(cvPdfFile);
+    const formData = new FormData();
+    formData.append("cv", cvPdfFile);
+
+    try {
+      // const response = await axios({
+      //   method: "POST",
+      //   url:
+      //     apiConfig.baseURL +
+      //     apiConfig.employee.applyToJob +
+      //     `?jobId=${props.jobId}&firstName=${jobApplyFormData.firstName}&lastName=${jobApplyFormData.lastName}&lastEducationDegree=${jobApplyFormData.lastEducationDegree}&currentCompany=${jobApplyFormData.currentCompany}&experience=${jobApplyFormData.experience}&totalExperienceInYear=${jobApplyFormData.totalExperienceInYear}&expectedSalary=${jobApplyFormData.expectedSalary}&aboutMe=${jobApplyFormData.aboutMe}&email=${jobApplyFormData.email}&phoneNumber=${jobApplyFormData.phoneNumber}`,
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      //   "Content-Type": "multipart/form-data",
+      //   // data: formData,
+      // },
+      //   data: formData,
+      // });
+      const url =
+        apiConfig.baseURL +
+        apiConfig.employee.applyToJob +
+        `?jobId=${props.jobId}&firstName=${jobApplyFormData.firstName}&lastName=${jobApplyFormData.lastName}&lastEducationDegree=${jobApplyFormData.lastEducationDegree}&currentCompany=${jobApplyFormData.currentCompany}&experience=${jobApplyFormData.experience}&totalExperienceInYear=${jobApplyFormData.totalExperienceInYear}&expectedSalary=${jobApplyFormData.expectedSalary}&aboutMe=${jobApplyFormData.aboutMe}&email=${jobApplyFormData.email}&phoneNumber=${jobApplyFormData.phoneNumber}`;
+
+      const response = await axios.post(url, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+          // data: formData,
+        },
+      });
+      console.log("job details api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setSuccessMsg("Congratulations! The Job Application is submitted!");
+      } else {
+        if (res.errorCode === 701) {
+          setError("Already Applied for this Job");
+        } else {
+          setError("Something Went Wrong! Please Try Again Later!");
+        }
+      }
+    } catch (error) {
+      console.log("error from catch", error);
+      setError("Something Went Wrong! Please Try Again Later!");
+    }
+    setIsSubmitting(false);
+  };
+
+  useEffect(() => {
+    console.log(cvPdfFile?.size);
+    if (cvPdfFile?.size >= "1012004") {
+      setError("PDF file size can not exceed 1MB");
+    } else {
+      setError("");
     }
   }, [cvPdfFile]);
   const formik = useFormik({
@@ -65,7 +166,7 @@ function JobApplyModal(props) {
       lastName: "",
       lastEducationDegree: "",
       currentCompany: "",
-      totalExperience: "",
+      totalExperienceInYear: "",
       expectedSalary: "",
       aboutMe: "",
       email: "",
@@ -102,101 +203,87 @@ function JobApplyModal(props) {
     >
       <Modal.Header className="px-4" closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className="ms-auto">
-          Apply Form
+          Apply Form - {props.jobId}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <FormControl
           className={clsx(styles["jobPostCreateForm-control"])}
           component="form"
-          onSubmit={formik.handleSubmit}
+          onSubmit={handleApplyFormDataSubmit}
           fullWidth
         >
           <TextField
             required
             fullWidth
             id="firstName"
+            name="firstName"
             label="First Name"
-            value={formik.values.firstName}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.firstName && !!formik.errors.firstName}
-            helperText={formik.touched.firstName && formik.errors.firstName}
+            value={jobApplyFormData.firstName}
+            onChange={handleApplyFormDataChange}
+            // value={formik.values.firstName}
+            // onChange={formik.handleChange}
+            // onBlur={formik.handleBlur}
+            // error={formik.touched.firstName && !!formik.errors.firstName}
+            // helperText={formik.touched.firstName && formik.errors.firstName}
           />
           <TextField
             required
             fullWidth
             id="lastName"
+            name="lastName"
             label="Last Name"
-            value={formik.values.lastName}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.lastName && !!formik.errors.lastName}
-            helperText={formik.touched.lastName && formik.errors.lastName}
+            value={jobApplyFormData.lastName}
+            onChange={handleApplyFormDataChange}
           />
           <TextField
             required
             fullWidth
             id="lastEducationDegree"
+            name="lastEducationDegree"
             label="Last Education Degree"
-            value={formik.values.lastEducationDegree}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.lastEducationDegree &&
-              !!formik.errors.lastEducationDegree
-            }
-            helperText={
-              formik.touched.lastEducationDegree &&
-              formik.errors.lastEducationDegree
-            }
+            value={jobApplyFormData.lastEducationDegree}
+            onChange={handleApplyFormDataChange}
           />
           <TextField
             required
             fullWidth
             id="currentCompany"
+            name="currentCompany"
             label="Current Company"
-            value={formik.values.currentCompany}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.currentCompany && !!formik.errors.currentCompany
-            }
-            helperText={
-              formik.touched.currentCompany && formik.errors.currentCompany
-            }
+            value={jobApplyFormData.currentCompany}
+            onChange={handleApplyFormDataChange}
           />
           <TextField
             required
             fullWidth
-            id="totalExperience"
+            id="experience"
+            name="experience"
+            multiline
+            rows={5}
+            label="Share your experience"
+            value={jobApplyFormData.experience}
+            onChange={handleApplyFormDataChange}
+          />
+          <TextField
+            required
+            fullWidth
+            id="totalExperienceInYear"
+            name="totalExperienceInYear"
             label="Total Experience (year)"
             type="Number"
-            value={formik.values.totalExperience}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.totalExperience && !!formik.errors.totalExperience
-            }
-            helperText={
-              formik.touched.totalExperience && formik.errors.totalExperience
-            }
+            value={jobApplyFormData.totalExperienceInYear}
+            onChange={handleApplyFormDataChange}
           />
           <TextField
             required
             fullWidth
             type="Number"
             id="expectedSalary"
-            label="Expected Salary"
-            value={formik.values.expectedSalary}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.expectedSalary && !!formik.errors.expectedSalary
-            }
-            helperText={
-              formik.touched.expectedSalary && formik.errors.expectedSalary
-            }
+            name="expectedSalary"
+            label="Expected Salary Per Month"
+            value={jobApplyFormData.expectedSalary}
+            onChange={handleApplyFormDataChange}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
@@ -207,25 +294,22 @@ function JobApplyModal(props) {
             required
             fullWidth
             id="aboutMe"
+            name="aboutMe"
             label="About Me"
             multiline
             rows={10}
-            value={formik.values.aboutMe}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.aboutMe && !!formik.errors.aboutMe}
-            helperText={formik.touched.aboutMe && formik.errors.aboutMe}
+            value={jobApplyFormData.aboutMe}
+            onChange={handleApplyFormDataChange}
           />
           <TextField
             required
             fullWidth
             id="email"
+            name="email"
+            type="email"
             label="Contact Email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.email && !!formik.errors.email}
-            helperText={formik.touched.email && formik.errors.email}
+            value={jobApplyFormData.email}
+            onChange={handleApplyFormDataChange}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -239,12 +323,10 @@ function JobApplyModal(props) {
             fullWidth
             type="Number"
             id="phoneNumber"
+            name="phoneNumber"
             label="Contact Phone Number"
-            value={formik.values.phoneNumber}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.phoneNumber && !!formik.errors.phoneNumber}
-            helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
+            value={jobApplyFormData.phoneNumber}
+            onChange={handleApplyFormDataChange}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -293,7 +375,7 @@ function JobApplyModal(props) {
             type="submit"
             variant="contained"
             fullWidth
-            disabled={formik.isSubmitting || error.length > 0}
+            disabled={isSubmitting || error.length > 0}
           >
             Apply
           </Button>

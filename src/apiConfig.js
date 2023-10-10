@@ -26,6 +26,11 @@ const apiConfig = {
     updateInfo: "User/updateEmployeeInfo",
     updatePassword: "User/UpdatePassword",
     fetchAllAppliedJob: "User/getAppliedJobs",
+    applyToJob: "/User/ApplyToJob",
+  },
+  public: {
+    fetchAllJobPosts: "JobPost/fetchJobPosts",
+    fetchJobDetailsByID: "JobPost/fetchJobPostById",
   },
 };
 

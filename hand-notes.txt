@@ -2,6 +2,9 @@ JSON.parse(localStorage.getItem("JS_userData")
 localStorage.removeItem("JS_userData")
 
 
+1. Short list hoyna... success dekhay but short listed hoyna, may be isShortListed variable er nam vul ase, isShortlited hoye ase.. dekhish ata...
+
+2. 
 
 
 
@@ -9,3 +12,10 @@ __
 company
 const userData = JSON.parse(localStorage.getItem("JS_userData"));
     const token = userData.data.token.accessToken;
+
+<RiseLoader color="#F6953F" />
+
+
+
+user->
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyOGMwYTRkYS0xYTYwLTQ3ODUtYjExNi04MzIyYWUzM2YxOGEiLCJyb2xlIjoiRW1wbG95ZWUiLCJuYmYiOjE2OTY4NjUyNTcsImV4cCI6MTY5NzA0NTI1NywiaWF0IjoxNjk2ODY1MjU3fQ.G_1Qbme7ZTF7VTKrJrp4U8aEJZup32_jQSt7G6D5lm4

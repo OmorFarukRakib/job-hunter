@@ -38,27 +38,25 @@ function UserDetailsModal({ show, onHide, userData }) {
               First Name
             </div>
             <div className={clsx(styles["userProfile-info-value"])}>
-              {userData.firstName}
+              {userData.userName}
             </div>
           </div>
           <div className={clsx(styles["userProfile-Info"])}>
-            <div className={clsx(styles["userProfile-info-title"])}>
-              Last Name
-            </div>
+            <div className={clsx(styles["userProfile-info-title"])}>Email</div>
             <div className={clsx(styles["userProfile-info-value"])}>
-              {userData.lastName}
+              {userData.email}
             </div>
           </div>
           <div className={clsx(styles["userProfile-Info"])}>
             <div className={clsx(styles["userProfile-info-title"])}>Status</div>
             <div className={clsx(styles["userProfile-status-wrapper"])}>
-              <StatusDiv statusType={userData.status} />
+              <StatusDiv statusType={userData.profileStatus} />
             </div>
           </div>
-          <div className={clsx(styles["userProfile-Info"])}>
+          {/* <div className={clsx(styles["userProfile-Info"])}>
             <div className={clsx(styles["userProfile-info-title"])}>Skills</div>
             <div className={clsx(styles["userProfile-info-value"])}>
-              {/* {userData.skills.join(", ")} */}
+              
               OK
             </div>
           </div>
@@ -109,7 +107,7 @@ function UserDetailsModal({ show, onHide, userData }) {
             <div className={clsx(styles["userProfile-info-value"])}>
               {userData.phoneNumber}
             </div>
-          </div>
+          </div> */}
         </div>
       </Modal.Body>
       <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>

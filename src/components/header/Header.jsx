@@ -9,6 +9,7 @@ import SigninModal from "../signinModal/SigninModal";
 import { useEffect } from "react";
 import AccountMenuForCompany from "../AccountMenuForCompany/AccountMenuForCompany";
 import AccountMenuForUser from "../AccountMenuForUser/AccountMenuForUser";
+import AccountMenuForAdmin from "../AccountMenuForAdmin/AccountMenuForAdmin";
 const Header = () => {
   const [signinModalShow, setsigninModalShow] = useState(false);
   const [userData, setUserData] = useState(
@@ -29,6 +30,8 @@ const Header = () => {
       return <AccountMenuForCompany />;
     } else if (userData.data.userType === "Employee") {
       return <AccountMenuForUser />;
+    } else if (userData.data.userType === "Admin") {
+      return <AccountMenuForAdmin />;
     }
   };
   return (

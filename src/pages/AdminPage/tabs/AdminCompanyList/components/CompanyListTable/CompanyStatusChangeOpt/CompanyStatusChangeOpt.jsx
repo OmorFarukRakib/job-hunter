@@ -14,6 +14,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
+import axios from "axios";
+import apiConfig from "../../../../../../../apiConfig";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -65,41 +67,69 @@ export default function CustomizedMenus(props) {
   };
   const handleClose = (option) => {
     setAnchorEl(null);
-    props.handleSelectOption(option);
+    // props.handleSelectOption(option);
   };
-  const changeStatus = (newStatus) => {
-    console.log('this will be the new status', newStatus)
-    console.log("company name", props.companyID);
-  }
+  const changeStatus = async (newStatus) => {
+    console.log("this will be the new status", newStatus);
+    console.log("company Email", props.companyEmail);
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    try {
+      const response = await axios({
+        method: "PUT",
+        url:
+          apiConfig.baseURL +
+          apiConfig.admin.changeProfileStatus +
+          `?email=${props.companyEmail}&profielStatus=${newStatus}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("admin all company list api res", response);
+      const res = response.data;
+      if(res.success === true) {
+        props.setFetchAgain((prev) => prev + 1);
+      }else{
+        props.setFetchAgain((prev) => prev + 1);
+      }
+  
+      
+    } catch (error) {
+      console.log('error in catch', error)
+    }
+    
+    handleClose()
+  };
 
   const ActionOptions = (currentStatus) => {
-    if (currentStatus === "pending") {
+    if (currentStatus === "Pending") {
       return (
         <div>
-          <MenuItem onClick={() => changeStatus("active")} disableRipple>
+          <MenuItem onClick={() => changeStatus("Approved")} disableRipple>
             <CheckIcon />
             Accept
           </MenuItem>
           <Divider sx={{ my: 0.5 }} />
-          <MenuItem onClick={() => changeStatus("reject")} disableRipple>
+          <MenuItem onClick={() => changeStatus("Rejected")} disableRipple>
             <ClearIcon />
             Reject
           </MenuItem>
         </div>
       );
-    } else if (currentStatus === "active") {
+    } else if (currentStatus === "Approved") {
       return (
         <div>
-          <MenuItem onClick={() => changeStatus("reject")} disableRipple>
+          <MenuItem onClick={() => changeStatus("Rejected")} disableRipple>
             <ClearIcon />
             Reject
           </MenuItem>
         </div>
       );
-    } else if (currentStatus === "rejected") {
+    } else if (currentStatus === "Rejected") {
       return (
         <div>
-          <MenuItem onClick={() => changeStatus("active")} disableRipple>
+          <MenuItem onClick={() => changeStatus("Approved")} disableRipple>
             <CheckIcon />
             Accept
           </MenuItem>

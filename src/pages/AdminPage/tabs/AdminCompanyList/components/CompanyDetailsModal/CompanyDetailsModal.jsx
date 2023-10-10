@@ -30,14 +30,13 @@ function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        
         <div className={clsx(styles["companyProfile-wrapper"])}>
           <div className={clsx(styles["companyProfile-Info"])}>
             <div className={clsx(styles["companyProfile-info-title"])}>
               Company Name
             </div>
             <div className={clsx(styles["companyProfile-info-value"])}>
-              {companyDetailsData.companyName}
+              {companyDetailsData.userName}
             </div>
           </div>
           <div className={clsx(styles["companyProfile-Info"])}>
@@ -45,64 +44,22 @@ function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
               Status
             </div>
             <div className={clsx(styles["companyProfile-status-wrapper"])}>
-              <StatusDiv statusType={companyDetailsData.status} />
-              
+              <StatusDiv statusType={companyDetailsData.profileStatus} />
             </div>
           </div>
           <div className={clsx(styles["companyProfile-Info"])}>
             <div className={clsx(styles["companyProfile-info-title"])}>
-              Industry
+              Email
             </div>
             <div className={clsx(styles["companyProfile-info-value"])}>
-              Software Developer Company
+              {companyDetailsData.userName}
             </div>
           </div>
-          <div className={clsx(styles["companyProfile-Info"])}>
+          {/* <div className={clsx(styles["companyProfile-Info"])}>
             <div className={clsx(styles["companyProfile-info-title"])}>
               Company Descriptions
             </div>
             <div className={clsx(styles["companyProfile-info-value"])}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet
-              delectus corrupti velit itaque repellendus ipsa unde quo odio
-              eligendi, fugiat consectetur blanditiis soluta quis hic corporis
-              ipsum. Quo quod recusandae libero, error, molestias laudantium
-              corrupti, dolorem sint explicabo voluptas eius. Ratione minus
-              similique ea hic quasi libero alias impedit vero! Maxime expedita
-              voluptate quam libero omnis obcaecati explicabo, accusamus
-              asperiores amet pariatur fugiat. Sint incidunt beatae adipisci,
-              maxime consectetur praesentium distinctio reiciendis natus quidem
-              voluptatem officiis veniam iste iusto sunt in, similique vel nobis
-              animi laudantium error. Consequatur quibusdam blanditiis autem
-              est, ipsa ducimus iusto vel nemo nesciunt rerum molestias corrupti
-              animi rationeLorem ipsum dolor, sit amet consectetur adipisicing
-              elit. Amet delectus corrupti velit itaque repellendus ipsa unde
-              quo odio eligendi, fugiat consectetur blanditiis soluta quis hic
-              corporis ipsum. Quo quod recusandae libero, error, molestias
-              laudantium corrupti, dolorem sint explicabo voluptas eius. Ratione
-              minus similique ea hic quasi libero alias impedit vero! Maxime
-              expedita voluptate quam libero omnis obcaecati explicabo,
-              accusamus asperiores amet pariatur fugiat. Sint incidunt beatae
-              adipisci, maxime consectetur praesentium distinctio reiciendis
-              natus quidem voluptatem officiis veniam iste iusto sunt in,
-              similique vel nobis animi laudantium error. Consequatur quibusdam
-              blanditiis autem est, ipsa ducimus iusto vel nemo nesciunt rerum
-              molestias corrupti animi rationeLorem ipsum dolor, sit amet
-              consectetur adipisicing elit. Amet delectus corrupti velit itaque
-              repellendus ipsa unde quo odio eligendi, fugiat consectetur
-              blanditiis soluta quis hic corporis ipsum. Quo quod recusandae
-              libero, error, molestias laudantium corrupti, dolorem sint
-              explicabo voluptas eius. Ratione minus similique ea hic quasi
-              libero alias impedit vero! Maxime expedita voluptate quam libero
-              omnis obcaecati explicabo, accusamus asperiores amet pariatur
-              fugiat. Sint incidunt beatae adipisci, maxime consectetur
-              praesentium distinctio reiciendis natus quidem voluptatem officiis
-              veniam iste iusto sunt in, similique vel nobis animi laudantium
-              error. Consequatur quibusdam blanditiis autem est, ipsa ducimus
-              iusto vel nemo nesciunt rerum molestias corrupti animi
-              rationeLorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Amet delectus corrupti velit itaque repellendus ipsa unde quo odio
-              eligendi, fugiat consectetur blanditiis soluta quis hic corporis
-              ipsum. Quo quod recusandae libero, error, molestias laudantium
               corrupti, dolorem sint explicabo voluptas eius. Ratione minus
               similique ea hic quasi libero alias impedit vero! Maxime expedita
               voluptate quam libero omnis obcaecati explicabo, accusamus
@@ -168,7 +125,7 @@ function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
             <div className={clsx(styles["companyProfile-info-value"])}>
               +880155555555
             </div>
-          </div>
+          </div> */}
         </div>
       </Modal.Body>
       <Modal.Footer style={{ display: "flex", justifyContent: "center" }}>

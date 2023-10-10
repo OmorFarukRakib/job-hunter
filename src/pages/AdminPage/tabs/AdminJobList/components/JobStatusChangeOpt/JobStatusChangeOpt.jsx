@@ -15,7 +15,7 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 import axios from "axios";
-import apiConfig from "../../../../../../../apiConfig";
+import apiConfig from "../../../../../../apiConfig";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -71,7 +71,7 @@ export default function CustomizedMenus(props) {
   };
   const changeStatus = async (newStatus) => {
     console.log("this will be the new status", newStatus);
-    console.log("company Email", props.userEmail);
+    console.log("job id", props.jobID);
     const userData = JSON.parse(localStorage.getItem("JS_userData"));
     const token = userData.data.token.accessToken;
     try {
@@ -79,14 +79,14 @@ export default function CustomizedMenus(props) {
         method: "PUT",
         url:
           apiConfig.baseURL +
-          apiConfig.admin.changeProfileStatus +
-          `?email=${props.userEmail}&profielStatus=${newStatus}`,
+          apiConfig.admin.updateJobApprovalStatus +
+          `?jobId=${props.jobID}&JobStatus=${newStatus}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-      console.log("admin all company list api res", response);
+      console.log("admin job status change res", response);
       const res = response.data;
       if (res.success === true) {
         props.setFetchAgain((prev) => prev + 1);

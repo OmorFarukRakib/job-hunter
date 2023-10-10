@@ -56,8 +56,15 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
+    id: "experience",
+    label: "Experience",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
     id: "totalExperienceInYear",
-    label: "Total Experience",
+    label: "Total Experience in Year",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
@@ -69,13 +76,13 @@ const columns = [
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
-  {
-    id: "aboutMe",
-    label: "About Me",
-    minWidth: 170,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
+  // {
+  //   id: "aboutMe",
+  //   label: "About Me",
+  //   minWidth: 170,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
   {
     id: "contactEmail",
     label: "Email",
@@ -135,255 +142,7 @@ function createData(
   };
 }
 
-const rows = [
-  createData(
-    "1",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 1",
-    "USER@gmail.com",
-    "11111111111",
-    true
-  ),
-  createData(
-    "2",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 2",
-    "USER@gmail.com",
-    "11111111111",
-    true
-  ),
-  createData(
-    "3",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 3",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "4",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 4",
-    "USER@gmail.com",
-    "11111111111",
-    true
-  ),
-  createData(
-    "5",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "6",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "7",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "8",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "9",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "10",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "11",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "12",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "13",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "14",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "15",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "16",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "17",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "18",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "19",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-];
+
 
 function JobApplicantShortListedModal(props) {
   //   const { row } = props;
@@ -397,6 +156,7 @@ function JobApplicantShortListedModal(props) {
   const [selectedApplicantData, setSelectedApplicantData] = React.useState({});
   const [shortlistedApplicant, setShortlistedApplicant] = useState([]);
   const fetchShortApplicantList = async (jobID) => {
+    console.log(jobID)
     const userData = JSON.parse(localStorage.getItem("JS_userData"));
     const token = userData.data.token.accessToken;
     try {
@@ -466,11 +226,12 @@ function JobApplicantShortListedModal(props) {
             </IconButton>
           </TableCell>
 
-          <TableCell align="center">{applicant.id}</TableCell>
+          {/* <TableCell align="center">{applicant.id}</TableCell> */}
           <TableCell align="center">{applicant.firstName}</TableCell>
           <TableCell align="center">{applicant.lastName}</TableCell>
-          <TableCell align="center">{applicant.LastEducationDegree}</TableCell>
+          <TableCell align="center">{applicant.lastEducationDegree}</TableCell>
           <TableCell align="center">{applicant.currentCOmpany}</TableCell>
+          <TableCell align="center">{applicant.experience}</TableCell>
           <TableCell align="center">
             {applicant.totalExperienceInYear}
           </TableCell>
@@ -482,6 +243,7 @@ function JobApplicantShortListedModal(props) {
               variant="contained"
               size="small"
               endIcon={<CloudDownloadIcon />}
+              disabled
               onClick={() =>
                 console.log("cv download link", applicant.cvLocation)
               }
@@ -538,6 +300,7 @@ function JobApplicantShortListedModal(props) {
             show={showRemoveFromShortListModal}
             onHide={() => setShowRemoveFromShortListModal(false)}
             applicantData={selectedApplicantData}
+            setFetchAgain={setFetchAgain}
           />
           {shortlistedApplicant.length === 0 ? (
             <div>
@@ -567,14 +330,14 @@ function JobApplicantShortListedModal(props) {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows
-                        .filter((row) => row.isShortListed === true)
+                      {shortlistedApplicant
+                        .filter((row) => row.isShortlisted === true)
                         .slice(
                           page * rowsPerPage,
                           page * rowsPerPage + rowsPerPage
                         )
-                        .map((row) => (
-                          <Row key={row.id} row={row} />
+                        .map((applicant) => (
+                          <Row key={applicant.id} applicant={applicant} />
                         ))}
                     </TableBody>
                   </Table>
@@ -582,7 +345,7 @@ function JobApplicantShortListedModal(props) {
                 <TablePagination
                   rowsPerPageOptions={[10, 25, 100]}
                   component="div"
-                  count={rows.length}
+                  count={shortlistedApplicant.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}

@@ -16,7 +16,6 @@ const AppRouters = () => {
       <Route path="/" element={<Home />} />
       <Route path="/verify_registration" element={<VerifyRegistratiob />} />
       <Route path="/forgot_password" element={<ForgotPassword />} />
-      <Route path="/admin" element={<AdminPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/jobs" element={<Jobs />} />
 
@@ -25,6 +24,7 @@ const AppRouters = () => {
       {/* <Route path="/user/:userID" element={<Employer />} /> */}
       <Route path="/company/:compID" element={<CompanyPage />} />
       <Route path="/user/:userID" element={<UserPage />} />
+      <Route path="/admin/:adminID" element={<AdminPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

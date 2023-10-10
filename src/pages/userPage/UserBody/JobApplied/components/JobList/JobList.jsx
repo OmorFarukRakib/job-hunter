@@ -25,7 +25,7 @@ const JobList = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log("company info change api res", response);
+      console.log("user applied job api res", response);
       const res = response.data;
       if (res.success === true) {
         setAllJobsList(res.data.jobs);

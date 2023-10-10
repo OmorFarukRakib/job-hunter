@@ -10,6 +10,9 @@ import GlobalLoadingModal from "../../components/GlobalLoadingModal/GlobalLoadin
 import PasswordResetModal from "./components/passwordResetModal/PasswordResetModal";
 import Snackbar from '../../components/Snackbar/Snackbar'
 import styles from "./forgotPassword.module.css";
+import axios from "axios";
+import apiConfig from "../../apiConfig";
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState();
   const [OpenPasswordResetModal, setOpenPasswordResetModal] = useState(false);
@@ -43,9 +46,31 @@ const ForgotPassword = () => {
   const handleChange = (value) => {
     setEmail(value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log('submittted', email)
+    setLoading(true)
     e.preventDefault();
-    setOpenPasswordResetModal(true);
+    try {
+      const response = await axios({
+        method: "POST",
+        url:
+          apiConfig.baseURL +
+          apiConfig.auth.sendVerificationCode +
+          `?email=${email}`,
+        // url: apiConfig.baseURL + apiConfig.public.fetchAllJobPosts,
+      });
+      console.log("email verification api res", response);
+      const res = response.data;
+      if(res.success === true) {
+         setOpenPasswordResetModal(true);
+      }
+    } catch (error) {
+      console.log('error in catch', error)
+      
+    }
+    setLoading(false);
+
+   
     console.log("forgot password to", email);
   };
   return (
@@ -68,6 +93,7 @@ const ForgotPassword = () => {
       />
       <div className={clsx(styles["forgotPassword_wrapper"])}>
         <PasswordResetModal
+          email={email}
           show={OpenPasswordResetModal}
           onHide={() => setOpenPasswordResetModal(false)}
         />
@@ -75,7 +101,7 @@ const ForgotPassword = () => {
         <div className={clsx(styles["verify_text"])}>
           Provide the email for reseting the password
         </div>
-        <FormControl component="form" onSubmit={(e) => handleSubmit(e)}>
+        <FormControl component="form" onSubmit={handleSubmit}>
           <TextField
             fullWidth
             type="email"
@@ -113,7 +139,7 @@ const ForgotPassword = () => {
           >
             Send code
           </Button>
-          <Button onClick={handleShowLoading}>Show loading</Button>
+          {/* <Button onClick={handleShowLoading}>Show loading</Button> */}
         </FormControl>
       </div>
     </>

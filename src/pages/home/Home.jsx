@@ -73,7 +73,8 @@ const Home = () => {
         </Button>
         <Button
           variant="contained"
-          onClick={() => navigate("/jobs")}
+          // disabled
+          // onClick={() => navigate("/jobs")}
           style={{ marginLeft: "2rem" }}
           sx={{
             padding: "0.7rem",

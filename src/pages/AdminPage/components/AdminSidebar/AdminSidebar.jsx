@@ -6,7 +6,7 @@ import companyLogo from "../../../../../public/jobsearch.jpeg";
 // import companyLogo from "../../../../public/jobhunter.png";
 import styles from "./adminSidebar.module.css";
 import { Hidden } from "@mui/material";
-import { LuLayoutDashboard } from 'react-icons/lu';
+import { LuLayoutDashboard } from "react-icons/lu";
 import { GrProductHunt } from "react-icons/gr";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { AiOutlineOrderedList } from "react-icons/ai";
@@ -47,9 +47,8 @@ const AdminSidebar = () => {
     if (
       !searchParams.get("tab") ||
       // (searchParams.get("tab") !== "dashboard" &&
-      (
-        searchParams.get("tab") !== "companyList" &&
-        searchParams.get("tab") !== "userList" && 
+      (searchParams.get("tab") !== "companyList" &&
+        searchParams.get("tab") !== "userList" &&
         searchParams.get("tab") !== "jobList")
     ) {
       setSearchParams({
@@ -134,118 +133,6 @@ const AdminSidebar = () => {
             {" "}
             Job List
           </MenuItem>
-          {/* <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem>
-          <MenuItem> Calendar </MenuItem> */}
         </Menu>
       </Sidebar>
     </div>

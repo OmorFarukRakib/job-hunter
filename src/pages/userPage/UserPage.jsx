@@ -24,7 +24,7 @@ const UserPage = () => {
       localStorage.removeItem("JS_userData");
       navigate("/");
     }
-    if (userData.data.userType === "Company") {
+    if (userData.data.userType !== "Employee") {
       navigate("/");
     }
   }, []);

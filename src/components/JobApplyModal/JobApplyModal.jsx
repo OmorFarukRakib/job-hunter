@@ -129,7 +129,7 @@ function JobApplyModal(props) {
 
       const response = await axios.post(url, formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `bearer ${token}`,
           "Content-Type": "multipart/form-data",
           // data: formData,
         },
@@ -203,7 +203,8 @@ function JobApplyModal(props) {
     >
       <Modal.Header className="px-4" closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className="ms-auto">
-          Apply Form - {props.jobId}
+          Job Apply Form 
+          {/* - {props.jobId} */}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -348,7 +349,16 @@ function JobApplyModal(props) {
           </Button>
           {cvPdfFile ? <>{cvPdfFile.name} has been uploaded</> : ""}
           <br />
-          {error && <div style={{ color: "red" }}>{error}</div>}
+          {error && (
+            <Typography variant="h7" color="red" align="center">
+              {error}
+            </Typography>
+          )}
+          {successMsg && (
+            <Typography variant="h7" color="green" align="center">
+              {successMsg}
+            </Typography>
+          )}
           {/* <FormControl>
             <InputLabel htmlFor="file-upload">Select PDF File</InputLabel>
             <Input

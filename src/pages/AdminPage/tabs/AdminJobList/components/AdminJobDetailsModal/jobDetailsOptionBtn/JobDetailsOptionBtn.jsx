@@ -95,16 +95,16 @@ export default function CustomizedMenus(props) {
         </MenuItem> */}
         <MenuItem onClick={() => handleClose("applicants")} disableRipple>
           <FormatListBulletedIcon />
-          All Applicants
+          All Job Applicants Information
         </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
+        {/* <Divider sx={{ my: 0.5 }} />
         <MenuItem
           onClick={() => handleClose("short-listed-applicant")}
           disableRipple
         >
           <ChecklistIcon />
           Short-listed Applicants
-        </MenuItem>
+        </MenuItem> */}
         {/* <MenuItem onClick={() => handleClose("remove")} disableRipple>
           <DeleteForeverIcon />
           Remove

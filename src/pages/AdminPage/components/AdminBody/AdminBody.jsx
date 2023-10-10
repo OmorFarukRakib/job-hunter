@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useParams } from "react-router-dom";
 
 import AdminHeader from "../AdminHeader/AdminHeader";
 import styles from "./adminBody.module.css";
@@ -10,6 +10,20 @@ import AdminJobList from "../../tabs/AdminJobList/AdminJobList";
 const AdminBody = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedTab, setSelectedTab] = useState(null);
+const navigate = useNavigate();
+const { adminID } = useParams();
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    if (userData.data.userID === adminID) {
+      console.log("milse");
+    } else {
+      console.log("mile nai");
+      navigate(`/admin/${userData.data.userID}`);
+    }
+    console.log(adminID);
+  }, [adminID]);
+
   useEffect(() => {
     setSelectedTab(searchParams.get("tab"));
   }, [searchParams]);

@@ -43,8 +43,21 @@ const Jobs = () => {
     place: searchParams.get("place"),
   });
 
-  const searchJobListByQueries = () => {
-    navigate(`/jobs?type=${searchQuery.type}&place=${searchQuery.place}`);
+  const searchJobListByQueries = (e) => {
+    e.preventDefault()
+    if (searchQuery.type && searchQuery.place) {
+      // console.log('both exist')
+     navigate(`/jobs?type=${searchQuery.type}&place=${searchQuery.place}`);
+    } else if (searchQuery.type) {
+      // console.log('search query naiw')
+      navigate(`/jobs?type=${searchQuery.type}`);
+    } else if (searchQuery.place) {
+      navigate(`/jobs?place=${searchQuery.place}`);
+    } else {
+      navigate(`/jobs`);
+    }
+    window.location.reload();
+    // navigate(`/jobs?type=${searchQuery.type}&place=${searchQuery.place}`);
   };
   return (
     <div>
@@ -53,7 +66,7 @@ const Jobs = () => {
           <FormControl
             fullWidth
             component="form"
-            onSubmit={() => console.log("search")}
+            onSubmit={searchJobListByQueries}
           >
             <div className={styles["job-search-field-wrapper"]}>
               <CustomTextField
@@ -66,27 +79,27 @@ const Jobs = () => {
                   setSearchQuery({ ...searchQuery, type: e.target.value })
                 }
                 type="search"
-                required
+                // required
               />
 
               <CustomTextField
                 id="filled-basic"
                 label="Where?"
-                value={searchQuery.where}
+                value={searchQuery.place}
                 placeholder="City, State, Contry, or Remote"
                 variant="outlined"
                 onChange={(e) =>
                   setSearchQuery({ ...searchQuery, place: e.target.value })
                 }
                 type="search"
-                required
+                // required
               />
             </div>
             <div className={styles["search-btn-wrapper"]}>
               <Button
                 type="submit"
                 variant="contained"
-                onClick={() => searchJobListByQueries()}
+                // onClick={() => searchJobListByQueries()}
                 sx={{
                   padding: "0.7rem",
                   borderRadius: "20px",

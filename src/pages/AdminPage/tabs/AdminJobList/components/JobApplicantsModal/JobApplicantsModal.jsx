@@ -26,10 +26,12 @@ import Button from "@mui/material/Button";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 import AddToShortListModal from "./AddToShortListModal";
-
+import axios from "axios";
+import apiConfig from "../../../../../../apiConfig";
+import { useEffect, useState } from "react";
 
 const columns = [
-  { id: "id", label: "Id", minWidth: 50, align: "start" },
+  // { id: "id", label: "Id", minWidth: 50, align: "start" },
   { id: "firstName", label: "First Name", minWidth: 170, align: "center" },
   {
     id: "lastName",
@@ -39,22 +41,29 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "LastEducationDegree",
+    id: "lastEducationDegree",
     label: "Last Education Degree",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "currentCompany",
+    id: "currentCOmpany",
     label: "Current Company",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "totalExp",
-    label: "Total Experience",
+    id: "experience",
+    label: "Experience",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "totalExperienceInYear",
+    label: "Total Experience in Year",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
@@ -66,313 +75,48 @@ const columns = [
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
+  // {
+  //   id: "aboutMe",
+  //   label: "About Me",
+  //   minWidth: 170,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
   {
-    id: "email",
+    id: "contactEmail",
     label: "Email",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "phone",
+    id: "contactPhoneNumber",
     label: "Phone",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
+  // {
+  //   id: "isShortlisted",
+  //   label: "is Short Listed",
+  //   minWidth: 170,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
   {
-    id: "downloadCVbtn",
+    id: "actions",
+    label: "Short List Status",
+    minWidth: 170,
+    align: "center",
+    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "cvLocation",
     label: "Download CV",
     minWidth: 170,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
-  // {
-  //   id: "actions",
-  //   label: "Actions",
-  //   minWidth: 170,
-  //   align: "center",
-  //   format: (value) => value.toLocaleString("en-US"),
-  // },
-];
-
-function createData(
-  id,
-  firstName,
-  lastName,
-  LastEducationDegree,
-  currentCompany,
-  totalExp,
-  expectedSalary,
-  aboutMe,
-  email,
-  phone,
-  isShortListed
-) {
-  //   const density = population / size;
-  return {
-    id,
-    firstName,
-    lastName,
-    LastEducationDegree,
-    currentCompany,
-    totalExp,
-    expectedSalary,
-    aboutMe,
-    email,
-    phone,
-    isShortListed,
-  };
-}
-
-const rows = [
-  createData(
-    "1",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 1",
-    "USER@gmail.com",
-    "11111111111",
-    true
-  ),
-  createData(
-    "2",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 2",
-    "USER@gmail.com",
-    "11111111111",
-    true
-  ),
-  createData(
-    "3",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 3",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "4",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION 4",
-    "USER@gmail.com",
-    "11111111111",
-    true
-  ),
-  createData(
-    "5",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "6",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "7",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "8",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "9",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "10",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "11",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "12",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "13",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "14",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "15",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "16",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "17",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "18",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
-  createData(
-    "19",
-    "Jhon",
-    "Doe",
-    "Bsc at CSE",
-    "ABC Company",
-    "3 years",
-    "50,000",
-    "ABOUT ME SECTION",
-    "USER@gmail.com",
-    "11111111111",
-    false
-  ),
 ];
 
 function JobApplicantModal(props) {
@@ -380,8 +124,42 @@ function JobApplicantModal(props) {
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [showAddToShortListModal, setShowAddToShortListModal] = React.useState(false)
-  const [selectedApplicantData, setSelectedApplicantData ] =  React.useState({})
+  const [showAddToShortListModal, setShowAddToShortListModal] =
+    React.useState(false);
+  const [selectedApplicantData, setSelectedApplicantData] = React.useState({});
+  const [allApplicantList, setAllApplicantList] = useState([]);
+
+  const fetchAllApplicantList = async (jobID) => {
+    const userData = JSON.parse(localStorage.getItem("JS_userData"));
+    const token = userData.data.token.accessToken;
+    try {
+      const response = await axios({
+        method: "GET",
+        url:
+          apiConfig.baseURL +
+          apiConfig.company.getAllApplicantList +
+          `?jobId=${jobID}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("all applicant fetch api res", response);
+      const res = response.data;
+      if (res.success === true) {
+        setAllApplicantList(res.data.jobs);
+      } else {
+        console.log("res -> false");
+      }
+    } catch (error) {
+      console.log("first from catch", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllApplicantList(props.jobID);
+  }, [props]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -391,18 +169,17 @@ function JobApplicantModal(props) {
     setPage(0);
   };
 
-
   const handleAddToShortListBtn = (applicantData) => {
-    setSelectedApplicantData(applicantData)
-     setShowAddToShortListModal(true)
-  }
+    setSelectedApplicantData(applicantData);
+    setShowAddToShortListModal(true);
+  };
   React.useEffect(() => {
-setSelectedApplicantData({})
-  }, showAddToShortListModal)
+    setSelectedApplicantData({});
+  }, [showAddToShortListModal]);
 
   // Row component Render
   function Row(props) {
-    const { row } = props;
+    const { applicant } = props;
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -419,90 +196,77 @@ setSelectedApplicantData({})
             </IconButton>
           </TableCell>
 
-          <TableCell align="center">{row.id}</TableCell>
-          <TableCell align="center">{row.firstName}</TableCell>
-          <TableCell align="center">{row.lastName}</TableCell>
-          <TableCell align="center">{row.LastEducationDegree}</TableCell>
-          <TableCell align="center">{row.currentCompany}</TableCell>
-          <TableCell align="center">{row.totalExp}</TableCell>
-          <TableCell align="center">{row.expectedSalary}</TableCell>
-          <TableCell align="center">{row.email}</TableCell>
-          <TableCell align="center">{row.phone}</TableCell>
+          <TableCell align="center">{applicant?.firstName}</TableCell>
+          <TableCell align="center">{applicant?.lastName}</TableCell>
+          <TableCell align="center">{applicant?.lastEducationDegree}</TableCell>
+          <TableCell align="center">{applicant?.currentCOmpany}</TableCell>
+          <TableCell align="center">{applicant?.experience}</TableCell>
+          <TableCell align="center">
+            {applicant?.totalExperienceInYear}
+          </TableCell>
+          <TableCell align="center">{applicant?.expectedSalary}</TableCell>
+          <TableCell align="center">{applicant?.contactEmail}</TableCell>
+          <TableCell align="center">{applicant?.contactPhoneNumber}</TableCell>
+
+          <TableCell align="center">
+            {applicant.isShortlisted === true ? (
+              <div
+                style={{
+                  padding: "1rem",
+                  background: "rgba(0, 128, 0, 0.738)",
+                  borderRadius: "10px",
+                  color: "white",
+                }}
+              >
+                Short-listed
+              </div>
+            ) : (
+              // <Button
+              //   variant="contained"
+              //   disabled
+              //   size="small"
+              //   endIcon={<CheckBoxIcon />}
+              // >
+              //   Short-listed
+              // </Button>
+              <div
+                style={{
+                  padding: "1rem",
+                  background: "rgba(128, 128, 128, 0.765)",
+                  borderRadius: "10px",
+                  color: "white",
+                }}
+              >
+                Not Short-listed
+              </div>
+              // <Button
+              //   variant="contained"
+              //   size="small"
+              //   disabled
+              //   endIcon={<GradingIcon />}
+              //   // onClick={() => handleAddToShortListBtn(row)}
+              // >
+              //   Add to Shortlist
+              // </Button>
+            )}
+          </TableCell>
           <TableCell align="center">
             <Button
               variant="contained"
               size="small"
               endIcon={<CloudDownloadIcon />}
+              disabled
             >
               Download
             </Button>
           </TableCell>
-          {/* <TableCell align="center">
-            {row.isShortListed === true ? (
-              <Button
-                variant="contained"
-                disabled
-                size="small"
-                endIcon={<CheckBoxIcon />}
-              >
-                Short-listed
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                size="small"
-                endIcon={<GradingIcon />}
-                onClick={() => handleAddToShortListBtn(row)}
-              >
-                Add to Shortlist
-              </Button>
-            )}
-          </TableCell> */}
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="p" gutterBottom component="div">
-                  {row.aboutMe}
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-                  nisi fugit iusto nemo delectus incidunt quibusdam nihil
-                  debitis excepturi ducimus nam dolores amet explicabo, quod
-                  tenetur ipsum illum. Eius tenetur minima ipsa adipisci
-                  molestiae libero, quidem magnam, repellat a corrupti atque
-                  aspernatur quam consequuntur veniam facere dolores unde. Dicta
-                  reprehenderit reiciendis necessitatibus ipsam eius, expedita
-                  eveniet quod dolores dolor molestiae placeat quis vero vel
-                  quos amet eaque eos hic nostrum. Modi assumenda consectetur
-                  ratione asperiores quia aliquid ea! Maxime voluptatibus, earum
-                  tempora, nihil alias provident, optio iste suscipit sequi rem
-                  illum voluptas voluptatum debitis esse architecto laboriosam
-                  fugit recusandae harum. Sit culpa id odit, quisquam aperiam
-                  quasi repudiandae iure tempore voluptatibus quidem ipsa,
-                  dolore ipsam tempora nihil porro ab. Possimus odit commodi
-                  provident quos explicabo! Reprehenderit possimus fuga quam,
-                  dignissimos numquam velit praesentium, dolore blanditiis saepe
-                  aut quidem sunt fugit. Deserunt dignissimos voluptatum ea
-                  fugit ullam ducimus dicta, voluptatem delectus facere animi
-                  hic possimus enim excepturi quo at. Numquam omnis doloremque
-                  impedit cumque repellendus maiores beatae magni minima fuga
-                  debitis ipsum officiis temporibus quisquam, voluptatibus
-                  eveniet minus eligendi officia rem optio facere veritatis. Ex
-                  esse dolorem, iusto placeat ad aliquid, in saepe maiores atque
-                  nostrum eum sint quam animi a recusandae inventore, quisquam
-                  fugit! Dolore, ratione commodi. Optio nulla dolore dolorem ab
-                  quisquam eos non vero quam, ut quod officiis numquam
-                  repellendus! Voluptatem nesciunt architecto eaque, dolorem
-                  reprehenderit facere, tenetur facilis nam alias nihil,
-                  deserunt quisquam tempora corporis. Ab ad eum iusto aut,
-                  explicabo, amet iste omnis illum quam laboriosam ratione id
-                  laudantium? Quia cupiditate quasi magni odio soluta corrupti
-                  hic necessitatibus dolorem ad rem porro omnis adipisci aliquid
-                  eius, nihil beatae rerum ullam quas saepe eum modi
-                  reprehenderit. Voluptas dignissimos repellendus, laboriosam
-                  quaerat iusto cupiditate obcaecati labore aut facere, esse
-                  dolorum, consequatur ipsa dolorem debitis culpa hic repellat
-                  enim?
+                  {applicant.aboutMe}
                 </Typography>
               </Box>
             </Collapse>
@@ -520,16 +284,15 @@ setSelectedApplicantData({})
       //   dialogClassName="modal-90w"
       dialogClassName="custom-modal-for-jobApplicant"
       aria-labelledby="contained-modal-title-vcenter"
-      centered
+      centered="true"
       backdrop="static"
       keyboard="false"
-      
     >
       <Modal.Header className="px-4" closeButton>
         <Modal.Title
           className="ms-auto"
           id="contained-modal-title-vcenter"
-          centered
+          centered="true"
         >
           All applicants list
         </Modal.Title>
@@ -541,44 +304,57 @@ setSelectedApplicantData({})
             onHide={() => setShowAddToShortListModal(false)}
             applicantData={selectedApplicantData}
           />
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align={"center"} style={{ minWidth: 150 }}>
-                      About Applicant
-                    </TableCell>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ minWidth: column.minWidth }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
-                      <Row key={row.id} row={row} />
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
+          {allApplicantList.length === 0 ? (
+            <>
+              <Typography variant="h6" align="center" color="red">
+                No Applicant
+              </Typography>
+            </>
+          ) : (
+            <>
+              <Paper sx={{ width: "100%", overflow: "hidden" }}>
+                <TableContainer sx={{ maxHeight: 440 }}>
+                  <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align={"center"} style={{ minWidth: 150 }}>
+                          About Applicant
+                        </TableCell>
+                        {columns.map((column) => (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{ minWidth: column.minWidth }}
+                          >
+                            {column.label}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {allApplicantList
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((applicant) => (
+                          <Row key={applicant.id} applicant={applicant} />
+                        ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TablePagination
+                  rowsPerPageOptions={[10, 25, 100]}
+                  component="div"
+                  count={allApplicantList.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </Paper>
+            </>
+          )}
         </>
       </Modal.Body>
       {/* <Modal.Footer>

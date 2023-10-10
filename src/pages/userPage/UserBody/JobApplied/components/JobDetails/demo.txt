@@ -1,0 +1,72 @@
+<div className={clsx(styles["job-page-wrapper"])}>
+        <div className={clsx(styles["job-ad-wrapper"])}>
+          <p style={{ textAlign: "center", color: "#232758" }}>
+            You have already applied to this Job
+          </p>
+          <h1 style={{ textAlign: "center" }}>
+            {/* Job Title - Software Developer - {jobID} */}
+            {jobDetails.title}
+          </h1>
+          {/* <div className={clsx(styles["jobDetailsOptionBtn-wrapper"])}>
+            <JobDetailsOptionBtn handleSelectOption={handleSelectOption} />
+          </div> */}
+          <div className={clsx(styles["job-ad-companyName"])}>
+            Company Name - {jobDetails.companyName}
+          </div>
+          <div className={clsx(styles["job-ad-deadline"])}>
+            Application deadline- 20-20-25
+          </div>
+          <div className={clsx(styles["job-ad-apply-btn-wrapper"])}>
+            <Button variant="contained" disabled>
+              Apply From Company Site
+            </Button>
+            <Button variant="contained" disabled>
+              Apply From Job-hunter
+            </Button>
+          </div>
+          <div className={clsx(styles["job-ad-description-wrapper"])}>
+            <div className={clsx(styles["job-ad-tags-wrapper"])}>
+              <div className={clsx(styles["job-ad-tag"])}>
+                <div>
+                  <LocalAtmIcon fontSize="inherit" />
+                  {` `}
+                  Salary Estimation
+                </div>
+                <div>$100k - $200k per year</div>
+              </div>
+              <div className={clsx(styles["job-ad-tag"])}>
+                <div>
+                  <ManageAccountsIcon fontSize="inherit" />
+                  {` `}
+                  Skill Required
+                </div>
+                <div>React</div>
+              </div>
+              <div className={clsx(styles["job-ad-tag"])}>
+                <div>
+                  <BusinessCenterIcon fontSize="inherit" />
+                  {` `}
+                  Job Type
+                </div>
+                <div>Full-Time</div>
+              </div>
+              <div className={clsx(styles["job-ad-tag"])}>
+                <div>
+                  <PersonSearchIcon fontSize="inherit" />
+                  {` `}
+                  Total Hiring
+                </div>
+                <div>4</div>
+              </div>
+              <div className={clsx(styles["job-ad-tag"])}>
+                <div>
+                  <WorkHistoryIcon fontSize="inherit" />
+                  {` `}
+                  Required Experience
+                </div>
+                <div>2+ years</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

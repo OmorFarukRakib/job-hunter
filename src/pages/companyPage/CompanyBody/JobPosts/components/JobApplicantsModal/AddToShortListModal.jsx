@@ -41,8 +41,10 @@ function AddToShortListModal(props) {
         method: "GET",
         url:
           apiConfig.baseURL +
-          apiConfig.company.getAllApplicantList +
-          `?jobId=${applicantForShortList.jobId}&candidatesId=${applicantForShortList.id}&isShortlisted=${true}`,
+          apiConfig.company.shortListCandidate +
+          `?jobId=${applicantForShortList.jobId}&candidatesId=${
+            applicantForShortList.appliedBy
+          }&isShortlisted=${true}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -54,6 +56,10 @@ function AddToShortListModal(props) {
         setSuccessMsg("Successfully added to shortlist");
         props.setFetchAgain((prev) => prev + 1);
       } else {
+        console.log(
+          applicantForShortList.jobId,
+          applicantForShortList.appliedBy
+        );
         setErrorMsg("Something Went Wrong! Please try Again Later!");
       }
     } catch (error) {
@@ -100,12 +106,12 @@ function AddToShortListModal(props) {
           {applicantForShortList.lastName}
         </Typography>
         {errorMsg.length > 0 && (
-          <Typography variant="h7" color="red" align="">
+          <Typography variant="h6" color="red" align="center">
             {errorMsg}
           </Typography>
         )}
         {successMsg.length > 0 && (
-          <Typography variant="h7" color="green" align="center">
+          <Typography variant="h6" color="green" align="center">
             {successMsg}
           </Typography>
         )}

@@ -5,6 +5,7 @@ const apiConfig = {
     userRegi: "Auth/user-registration",
     companyRegi: "Auth/company-registration",
     sendVerificationCode: "Auth/send-verification-code",
+    passwordReset: "Auth/ResetPassword",
   },
   company: {
     getInfoByToken: "User/getCompanyInfo",
@@ -19,6 +20,7 @@ const apiConfig = {
     getAllApplicantList: "JobPost/getAllAplicantsByJob",
     getShortListedApplicantList: "JobPost/getShortlistedApplicant",
     deleteJobPost: "JobPost/deleteJobPost",
+    shortListCandidate: "JobPost/shortlistCandidate",
   },
   employee: {
     getInfoByToken: "User/getEmployeeInfo",
@@ -26,11 +28,19 @@ const apiConfig = {
     updateInfo: "User/updateEmployeeInfo",
     updatePassword: "User/UpdatePassword",
     fetchAllAppliedJob: "User/getAppliedJobs",
-    applyToJob: "/User/ApplyToJob",
+    applyToJob: "User/ApplyToJob",
+    getJobDetailsByID: "JobPost/fetchJobPostById",
   },
   public: {
     fetchAllJobPosts: "JobPost/fetchJobPosts",
     fetchJobDetailsByID: "JobPost/fetchJobPostById",
+  },
+  admin: {
+    fetchAllCompanyData: "User/getUsersList?userType=Company",
+    fetchAllUserData: "User/getUsersList?userType=Employee",
+    changeProfileStatus: "User/Update-User-Access",
+    fetchAllJobs: "JobPost/fetchJobPostsAsAdmin",
+    updateJobApprovalStatus: "JobPost/updateJobApprovalStatus",
   },
 };
 

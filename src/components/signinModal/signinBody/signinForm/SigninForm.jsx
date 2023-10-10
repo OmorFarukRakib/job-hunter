@@ -89,14 +89,24 @@ const LoginForm = (props) => {
       });
       const res = response.data;
       if (res.success === true) {
-        localStorage.setItem("JS_userData", JSON.stringify(res));
-        props.modalHideFun();
-        if (res.data.userType === "Company") {
-          navigate(`/company/${res.data.userID}`);
+        if (res.data.profileStatus === "Approved"){
+           localStorage.setItem("JS_userData", JSON.stringify(res));
+           props.modalHideFun();
+           if (res.data.userType === "Company") {
+             navigate(`/company/${res.data.userID}`);
+           } else if (res.data.userType === "Employee") {
+             navigate(`/user/${res.data.userID}`);
+           } else if (res.data.userType === "Admin") {
+             navigate(`/admin/${res.data.userID}`);
+           }
+
+        }else{
+          setErrorMsg({
+            loginErrorMsg:
+              "The Acount is not Approved by the Admin! Please wait or contact the Admin",
+          });
         }
-        else if (res.data.userType === "Employee") {
-          navigate(`/user/${res.data.userID}`);
-        }
+         
       } else {
         setErrorMsg({
           loginErrorMsg:

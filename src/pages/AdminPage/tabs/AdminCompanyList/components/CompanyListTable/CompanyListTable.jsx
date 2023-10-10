@@ -14,32 +14,33 @@ import CompanyDeleteModal from "../CompanyDeleteModal/CompanyDeleteModal";
 import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
 import CompanyStatusChangeOpt from "./CompanyStatusChangeOpt/CompanyStatusChangeOpt";
 import styles from "./companyListTable.module.css";
+import { useEffect } from "react";
 const columns = [
-  { id: "companyName", label: "Company Name", minWidth: 100, align: "center" },
-  { id: "industry", label: "Industry", minWidth: 100, align: "center" },
+  // { id: "companyName", label: "Company Name", minWidth: 100, align: "center" },
+  // { id: "industry", label: "Industry", minWidth: 100, align: "center" },
+  // {
+  //   id: "companyAddress",
+  //   label: "Company Address",
+  //   minWidth: 100,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
   {
-    id: "companyAddress",
-    label: "Company Address",
-    minWidth: 100,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "contactPersonName",
+    id: "userName",
     label: "Contact Person Name",
     minWidth: 100,
     align: "center",
     format: (value) => value.toFixed(2),
   },
   {
-    id: "contactEmail",
-    label: "Contact Email",
+    id: "email",
+    label: "Email",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "status",
+    id: "profileStatus",
     label: "Status",
     minWidth: 100,
     align: "center",
@@ -65,112 +66,22 @@ function createData(
   };
 }
 
-const rows = [
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "pending"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "active"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "rejected"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "pending"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "active"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "rejected"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "pending"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "active"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "rejected"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "pending"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "active"
-  ),
-  createData(
-    "X-Company",
-    "IT",
-    "138-street",
-    "Mr Jhon",
-    "jhon@xcompany.com",
-    "rejected"
-  ),
-];
 
-export default function CompanyListTable() {
+
+export default function CompanyListTable(props) {
   const [companyDetailsData, setCompanyDetailsData] = useState({});
+  const [allCompanyData, setAllCompanyData] = useState([])
   const [companyDetailsModalShow, setCompanyDetailsModalShow] = useState(false);
   const [companyIDForDelete, setCompanyIDForDelete] = useState();
   const [companyDeleteModalShow, setCompanyDeleteModalShow] = useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+
+  useEffect(() => {
+    setAllCompanyData(props.allCompanyData);
+  }, [props])
+
 
   const openCompanyDetailsModalHandler = (row) => {
     setCompanyDetailsModalShow(true);
@@ -228,7 +139,7 @@ export default function CompanyListTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {allCompanyData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
@@ -246,12 +157,13 @@ export default function CompanyListTable() {
                             {/* {column.format && typeof value === "number"
                               ? column.format(value)
                               : value} */}
-                            {column.id === "status" ? (
+                            {column.id === "profileStatus" ? (
                               <div className={styles["statusColumn-wrapper"]}>
                                 <StatusDiv statusType={value} />
                                 <CompanyStatusChangeOpt
-                                  companyID={row["companyName"]}
+                                  companyEmail={row.email}
                                   currentStatus={value}
+                                  setFetchAgain={props.setFetchAgain}
                                 />
                               </div>
                             ) : (
@@ -288,7 +200,7 @@ export default function CompanyListTable() {
                           >
                             Details
                           </Button>
-                          <Button
+                          {/* <Button
                             variant="outlined"
                             color="error"
                             onClick={() =>
@@ -296,7 +208,7 @@ export default function CompanyListTable() {
                             }
                           >
                             Delete
-                          </Button>
+                          </Button> */}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -308,7 +220,7 @@ export default function CompanyListTable() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={allCompanyData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

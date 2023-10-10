@@ -10,7 +10,12 @@ import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 
 import AdminJobDetailsModal from "../AdminJobDetailsModal/AdminJobDetailsModal";
-import AdminJobDeleteModal from "../AdminJobDeleteModal/AdminJobDeleteModal"
+import AdminJobDeleteModal from "../AdminJobDeleteModal/AdminJobDeleteModal";
+import { useState } from "react";
+import { useEffect } from "react";
+import JobStatusChangeOpt from "../JobStatusChangeOpt/JobStatusChangeOpt";
+import styles from "./jobListTable.module.css";
+import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
 const columns = [
   {
     id: "companyName",
@@ -18,34 +23,41 @@ const columns = [
     minWidth: 100,
     align: "center",
   },
-  { id: "industry", label: "Industry", minWidth: 100, align: "center" },
   {
-    id: "jobTitle",
+    id: "title",
     label: "Job Title",
     minWidth: 100,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "jobType",
-    label: "Job Type",
+    id: "industry",
+    label: "Industry",
     minWidth: 100,
     align: "center",
-    format: (value) => value.toString(),
   },
   {
-    id: "salary_Estimation",
-    label: "Salary Estimation",
+    id: "companyEmail",
+    label: "Company Email",
     minWidth: 100,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "companyPhoneNumber",
+    label: "Company Contact Number",
+    minWidth: 100,
+    align: "center",
   },
   {
     id: "applicationDeadline",
     label: "Application Deadline",
     minWidth: 100,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+  },
+  {
+    id: "jobPostStatus",
+    label: "Status",
+    minWidth: 100,
+    align: "center",
   },
 ];
 
@@ -68,59 +80,25 @@ function createData(
   };
 }
 
-const rows = [
-  createData(
-    "X Company",
-    "IT",
-    "Software Developer",
-    "Full-Time",
-    "1500",
-    "2000",
-    "12-12-23"
-  ),
-  createData(
-    "X Company",
-    "IT",
-    "Software Developer",
-    "Full-Time",
-    "1500",
-    "2000",
-    "12-12-23"
-  ),
-  createData(
-    "X Company",
-    "IT",
-    "Software Developer",
-    "Full-Time",
-    "1500",
-    "2000",
-    "12-12-23"
-  ),
-  createData(
-    "X Company",
-    "IT",
-    "Software Developer",
-    "Full-Time",
-    "1500",
-    "2000",
-    "12-12-23"
-  ),
-  createData(
-    "X Company",
-    "IT",
-    "Software Developer",
-    "Full-Time",
-    "1500",
-    "2000",
-    "12-12-23"
-  ),
-];
-
-export default function JobListTable() {
+export default function JobListTable(props) {
+  const [jobDataforDetailsModal, setJobDataforDetailsModal] = useState({})
+  const [allJobsData, setAllJobsData] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [showJobDetailsModal, setShowJobDetailsModal] = React.useState(false);
-  const [showJobDeleteModal, setShowJobDeleteModal] = React.useState(false)
+  const [showJobDeleteModal, setShowJobDeleteModal] = React.useState(false);
+
+  useEffect(() => {
+    setAllJobsData(props.allJobsData);
+  }, [props]);
+  function formatDate(initialDate) {
+    const date = new Date(initialDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Add 1 to month since it's zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -130,12 +108,13 @@ export default function JobListTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const handleJobDetailsModalOpen = () => {
-    setShowJobDetailsModal(true)
-  }
+  const handleJobDetailsModalOpen = (jobDetails) => {
+    setJobDataforDetailsModal(jobDetails)
+    setShowJobDetailsModal(true);
+  };
   const handleJobDeleteModalOpen = () => {
     setShowJobDeleteModal(true);
-  }
+  };
 
   return (
     <>
@@ -147,7 +126,7 @@ export default function JobListTable() {
       <AdminJobDetailsModal
         show={showJobDetailsModal}
         onHide={() => setShowJobDetailsModal(false)}
-        jobDetailsData={null}
+        jobDetailsData={jobDataforDetailsModal}
       />
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: "70vh" }}>
@@ -173,7 +152,7 @@ export default function JobListTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {allJobsData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
@@ -185,14 +164,31 @@ export default function JobListTable() {
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
+                        // console.log(value);
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
+                            {column.id === "jobPostStatus" ? (
+                              <div className={styles["statusColumn-wrapper"]}>
+                                <StatusDiv statusType={value} />
+                                <JobStatusChangeOpt
+                                  jobID={row.jobID}
+                                  currentStatus={value}
+                                  setFetchAgain={props.setFetchAgain}
+                                />
+                              </div>
+                            ) : (
+                              <>
+                                {column.id === "applicationDeadline" ? (
+                                  <>{formatDate(value)}</>
+                                ) : (
+                                  <>{value}</>
+                                )}
+                              </>
+                            )}
                           </TableCell>
                         );
                       })}
+
                       <TableCell
                         key={"action"}
                         align={"right"}
@@ -207,7 +203,7 @@ export default function JobListTable() {
                         >
                           <Button
                             variant="contained"
-                            onClick={handleJobDetailsModalOpen}
+                            onClick={() => handleJobDetailsModalOpen(row)}
                             sx={{
                               background: "#F6953F",
                               color: "white",
@@ -221,13 +217,13 @@ export default function JobListTable() {
                           >
                             Details
                           </Button>
-                          <Button
+                          {/* <Button
                             variant="outlined"
                             color="error"
                             onClick={handleJobDeleteModalOpen}
                           >
                             Delete
-                          </Button>
+                          </Button> */}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -239,7 +235,7 @@ export default function JobListTable() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={allJobsData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

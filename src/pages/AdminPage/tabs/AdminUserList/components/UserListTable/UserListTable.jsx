@@ -14,15 +14,23 @@ import UserDeleteModal from "../UserDeleteModal/UserDeleteModal";
 import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
 import UserStatusChangeOpt from './UserStatusChangeOpt/UserStatusChangeOpt'
 import styles from './userListTable.module.css'
+import { useEffect } from "react";
 const columns = [
-  { id: "firstName", label: "First Name", minWidth: 100, align: "center" },
-  { id: "lastName", label: "Last Name", minWidth: 100, align: "center" },
+  // { id: "firstName", label: "First Name", minWidth: 100, align: "center" },
+  // { id: "lastName", label: "Last Name", minWidth: 100, align: "center" },
+  // {
+  //   id: "aimedIndustry",
+  //   label: "Industry",
+  //   minWidth: 100,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
   {
-    id: "aimedIndustry",
-    label: "Industry",
+    id: "userName",
+    label: "User Name",
     minWidth: 100,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+    format: (value) => value.toFixed(2),
   },
   {
     id: "email",
@@ -31,15 +39,15 @@ const columns = [
     align: "center",
     format: (value) => value.toFixed(2),
   },
+  // {
+  //   id: "phone",
+  //   label: "Phone",
+  //   minWidth: 100,
+  //   align: "center",
+  //   format: (value) => value.toLocaleString("en-US"),
+  // },
   {
-    id: "phone",
-    label: "Phone",
-    minWidth: 100,
-    align: "center",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "status",
+    id: "profileStatus",
     label: "Status",
     minWidth: 100,
     align: "center",
@@ -47,49 +55,30 @@ const columns = [
   },
 ];
 
-function createData(firstName, lastName, aimedIndustry, email, phone, status) {
-  return {
-    firstName,
-    lastName,
-    aimedIndustry,
-    email,
-    phone,
-    status
-  };
-}
+// function createData(firstName, lastName, aimedIndustry, email, phone, status) {
+//   return {
+//     firstName,
+//     lastName,
+//     aimedIndustry,
+//     email,
+//     phone,
+//     status
+//   };
+// }
 
-const rows = [
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'pending'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'active'),
-  createData("Mr. Jhon", "Joe", "IT", "jhon@xcompany.com", "0199999999", 'rejected'),
-  
-];
 
-export default function UserListTable() {
+export default function UserListTable(props) {
   const [userDetailsData, setUserDetailsData] = useState({});
+  const [allUserData, setAllUserData] = useState([])
   const [userDetailsModalShow, setUserDetailsModalShow] = useState(false);
 const [userIDForDelete, setUserIDForDelete] = useState();
 const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+ useEffect(() => {
+   setAllUserData(props.allUserData);
+ }, [props]);
 
   const openUserDetailsModalHandler = (row) => {
     setUserDetailsModalShow(true);
@@ -146,7 +135,7 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {allUserData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
@@ -163,12 +152,13 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                             {/* {column.format && typeof value === "number"
                               ? column.format(value)
                               : value} */}
-                            {column.id === "status" ? (
+                            {column.id === "profileStatus" ? (
                               <div className={styles["statusColumn-wrapper"]}>
                                 <StatusDiv statusType={value} />
                                 <UserStatusChangeOpt
-                                  userID={row["firstName"]}
+                                  userEmail={row.email}
                                   currentStatus={value}
+                                  setFetchAgain={props.setFetchAgain}
                                 />
                               </div>
                             ) : (
@@ -206,7 +196,7 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                           >
                             Details
                           </Button>
-                          <Button
+                          {/* <Button
                             variant="outlined"
                             color="error"
                             onClick={() =>
@@ -214,7 +204,7 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                             }
                           >
                             Delete
-                          </Button>
+                          </Button> */}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -226,7 +216,7 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={allUserData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

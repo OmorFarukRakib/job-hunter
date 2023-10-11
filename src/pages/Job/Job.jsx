@@ -34,7 +34,7 @@ const Job = () => {
     }
   };
   const goToCompanyJobPortalSite = (jobPortalLink) => {
-    console.log('should go to new tab with new link', jobPortalLink)
+    console.log("should go to new tab with new link", jobPortalLink);
     window.open(jobPortalLink, "_blank", "noopener");
   };
   const fetchJobDetails = async (jobID) => {
@@ -124,24 +124,30 @@ const Job = () => {
                     Application deadline -{" "}
                     {formatDate(jobDetails.applicationDeadline)}
                   </div>
-                  {userData.data.userType === "Employee" ? <div className={clsx(styles["job-ad-apply-btn-wrapper"])}>
-                    <Button
-                      variant="contained"
-                      disabled={jobDetails.companyJobApplyUrl.length === 0}
-                      onClick={() =>
-                        goToCompanyJobPortalSite(jobDetails.companyJobApplyUrl)
-                      }
-                    >
-                      Apply From Company Site
-                    </Button>
-                    <Button
-                      variant="contained"
-                      onClick={handleApplyJobFromJobSpace}
-                    >
-                      Apply From Job-hunter
-                    </Button>
-                  </div> : null}
-                  
+                  {userData?.data?.userType === "Employee" ? (
+                    <div className={clsx(styles["job-ad-apply-btn-wrapper"])}>
+                      <Button
+                        variant="contained"
+                        disabled={jobDetails.companyJobApplyUrl.length === 0}
+                        onClick={() =>
+                          goToCompanyJobPortalSite(
+                            jobDetails.companyJobApplyUrl
+                          )
+                        }
+                      >
+                        Apply From Company Site
+                      </Button>
+                      <Button
+                        variant="contained"
+                        onClick={handleApplyJobFromJobSpace}
+                      >
+                        Apply From Job-hunter
+                      </Button>
+                    </div>
+                  ) : (
+                    <Typography variant="h6" color="red">Login to Apply</Typography>
+                  )}
+
                   <div className={clsx(styles["job-ad-description-wrapper"])}>
                     <div className={clsx(styles["job-ad-tags-wrapper"])}>
                       <div className={clsx(styles["job-ad-tag"])}>

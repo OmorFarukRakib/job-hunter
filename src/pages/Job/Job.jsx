@@ -34,9 +34,19 @@ const Job = () => {
     }
   };
   const goToCompanyJobPortalSite = (jobPortalLink) => {
-    console.log("should go to new tab with new link", jobPortalLink);
-    window.open(jobPortalLink, "_blank", "noopener");
+    // const jobPortalLink = "https://www.google.com";
+    if (jobPortalLink.startsWith("http")) {
+      window.open(jobPortalLink, "_blank");
+    } else if (jobPortalLink.startsWith("www")) {
+      window.open(`https://${jobPortalLink}`, "_blank");
+    } else {
+      window.open(`https://www.${jobPortalLink}`, "_blank");
+    }
+    // const link = "www.google.com/?gws_rd=ssl";
+    // console.log("should go to new tab with new link", link);
+    // window.open(link, "_blank", "noopener");
   };
+
   const fetchJobDetails = async (jobID) => {
     setIsLoading(true);
     try {
@@ -145,7 +155,9 @@ const Job = () => {
                       </Button>
                     </div>
                   ) : (
-                    <Typography variant="h6" color="red">Login to Apply</Typography>
+                    <Typography variant="h6" color="red">
+                      Login to Apply
+                    </Typography>
                   )}
 
                   <div className={clsx(styles["job-ad-description-wrapper"])}>

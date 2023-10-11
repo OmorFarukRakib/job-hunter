@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import companyLogo from "../../../../public/xCompany.png";
 // import companyLogo from "../../../../public/jobhunter.png";
 import styles from "./companySidebar.module.css";
-import { Hidden } from "@mui/material";
+import { Grid, Hidden, Typography } from "@mui/material";
 
 const CompanySidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -66,7 +66,12 @@ const CompanySidebar = () => {
         }}
       >
         <div className={clsx(styles["company-logo-wrapper"])}>
-          <img src={companyLogo} alt="companylogo" />
+          {/* <h2 style={{ color: "white" }}>Company Panel</h2> */}
+          <Grid container justifyContent={'center'} alignContent={'center'} mt={2}>
+
+          <Typography variant="h5" align="center" color="white">Company Panel</Typography>
+          </Grid>
+          {/* <img src={companyLogo} alt="companylogo" /> */}
         </div>
         <Menu className={clsx(styles["companySidebar-wrapper"])}>
           {/* <SubMenu label="Job section">

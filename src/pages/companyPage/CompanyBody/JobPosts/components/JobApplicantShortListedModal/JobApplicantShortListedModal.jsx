@@ -244,6 +244,16 @@ function JobApplicantShortListedModal(props) {
               size="small"
               endIcon={<CloudDownloadIcon />}
               onClick={() => downloadCV(applicant.cvLocation)}
+              sx={{
+                background: "#F6953F",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#f6943fbc",
+
+                  borderColor: "#0062cc",
+                  boxShadow: "none",
+                },
+              }}
             >
               Download
             </Button>
@@ -254,6 +264,7 @@ function JobApplicantShortListedModal(props) {
               size="small"
               endIcon={<DeleteForeverIcon />}
               onClick={() => handleRemoveFromShortListBtn(applicant)}
+              color="error"
             >
               Remove
             </Button>
@@ -312,7 +323,14 @@ function JobApplicantShortListedModal(props) {
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                       <TableRow>
-                        <TableCell align={"center"} style={{ minWidth: 150 }}>
+                        <TableCell
+                          align={"center"}
+                          style={{ minWidth: 150 }}
+                          sx={{
+                            backgroundColor: "#643393",
+                            color: "white",
+                          }}
+                        >
                           About Applicant
                         </TableCell>
                         {columns.map((column) => (
@@ -320,6 +338,10 @@ function JobApplicantShortListedModal(props) {
                             key={column.id}
                             align={column.align}
                             style={{ minWidth: column.minWidth }}
+                            sx={{
+                              backgroundColor: "#643393",
+                              color: "white",
+                            }}
                           >
                             {column.label}
                           </TableCell>

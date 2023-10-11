@@ -26,6 +26,10 @@ function RemoveFromShortListModal(props) {
       setApplicantForShortList(props.applicantData);
     }
   }, [props]);
+   useEffect(() => {
+     setErrorMsg("");
+     setSuccessMsg("");
+   }, [props.show]);
   const handleRemoveFromShortList = async () => {
     const userData = JSON.parse(localStorage.getItem("JS_userData"));
     const token = userData.data.token.accessToken;

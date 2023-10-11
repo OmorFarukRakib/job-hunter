@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import RegistrationForm from "../../components/signinModal/signinBody/RegistrationForm/EmployeeRegistrationForm/EmployeeRegistrationForm";
+import { useEffect, useState } from "react";
 
 const CustomMUIBtn = styled(Button)({
   backgroundColor: "#4CAF50",
@@ -28,6 +29,12 @@ const CustomMUIBtn = styled(Button)({
 
 const Home = () => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState("");
+  useEffect(() => {
+    if (localStorage.getItem("JS_userData")) {
+      setUserData(JSON.parse(localStorage.getItem("JS_userData")));
+    }
+  }, []);
   return (
     <div className={styles["home-wrapper"]}>
       <h1
@@ -73,13 +80,14 @@ const Home = () => {
         </Button>
         <Button
           variant="contained"
-          // disabled
-          // onClick={() => navigate("/jobs")}
+          disabled={userData?.data?.userType !== "Company"}
+          onClick={() => navigate(`/company/${userData?.data?.userID}`)}
           style={{ marginLeft: "2rem" }}
           sx={{
             padding: "0.7rem",
             borderRadius: "20px",
             background: "#643393",
+
             color: "white",
             "&:hover": {
               backgroundColor: "#653393cf",

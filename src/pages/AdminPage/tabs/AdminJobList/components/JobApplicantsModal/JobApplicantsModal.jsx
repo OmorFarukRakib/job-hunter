@@ -129,6 +129,18 @@ function JobApplicantModal(props) {
     React.useState(false);
   const [selectedApplicantData, setSelectedApplicantData] = React.useState({});
   const [allApplicantList, setAllApplicantList] = useState([]);
+  const [ApplicantCount, setApplicantCount] = useState({
+    allApplicant: 0,
+    shortlisted: 0,
+  });
+  useEffect(() => {
+    setApplicantCount({
+      allApplicant: allApplicantList.length,
+      shortlisted: allApplicantList.filter(
+        (item) => item.isShortlisted === true
+      ).length,
+    });
+  }, [allApplicantList]);
 
   const fetchAllApplicantList = async (jobID) => {
     const userData = JSON.parse(localStorage.getItem("JS_userData"));
@@ -257,6 +269,16 @@ function JobApplicantModal(props) {
               size="small"
               endIcon={<CloudDownloadIcon />}
               onClick={() => downloadCV(applicant?.cvLocation)}
+              sx={{
+                background: "#F6953F",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#f6943fbc",
+
+                  borderColor: "#0062cc",
+                  boxShadow: "none",
+                },
+              }}
             >
               Download
             </Button>
@@ -314,11 +336,23 @@ function JobApplicantModal(props) {
           ) : (
             <>
               <Paper sx={{ width: "100%", overflow: "hidden" }}>
+                <Typography variant="h8" color="initial" p={2}>
+                  Total Applicant: {ApplicantCount.allApplicant}, Total
+                  Shortlisted Applicant: {ApplicantCount.shortlisted}
+                </Typography>
+
                 <TableContainer sx={{ maxHeight: 440 }}>
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                       <TableRow>
-                        <TableCell align={"center"} style={{ minWidth: 150 }}>
+                        <TableCell
+                          align={"center"}
+                          style={{ minWidth: 150 }}
+                          sx={{
+                            backgroundColor: "#643393",
+                            color: "white",
+                          }}
+                        >
                           About Applicant
                         </TableCell>
                         {columns.map((column) => (
@@ -326,6 +360,10 @@ function JobApplicantModal(props) {
                             key={column.id}
                             align={column.align}
                             style={{ minWidth: column.minWidth }}
+                            sx={{
+                              backgroundColor: "#643393",
+                              color: "white",
+                            }}
                           >
                             {column.label}
                           </TableCell>

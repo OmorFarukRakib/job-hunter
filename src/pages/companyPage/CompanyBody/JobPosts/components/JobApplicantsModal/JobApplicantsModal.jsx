@@ -5,7 +5,7 @@ import clsx from "clsx";
 import styles from "./jobApplicantModal.module.css";
 
 // Table
-import React  from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 
 import Paper from "@mui/material/Paper";
@@ -121,18 +121,29 @@ const columns = [
   },
 ];
 
-
 function JobApplicantModal(props) {
   //   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [ fetchAgain, setFetchAgain] = useState(1)
+  const [fetchAgain, setFetchAgain] = useState(1);
   const [showAddToShortListModal, setShowAddToShortListModal] =
     React.useState(false);
   const [selectedApplicantData, setSelectedApplicantData] = React.useState({});
 
-  const [allApplicantList, setAllApplicantList] = useState([])
+  const [allApplicantList, setAllApplicantList] = useState([]);
+  const [ApplicantCount, setApplicantCount] = useState({
+    allApplicant: 0,
+    shortlisted: 0,
+  });
+  useEffect(() => {
+    setApplicantCount({
+      allApplicant: allApplicantList.length,
+      shortlisted: allApplicantList.filter(
+        (item) => item.isShortlisted === true
+      ).length,
+    });
+  }, [allApplicantList]);
 
   const fetchAllApplicantList = async (jobID) => {
     const userData = JSON.parse(localStorage.getItem("JS_userData"));
@@ -140,35 +151,30 @@ function JobApplicantModal(props) {
     try {
       const response = await axios({
         method: "GET",
-        url: apiConfig.baseURL + apiConfig.company.getAllApplicantList + `?jobId=${jobID}`,
+        url:
+          apiConfig.baseURL +
+          apiConfig.company.getAllApplicantList +
+          `?jobId=${jobID}`,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        
       });
       console.log("all applicant fetch api res", response);
       const res = response.data;
-      if(res.success === true) {
-        setAllApplicantList(res.data.jobs)
+      if (res.success === true) {
+        setAllApplicantList(res.data.jobs);
+      } else {
+        console.log("res -> false");
       }
-      else{
-        console.log('res -> false')
-      }
-      
     } catch (error) {
-      console.log('first from catch', error)
+      console.log("first from catch", error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchAllApplicantList(props.jobID)
-    
-  }, [props, fetchAgain])
-
-
-
-
+    fetchAllApplicantList(props.jobID);
+  }, [props, fetchAgain]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -212,7 +218,9 @@ function JobApplicantModal(props) {
           <TableCell align="center">{applicant.lastEducationDegree}</TableCell>
           <TableCell align="center">{applicant.currentCOmpany}</TableCell>
           <TableCell align="center">{applicant.experience}</TableCell>
-          <TableCell align="center">{applicant.totalExperienceInYear}</TableCell>
+          <TableCell align="center">
+            {applicant.totalExperienceInYear}
+          </TableCell>
           <TableCell align="center">{applicant.expectedSalary}</TableCell>
           <TableCell align="center">{applicant.contactEmail}</TableCell>
           <TableCell align="center">{applicant.contactPhoneNumber}</TableCell>
@@ -223,6 +231,16 @@ function JobApplicantModal(props) {
               endIcon={<CloudDownloadIcon />}
               // disabled
               onClick={() => downloadCV(applicant.cvLocation)}
+              sx={{
+                background: "#F6953F",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#f6943fbc",
+
+                  borderColor: "#0062cc",
+                  boxShadow: "none",
+                },
+              }}
             >
               Download
             </Button>
@@ -255,7 +273,6 @@ function JobApplicantModal(props) {
               <Box sx={{ margin: 1 }}>
                 <Typography variant="p" gutterBottom component="div">
                   {applicant.aboutMe}
-                  
                 </Typography>
               </Box>
             </Collapse>
@@ -290,53 +307,74 @@ function JobApplicantModal(props) {
             applicantData={selectedApplicantData}
             setFetchAgain={setFetchAgain}
           />
-          {allApplicantList.length === 0 ? <>
-          <div>
-              <Typography variant="h7" color="initial" align="center">
-                No Applicant Data
-              </Typography>
-            </div>
-          </> : <>
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align={"center"} style={{ minWidth: 150 }}>
-                      About Applicant
-                    </TableCell>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ minWidth: column.minWidth }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {allApplicantList
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((applicant) => (
-                      <Row key={applicant.id} applicant={applicant} />
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              component="div"
-              count={allApplicantList.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
-          </>}
-          
+          {allApplicantList.length === 0 ? (
+            <>
+              <div>
+                <Typography variant="h7" color="initial" align="center">
+                  No Applicant Data
+                </Typography>
+              </div>
+            </>
+          ) : (
+            <>
+              <Paper sx={{ width: "100%", overflow: "hidden" }}>
+                <Typography variant="h8" color="initial" p={2}>
+                  Total Applicant: {ApplicantCount.allApplicant}, Total
+                  Shortlisted Applicant: {ApplicantCount.shortlisted}
+                </Typography>
+                <TableContainer sx={{ maxHeight: 440 }}>
+                  <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          align={"center"}
+                          style={{ minWidth: 150 }}
+                          sx={{
+                            backgroundColor: "#643393",
+                            color: "white",
+                          }}
+                        >
+                          About Applicant
+                        </TableCell>
+                        {columns.map((column) => (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{ minWidth: column.minWidth }}
+                            sx={{
+                              backgroundColor: "#643393",
+                              color: "white",
+                            }}
+                          >
+                            {column.label}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {allApplicantList
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((applicant) => (
+                          <Row key={applicant.id} applicant={applicant} />
+                        ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <TablePagination
+                  rowsPerPageOptions={[10, 25, 100]}
+                  component="div"
+                  count={allApplicantList.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </Paper>
+            </>
+          )}
         </>
       </Modal.Body>
       {/* <Modal.Footer>

@@ -55,24 +55,6 @@ const columns = [
   },
 ];
 
-function createData(
-  companyName,
-  industry,
-  companyAddress,
-  contactPersonName,
-  contactEmail,
-  status
-) {
-  return {
-    companyName,
-    industry,
-    companyAddress,
-    contactPersonName,
-    contactEmail,
-    status,
-  };
-}
-
 
 
 export default function CompanyListTable(props) {
@@ -131,6 +113,10 @@ export default function CompanyListTable(props) {
                     key={column.id}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
+                    sx={{
+                      backgroundColor: "#643393",
+                      color: "white",
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -140,6 +126,10 @@ export default function CompanyListTable(props) {
                   key={"action"}
                   align={"center"}
                   style={{ minWidth: 100 }}
+                  sx={{
+                    backgroundColor: "#643393",
+                    color: "white",
+                  }}
                 >
                   Action
                 </TableCell>

@@ -34,19 +34,7 @@ const validationSchema = Yup.object().shape({
       (value) => value && value.size <= 2000000
     ),
 });
-// jobTitle: Yup.string()
-//   .required("Job Title is required")
-//   .max(30, "Job Title can not be longer than 30 letters"),
-// lastName: Yup.string()
-//   .required("Last name is required")
-//   .max(50, "Last name can not be longer than 50 letters"),
-// password: Yup.string()
-//   .required("Password is required")
-//   .min(8, "Password must be at least 8 characters"),
-// confirmPassword: Yup.string()
-//   .oneOf([Yup.ref("password"), null], "Passwords must match")
-//   .required("Confirm Password is required"),
-// });
+
 
 function JobApplyModal(props) {
   const [jobApplyFormData, setJobApplyFormData] = useState({
@@ -137,17 +125,24 @@ function JobApplyModal(props) {
       console.log("job details api res", response);
       const res = response.data;
       if (res.success === true) {
+        setError("");
         setSuccessMsg("Congratulations! The Job Application is submitted!");
       } else {
         if (res.errorCode === 701) {
           setError("Already Applied for this Job");
+          setSuccessMsg("");
+
         } else {
           setError("Something Went Wrong! Please Try Again Later!");
+          setSuccessMsg("");
+
         }
       }
     } catch (error) {
       console.log("error from catch", error);
       setError("Something Went Wrong! Please Try Again Later!");
+      setSuccessMsg("");
+
     }
     setIsSubmitting(false);
   };
@@ -160,34 +155,34 @@ function JobApplyModal(props) {
       setError("");
     }
   }, [cvPdfFile]);
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      lastEducationDegree: "",
-      currentCompany: "",
-      totalExperienceInYear: "",
-      expectedSalary: "",
-      aboutMe: "",
-      email: "",
-      phoneNumber: "",
-      cvPdfFile: null,
-    },
-    validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      console.log("ok");
-      console.log(JSON.stringify(values, null, 2));
-      alert(JSON.stringify(values, null, 2));
-      console.log("pdf value", values.cvPdfFile);
-      setSubmitting(false);
-      //   formik.resetForm();
-    },
-  });
+  // const formik = useFormik({
+  //   initialValues: {
+  //     firstName: "",
+  //     lastName: "",
+  //     lastEducationDegree: "",
+  //     currentCompany: "",
+  //     totalExperienceInYear: "",
+  //     expectedSalary: "",
+  //     aboutMe: "",
+  //     email: "",
+  //     phoneNumber: "",
+  //     cvPdfFile: null,
+  //   },
+  //   validationSchema,
+  //   onSubmit: (values, { setSubmitting }) => {
+  //     console.log("ok");
+  //     console.log(JSON.stringify(values, null, 2));
+  //     alert(JSON.stringify(values, null, 2));
+  //     console.log("pdf value", values.cvPdfFile);
+  //     setSubmitting(false);
+  //     //   formik.resetForm();
+  //   },
+  // });
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setCvPdfFile(selectedFile);
     console.log(selectedFile);
-    formik.setFieldValue("cvPdfFile", selectedFile);
+    // formik.setFieldValue("cvPdfFile", selectedFile);
   };
   return (
     <Modal

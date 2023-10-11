@@ -51,7 +51,7 @@ const JobList = () => {
           {allJobsList.length === 0 && (
             <Grid container justifyContent={"center"}>
               <Typography variant="h6" color="initial">
-                No Jobs has been created
+                No Jobs found
               </Typography>
             </Grid>
           )}

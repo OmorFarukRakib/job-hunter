@@ -26,10 +26,13 @@ function AddToShortListModal(props) {
     if (!isEmptyObject(props.applicantData)) {
       setApplicantForShortList(props.applicantData);
     }
-    
   }, [props]);
 
-  
+  useEffect(() => {
+    setErrorMsg("");
+    setSuccessMsg("");
+  }, [props.show]);
+
   const handleAddToShortList = async () => {
     const userData = JSON.parse(localStorage.getItem("JS_userData"));
     const token = userData.data.token.accessToken;
@@ -72,8 +75,8 @@ function AddToShortListModal(props) {
   const handleClose = () => {
     setErrorMsg("");
     setSuccessMsg("");
-    props.onHide()
-  }
+    props.onHide();
+  };
   return (
     <Modal
       {...props}

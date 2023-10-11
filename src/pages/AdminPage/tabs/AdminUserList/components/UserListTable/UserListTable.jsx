@@ -128,6 +128,10 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                     key={column.id}
                     align={column.align}
                     style={{ minWidth: column.minWidth }}
+                    sx={{
+                      backgroundColor: "#643393",
+                      color: "white",
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -136,6 +140,10 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                   key={"action"}
                   align={"center"}
                   style={{ minWidth: 100 }}
+                  sx={{
+                    backgroundColor: "#643393",
+                    color: "white",
+                  }}
                 >
                   Action
                 </TableCell>

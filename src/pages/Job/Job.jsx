@@ -34,7 +34,8 @@ const Job = () => {
     }
   };
   const goToCompanyJobPortalSite = (jobPortalLink) => {
-    window.open(jobPortalLink, "_blank");
+    console.log('should go to new tab with new link', jobPortalLink)
+    window.open(jobPortalLink, "_blank", "noopener");
   };
   const fetchJobDetails = async (jobID) => {
     setIsLoading(true);

@@ -34,7 +34,7 @@ export default function AccountMenuForAdmin() {
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         
-        <Tooltip title="Company Account">
+        <Tooltip title="Admin Account">
           <IconButton
             onClick={handleClick}
             size="small"

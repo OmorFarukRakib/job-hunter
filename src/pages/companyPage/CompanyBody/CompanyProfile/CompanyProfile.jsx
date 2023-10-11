@@ -140,6 +140,14 @@ const CompanyProfile = () => {
         </div>
         <div className={clsx(styles["companyProfile-Info"])}>
           <div className={clsx(styles["companyProfile-info-title"])}>
+            Registration/License Number
+          </div>
+          <div className={clsx(styles["companyProfile-info-value"])}>
+            {companyData.licenceNumber}
+          </div>
+        </div>
+        <div className={clsx(styles["companyProfile-Info"])}>
+          <div className={clsx(styles["companyProfile-info-title"])}>
             Contact Person Name
           </div>
           <div className={clsx(styles["companyProfile-info-value"])}>

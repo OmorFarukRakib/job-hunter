@@ -54,6 +54,7 @@ const CompanyRegistrationForm = () => {
     companySize: "",
     contactPersonName: "",
     contactEmail: "",
+    licenceNumber: "",
     contactPhone: "",
     password: "",
     confirmPassword: "",
@@ -188,6 +189,7 @@ const CompanyRegistrationForm = () => {
           address: regiFormData.companyAddress,
           description: regiFormData.companyDescription,
           companySize: regiFormData.companySize,
+          licenceNumber: regiFormData.licenceNumber,
           contactPersonName: regiFormData.contactPersonName,
           email: regiFormData.contactEmail,
           phoneNumber: regiFormData.contactPhone,
@@ -317,6 +319,16 @@ const CompanyRegistrationForm = () => {
           required
           onChange={handleFormDataChange}
           value={regiFormData.companyWebsite}
+        />
+        <TextField
+          fullWidth
+          label="Company Registration/License Number"
+          multiline
+          id="licenceNumber"
+          name="licenceNumber"
+          required
+          onChange={handleFormDataChange}
+          value={regiFormData.licenceNumber}
         />
 
         <TextField

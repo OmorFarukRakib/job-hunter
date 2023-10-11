@@ -5,7 +5,7 @@ import clsx from "clsx";
 import styles from "./jobApplicantModal.module.css";
 
 // Table
-import React,  from "react";
+import React  from "react";
 import { useState, useEffect } from "react";
 
 import Paper from "@mui/material/Paper";

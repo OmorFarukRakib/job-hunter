@@ -75,6 +75,7 @@ function CompanyInfoEditModal(props) {
     companySize: props.companyData.companySize,
     address: props.companyData.address,
     webSite: props.companyData.webSite,
+    licenceNumber: props.companyData.licenceNumber,
     contactPersonName: props.companyData.contactPersonName,
     email: props.companyData.email,
     phoneNumber: props.companyData.phoneNumber,
@@ -97,6 +98,7 @@ function CompanyInfoEditModal(props) {
       companySize: props.companyData.companySize,
       address: props.companyData.address,
       webSite: props.companyData.webSite,
+      licenceNumber: props.companyData.licenceNumber,
       contactPersonName: props.companyData.contactPersonName,
       email: props.companyData.email,
       phoneNumber: props.companyData.phoneNumber,
@@ -139,6 +141,7 @@ function CompanyInfoEditModal(props) {
         data: {
           name: companyFormData.name,
           webSite: companyFormData.webSite,
+          licenceNumber: companyFormData.licenceNumber,
           address: companyFormData.address,
           description: companyFormData.description,
           companySize: companyFormData.companySize,
@@ -312,6 +315,15 @@ function CompanyInfoEditModal(props) {
             required
             onChange={handleCompanyFormDataChange}
             value={companyFormData.contactPersonName}
+          />
+          <TextField
+            fullWidth
+            label="Registration/License Number"
+            id="licenceNumber"
+            name="licenceNumber"
+            required
+            onChange={handleCompanyFormDataChange}
+            value={companyFormData.licenceNumber}
           />
           <TextField
             fullWidth

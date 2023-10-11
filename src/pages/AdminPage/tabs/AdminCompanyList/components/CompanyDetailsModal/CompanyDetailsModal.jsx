@@ -137,6 +137,14 @@ function CompanyDetailsModal({ show, onHide, companyDetailsData }) {
               </div>
               <div className={clsx(styles["companyProfile-Info"])}>
                 <div className={clsx(styles["companyProfile-info-title"])}>
+                  Registration/License Number
+                </div>
+                <div className={clsx(styles["companyProfile-info-value"])}>
+                  {companyDetails.licenceNumber}
+                </div>
+              </div>
+              <div className={clsx(styles["companyProfile-Info"])}>
+                <div className={clsx(styles["companyProfile-info-title"])}>
                   Contact Person Name
                 </div>
                 <div className={clsx(styles["companyProfile-info-value"])}>

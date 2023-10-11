@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import GlobalLoadingModal from "../../components/GlobalLoadingModal/GlobalLoadingModal";
-import PasswordResetModal from "./components/passwordResetModal/PasswordResetModal.jsx";
+import PasswordResetModal from "./components/NewPasswordResetModal/PasswordResetModal.jsx";
 import Snackbar from '../../components/Snackbar/Snackbar'
 import styles from "./forgotPassword.module.css";
 import axios from "axios";

@@ -109,7 +109,7 @@ export default function CustomizedMenus(props) {
             Accept
           </MenuItem>
           <Divider sx={{ my: 0.5 }} />
-          <MenuItem onClick={() => changeStatus("Rejected")} disableRipple>
+          <MenuItem onClick={() => changeStatus("Returned")} disableRipple>
             <ClearIcon />
             Reject
           </MenuItem>
@@ -118,13 +118,13 @@ export default function CustomizedMenus(props) {
     } else if (currentStatus === "Approved") {
       return (
         <div>
-          <MenuItem onClick={() => changeStatus("Rejected")} disableRipple>
+          <MenuItem onClick={() => changeStatus("Returned")} disableRipple>
             <ClearIcon />
             Reject
           </MenuItem>
         </div>
       );
-    } else if (currentStatus === "Rejected") {
+    } else if (currentStatus === "Returned") {
       return (
         <div>
           <MenuItem onClick={() => changeStatus("Approved")} disableRipple>

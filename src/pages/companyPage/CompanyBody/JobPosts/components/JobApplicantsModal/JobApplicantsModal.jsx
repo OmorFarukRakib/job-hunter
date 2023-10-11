@@ -30,6 +30,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import AddToShortListModal from "./AddToShortListModal";
 import axios from "axios";
 import apiConfig from "../../../../../../apiConfig";
+import downloadCV from "../../../../../../functions/downloadCV";
 
 const columns = [
   // { id: "id", label: "Id", minWidth: 50, align: "start" },
@@ -220,8 +221,8 @@ function JobApplicantModal(props) {
               variant="contained"
               size="small"
               endIcon={<CloudDownloadIcon />}
-              disabled
-              onClick={() => console.log('cv download link', applicant.cvLocation)}
+              // disabled
+              onClick={() => downloadCV(applicant.cvLocation)}
             >
               Download
             </Button>

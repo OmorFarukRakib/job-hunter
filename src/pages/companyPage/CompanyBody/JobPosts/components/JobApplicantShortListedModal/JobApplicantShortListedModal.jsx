@@ -30,7 +30,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import apiConfig from "../../../../../../apiConfig";
 import { useState } from "react";
-
+import downloadCV from "../../../../../../functions/downloadCV";
 const columns = [
   // { id: "id", label: "Id", minWidth: 50, align: "start" },
   { id: "firstName", label: "First Name", minWidth: 170, align: "center" },
@@ -243,10 +243,7 @@ function JobApplicantShortListedModal(props) {
               variant="contained"
               size="small"
               endIcon={<CloudDownloadIcon />}
-              disabled
-              onClick={() =>
-                console.log("cv download link", applicant.cvLocation)
-              }
+              onClick={() => downloadCV(applicant.cvLocation)}
             >
               Download
             </Button>

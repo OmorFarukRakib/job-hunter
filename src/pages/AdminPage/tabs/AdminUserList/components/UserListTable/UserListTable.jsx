@@ -25,13 +25,13 @@ const columns = [
   //   align: "center",
   //   format: (value) => value.toLocaleString("en-US"),
   // },
-  {
-    id: "userName",
-    label: "User Name",
-    minWidth: 100,
-    align: "center",
-    format: (value) => value.toFixed(2),
-  },
+  // {
+  //   id: "userName",
+  //   label: "User Name",
+  //   minWidth: 100,
+  //   align: "center",
+  //   format: (value) => value.toFixed(2),
+  // },
   {
     id: "email",
     label: "Email",
@@ -49,6 +49,13 @@ const columns = [
   {
     id: "profileStatus",
     label: "Status",
+    minWidth: 100,
+    align: "center",
+    format: (value) => value,
+  },
+  {
+    id: "changeStatus",
+    label: "Status Change Action",
     minWidth: 100,
     align: "center",
     format: (value) => value,
@@ -155,14 +162,21 @@ const [userDeleteModalShow, setUserDeleteModalShow] = useState(false);
                             {column.id === "profileStatus" ? (
                               <div className={styles["statusColumn-wrapper"]}>
                                 <StatusDiv statusType={value} />
-                                <UserStatusChangeOpt
-                                  userEmail={row.email}
-                                  currentStatus={value}
-                                  setFetchAgain={props.setFetchAgain}
-                                />
                               </div>
                             ) : (
-                              value
+                              <>
+                                {column.id === "changeStatus" ? (
+                                  <>
+                                    <UserStatusChangeOpt
+                                      userEmail={row.email}
+                                      currentStatus={row.profileStatus}
+                                      setFetchAgain={props.setFetchAgain}
+                                    />
+                                  </>
+                                ) : (
+                                  <>{value}</>
+                                )}
+                              </>
                             )}
                           </TableCell>
                         );

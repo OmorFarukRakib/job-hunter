@@ -21,6 +21,7 @@ const apiConfig = {
     getShortListedApplicantList: "JobPost/getShortlistedApplicant",
     deleteJobPost: "JobPost/deleteJobPost",
     shortListCandidate: "JobPost/shortlistCandidate",
+    downloadCV: "JobPost/download-cv",
   },
   employee: {
     getInfoByToken: "User/getEmployeeInfo",
@@ -34,6 +35,7 @@ const apiConfig = {
   public: {
     fetchAllJobPosts: "JobPost/fetchJobPosts",
     fetchJobDetailsByID: "JobPost/fetchJobPostById",
+    downloadCV: "JobPost/download-cv",
   },
   admin: {
     fetchAllCompanyData: "User/getUsersList?userType=Company",
@@ -41,6 +43,9 @@ const apiConfig = {
     changeProfileStatus: "User/Update-User-Access",
     fetchAllJobs: "JobPost/fetchJobPostsAsAdmin",
     updateJobApprovalStatus: "JobPost/updateJobApprovalStatus",
+    downloadCV: "JobPost/download-cv",
+    getCompanyInfoByID: "User/getCompanyById",
+    getEmployeeInfoByID: "User/getEmployeeById",
   },
 };
 

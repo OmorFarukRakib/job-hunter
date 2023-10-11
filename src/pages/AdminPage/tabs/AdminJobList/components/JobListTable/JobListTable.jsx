@@ -15,7 +15,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import JobStatusChangeOpt from "../JobStatusChangeOpt/JobStatusChangeOpt";
 import styles from "./jobListTable.module.css";
-import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
+// import StatusDiv from "../../../../../../components/StatusDiv/StatusDiv";
+import StatusDiv from "../StatusDiv/StatusDiv";
 const columns = [
   {
     id: "companyName",

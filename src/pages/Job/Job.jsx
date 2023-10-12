@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
@@ -15,7 +15,7 @@ import axios from "axios";
 import apiConfig from "../../apiConfig";
 import { useEffect } from "react";
 import RiseLoader from "react-spinners/RiseLoader";
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const Job = () => {
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showJobApplyModal, setShowJobApplyModal] = useState(false);
@@ -33,6 +33,7 @@ const Job = () => {
       // alert("u can not apply without login");
     }
   };
+  const navigate = useNavigate();
   const goToCompanyJobPortalSite = (jobPortalLink) => {
     // const jobPortalLink = "https://www.google.com";
     if (jobPortalLink.startsWith("http")) {
@@ -105,6 +106,20 @@ const Job = () => {
           ) : (
             <>
               <div className={clsx(styles["job-page-wrapper"])}>
+                <div
+                  style={{
+                    marginTop: "5px",
+                    marginRight: "5px",
+                    padding: "0.5rem",
+                    background: "#C1C1C1",
+                    height: "fit-content",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => navigate("/jobs")}
+                >
+                  <ArrowBackIcon />
+                </div>
                 <div className={clsx(styles["job-ad-wrapper"])}>
                   {/* <div
                     style={{
@@ -262,7 +277,6 @@ const Job = () => {
           )}
         </>
       )}
-
     </div>
   );
 };

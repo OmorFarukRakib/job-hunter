@@ -13,12 +13,14 @@ function SigninModal(props) {
       dialogClassName="custom-modal-login"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      backdrop="static"
+      keyboard="false"
     >
-      {/* <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">
+      <Modal.Header className="px-4" closeButton>
+        {/* <Modal.Title id="contained-modal-title-vcenter">
           Modal heading
-        </Modal.Title>
-      </Modal.Header> */}
+        </Modal.Title> */}
+      </Modal.Header>
       <Modal.Body>
         <SigninBody modalHideFun={props.onHide} />
       </Modal.Body>

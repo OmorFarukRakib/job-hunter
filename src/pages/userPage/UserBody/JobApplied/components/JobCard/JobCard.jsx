@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./jobCard.module.css";
 import clsx from "clsx";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
@@ -86,24 +86,26 @@ const JobCard = ({ job }) => {
           </Typography>
         </div>
         <div className={clsx(styles["job-card-details-btn-wrapper"])}>
-          <Button
-            variant="contained"
-            sx={{
-              padding: "0.7rem",
-              borderRadius: "20px",
-              background: "#232758",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#232758c7",
+          <Link to={`?tab=job-applied&jobId=${job.jobID}`}>
+            <Button
+              variant="contained"
+              sx={{
+                padding: "0.7rem",
+                borderRadius: "20px",
+                background: "#232758",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#232758c7",
 
-                borderColor: "#0062cc",
-                boxShadow: "none",
-              },
-            }}
-            onClick={() => handleJobDetailBtn(job.jobID)}
-          >
-            View Details
-          </Button>
+                  borderColor: "#0062cc",
+                  boxShadow: "none",
+                },
+              }}
+              // onClick={() => handleJobDetailBtn(job.jobID)}
+            >
+              View Details
+            </Button>
+          </Link>
         </div>
       </div>
     </Card>

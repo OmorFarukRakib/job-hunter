@@ -3,7 +3,7 @@ import jobMarketGif from "../../assets/job-market.json";
 import Lottie from "lottie-react";
 import { Typewriter } from "react-simple-typewriter";
 import styles from "./home.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import RegistrationForm from "../../components/signinModal/signinBody/RegistrationForm/EmployeeRegistrationForm/EmployeeRegistrationForm";
@@ -60,24 +60,26 @@ const Home = () => {
         <Lottie animationData={jobMarketGif} loop={true} />
       </div>
       <div>
-        <Button
-          variant="contained"
-          onClick={() => navigate("/jobs")}
-          sx={{
-            padding: "0.7rem",
-            borderRadius: "20px",
-            background: "#F6953F",
-            color: "white",
-            "&:hover": {
-              backgroundColor: "#f6943fbc",
+        <Link to={'/jobs'}>
+          <Button
+            variant="contained"
+            // onClick={() => navigate("/jobs")}
+            sx={{
+              padding: "0.7rem",
+              borderRadius: "20px",
+              background: "#F6953F",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#f6943fbc",
 
-              borderColor: "#0062cc",
-              boxShadow: "none",
-            },
-          }}
-        >
-          Find Your Dream Job
-        </Button>
+                borderColor: "#0062cc",
+                boxShadow: "none",
+              },
+            }}
+          >
+            Find Your Dream Job
+          </Button>
+        </Link>
         <Button
           variant="contained"
           disabled={userData?.data?.userType !== "Company"}

@@ -61,6 +61,9 @@ function UserPassEditModal(props) {
       passwordChangeFormData.newPassword !==
       passwordChangeFormData.confirmPassword
     ) {
+      setSuccessMsg({
+        passwordChnageSuccessMsg: "",
+      });
       setErrorMsg({
         ...errorMsg,
         passwordChnageErrorMsg: "Password does not match! Please try again!",
@@ -84,18 +87,8 @@ function UserPassEditModal(props) {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        // data: {
-        //   name: companyFormData.name,
-        //   webSite: companyFormData.webSite,
-        //   address: companyFormData.address,
-        //   description: companyFormData.description,
-        //   companySize: companyFormData.companySize,
-        //   contactPersonName: companyFormData.contactPersonName,
-        //   email: companyFormData.email,
-        //   phoneNumber: companyFormData.phoneNumber,
-        // },
       });
-      console.log("company pass change api res", response);
+      console.log("user pass change api res", response);
       const res = response.data;
       if (res.success === true) {
         setErrorMsg({
@@ -106,8 +99,12 @@ function UserPassEditModal(props) {
           ...successMsg,
           passwordChnageSuccessMsg: "Password has been updated successfully!",
         });
-        props.setFetchAgainFlag((prev) => prev + 1);
+        // props.setFetchAgainFlag((prev) => prev + 1);
       } else {
+        setSuccessMsg({
+          ...successMsg,
+          passwordChnageSuccessMsg: "",
+        });
         if (res.errorCode === 501) {
           setErrorMsg({
             ...errorMsg,
@@ -124,6 +121,10 @@ function UserPassEditModal(props) {
       }
     } catch (error) {
       console.log("error from catch", error);
+      setSuccessMsg({
+        ...successMsg,
+        passwordChnageSuccessMsg: "",
+      });
       setErrorMsg({
         ...errorMsg,
         passwordChnageErrorMsg: "Something Went Wrong! Please try again later",

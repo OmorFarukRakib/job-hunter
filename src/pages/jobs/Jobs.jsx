@@ -73,7 +73,7 @@ const Jobs = () => {
                 id="outlined-basic"
                 label="What?"
                 value={searchQuery.type}
-                placeholder="Job title, Keywords, or Company"
+                placeholder="Job title, skills or Keywords"
                 variant="outlined"
                 onChange={(e) =>
                   setSearchQuery({ ...searchQuery, type: e.target.value })

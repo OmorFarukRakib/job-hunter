@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -52,7 +52,7 @@ const NewJobCard = ({ job, setFetchAgain }) => {
         setFetchAgain((prev) => prev + 1);
       }
     } catch (error) {
-      console.log('error from catch', error)
+      console.log("error from catch", error);
     }
   };
   function formatDate(initialDate) {
@@ -176,26 +176,28 @@ const NewJobCard = ({ job, setFetchAgain }) => {
         <div className={styles["newJobCard-items-wrapper"]}>
           {/* <div className={styles["newJobCard-item"]}>{"Options"}</div> */}
           <div className={styles["newJobCard-item"]}>
-            <Button
-              variant="contained"
-              onClick={() => handleJobDetailBtn(job.jobID)}
-              sx={{
-                padding: "0.7rem",
-                borderRadius: "20px",
-                background: "#F6953F",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#f6943fbc",
+            <Link to={`?tab=job-posts&jobId=${job.jobID}`}>
+              <Button
+                variant="contained"
+                // onClick={() => handleJobDetailBtn(job.jobID)}
+                sx={{
+                  padding: "0.7rem",
+                  borderRadius: "20px",
+                  background: "#F6953F",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#f6943fbc",
 
-                  borderColor: "#0062cc",
-                  boxShadow: "none",
-                },
-              }}
-            >
-              <div>
-                Details <OpenInNewIcon fontSize="small" />
-              </div>
-            </Button>
+                    borderColor: "#0062cc",
+                    boxShadow: "none",
+                  },
+                }}
+              >
+                <div>
+                  Details <OpenInNewIcon fontSize="small" />
+                </div>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

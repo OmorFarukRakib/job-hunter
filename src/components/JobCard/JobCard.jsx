@@ -7,7 +7,7 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-
+import { Link } from "react-router-dom";
 import { Button, Card, Typography } from "@mui/material";
 const JobCard = ({ job }) => {
   const navigate = useNavigate();
@@ -20,9 +20,11 @@ const JobCard = ({ job }) => {
     return `${year}-${month}-${day}`;
   }
   return (
-    <Card sx={{
-      borderRadius: '20px'
-    }}>
+    <Card
+      sx={{
+        borderRadius: "20px",
+      }}
+    >
       <div className={clsx(styles["job-card-wrapper"])}>
         <div className={clsx(styles["job-card-title"])}>{job.title}</div>
         <div className={clsx(styles["job-card-companyName"])}>
@@ -70,24 +72,27 @@ const JobCard = ({ job }) => {
           </Typography>
         </div>
         <div className={clsx(styles["job-card-details-btn-wrapper"])}>
-          <Button
-            variant="contained"
-            onClick={() => navigate(`/job/${job.jobID}`)}
-            sx={{
-              padding: "0.7rem",
-              borderRadius: "20px",
-              background: "#232758",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#232758c7",
+          <Link to={`/job/${job.jobID}`}>
+            <Button
+              variant="contained"
+              // onClick={() => (window.location.href = `/job/${job.jobID}`)}
+              // onClick={() => navigate(`/job/${job.jobID}`)}
+              sx={{
+                padding: "0.7rem",
+                borderRadius: "20px",
+                background: "#232758",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#232758c7",
 
-                borderColor: "#0062cc",
-                boxShadow: "none",
-              },
-            }}
-          >
-            View Details
-          </Button>
+                  borderColor: "#0062cc",
+                  boxShadow: "none",
+                },
+              }}
+            >
+              View Details
+            </Button>
+          </Link>
         </div>
       </div>
     </Card>

@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import AccountMenuForCompany from "../AccountMenuForCompany/AccountMenuForCompany";
 import AccountMenuForUser from "../AccountMenuForUser/AccountMenuForUser";
 import AccountMenuForAdmin from "../AccountMenuForAdmin/AccountMenuForAdmin";
+import { Link } from "react-router-dom";
 const Header = () => {
   const [signinModalShow, setsigninModalShow] = useState(false);
   const [userData, setUserData] = useState(
@@ -45,23 +46,40 @@ const Header = () => {
           <div className={clsx(styles["header-logo-wrapper"])}>
             <img src={logoImg} alt="My Image" />
           </div>
+
           <div
             className={clsx(
               pathname == "" ? [styles["header-menu-btn-active"]] : null,
               styles["header-menu-btn"]
             )}
-            onClick={() => navigate("/")}
+            // onClick={() => navigate("/")}
           >
-            Home
+            <Link
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+              to={"/"}
+            >
+              Home
+            </Link>
           </div>
           <div
             className={clsx(
               pathname == "jobs" ? [styles["header-menu-btn-active"]] : null,
               styles["header-menu-btn"]
             )}
-            onClick={() => navigate("/jobs")}
+            // onClick={() => navigate("/jobs")}
           >
-            Find Jobs
+            <Link
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+              to={"/jobs"}
+            >
+              Find Jobs
+            </Link>
           </div>
         </div>
         <div className={clsx(styles["header-menu-wrapper"])}>

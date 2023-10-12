@@ -62,6 +62,9 @@ const Job = ({ jobID }) => {
 
    return `${year}-${month}-${day}`;
  }
+ function isEmptyObject(obj) {
+   return Object.keys(obj).length === 0;
+ }
 
  useEffect(() => {
    fetchJobDetailsByID(jobID);
@@ -100,54 +103,60 @@ const Job = ({ jobID }) => {
             </div>
           ) : (
             <>
-              <div className={clsx(styles["job-page-wrapper"])}>
-                <div className={clsx(styles["job-ad-wrapper"])}>
-                  <div
-                    style={{
-                      color: "#232758",
-                      // color: "white",
-                      fontWeight: "500",
-                      display: "flex",
-                      justifyContent: "center",
-                      justifyItems: "center",
-                      // width: '100%',
-                      // textAlign: "center",
-                      marginTop: "2.5rem",
-                    }}
-                  >
-                    You have already applied to this Job
-                  </div>
-                  <h1 style={{ textAlign: "center" }}>{jobDetails.title}</h1>
+              {isEmptyObject(jobDetails) && (
+                <Typography variant="h6" align="center" color="red">
+                  No Job Exists
+                </Typography>
+              )}
+              {!isEmptyObject(jobDetails) && (
+                <div className={clsx(styles["job-page-wrapper"])}>
+                  <div className={clsx(styles["job-ad-wrapper"])}>
+                    <div
+                      style={{
+                        color: "#232758",
+                        // color: "white",
+                        fontWeight: "500",
+                        display: "flex",
+                        justifyContent: "center",
+                        justifyItems: "center",
+                        // width: '100%',
+                        // textAlign: "center",
+                        marginTop: "2.5rem",
+                      }}
+                    >
+                      You have already applied to this Job
+                    </div>
+                    <h1 style={{ textAlign: "center" }}>{jobDetails.title}</h1>
 
-                  <div className={clsx(styles["job-ad-companyName"])}>
-                    {jobDetails.companyName}
-                  </div>
-                  <div className={clsx(styles["job-ad-deadline"])}>
-                    Application deadline -{" "}
-                    {formatDate(jobDetails.applicationDeadline)}
-                  </div>
-                  <div className={clsx(styles["job-ad-apply-btn-wrapper"])}>
-                    <Button variant="contained" disabled>
-                      Apply From Company Site
-                    </Button>
-                    <Button variant="contained" disabled>
-                      Apply From Job-hunter
-                    </Button>
-                  </div>
-                  <div className={clsx(styles["job-ad-description-wrapper"])}>
-                    <div className={clsx(styles["job-ad-tags-wrapper"])}>
-                      <div className={clsx(styles["job-ad-tag"])}>
-                        <div>
-                          <LocalAtmIcon fontSize="inherit" />
-                          {` `}
-                          Salary Estimation
+                    <div className={clsx(styles["job-ad-companyName"])}>
+                      {jobDetails.companyName}
+                    </div>
+                    <div className={clsx(styles["job-ad-deadline"])}>
+                      Application deadline -{" "}
+                      {formatDate(jobDetails.applicationDeadline)}
+                    </div>
+                    <div className={clsx(styles["job-ad-apply-btn-wrapper"])}>
+                      <Button variant="contained" disabled>
+                        Apply From Company Site
+                      </Button>
+                      <Button variant="contained" disabled>
+                        Apply From Job Space
+                      </Button>
+                    </div>
+                    <div className={clsx(styles["job-ad-description-wrapper"])}>
+                      <div className={clsx(styles["job-ad-tags-wrapper"])}>
+                        <div className={clsx(styles["job-ad-tag"])}>
+                          <div>
+                            <LocalAtmIcon fontSize="inherit" />
+                            {` `}
+                            Salary Estimation
+                          </div>
+                          <div>
+                            ${jobDetails.salaryEstimationStart} - $
+                            {jobDetails.salaryEstimationEnd} per year
+                          </div>
                         </div>
-                        <div>
-                          ${jobDetails.salaryEstimationStart} - $
-                          {jobDetails.salaryEstimationEnd} per year
-                        </div>
-                      </div>
-                      {/* <div className={clsx(styles["job-ad-tag"])}>
+                        {/* <div className={clsx(styles["job-ad-tag"])}>
                     <div>
                       <ManageAccountsIcon fontSize="inherit" />
                       {` `}
@@ -155,82 +164,83 @@ const Job = ({ jobID }) => {
                     </div>
                     <div>{jobDetails.skillReq}</div>
                   </div> */}
-                      <div className={clsx(styles["job-ad-tag"])}>
-                        <div>
-                          <BusinessCenterIcon fontSize="inherit" />
-                          {` `}
-                          Job Type
+                        <div className={clsx(styles["job-ad-tag"])}>
+                          <div>
+                            <BusinessCenterIcon fontSize="inherit" />
+                            {` `}
+                            Job Type
+                          </div>
+                          <div>{jobDetails.jobType}</div>
                         </div>
-                        <div>{jobDetails.jobType}</div>
-                      </div>
-                      <div className={clsx(styles["job-ad-tag"])}>
-                        <div>
-                          <PersonSearchIcon fontSize="inherit" />
-                          {` `}
-                          Total Hiring
+                        <div className={clsx(styles["job-ad-tag"])}>
+                          <div>
+                            <PersonSearchIcon fontSize="inherit" />
+                            {` `}
+                            Total Hiring
+                          </div>
+                          <div>{jobDetails.totalHiringNumber}</div>
                         </div>
-                        <div>{jobDetails.totalHiringNumber}</div>
-                      </div>
-                      <div className={clsx(styles["job-ad-tag"])}>
-                        <div>
-                          <WorkHistoryIcon fontSize="inherit" />
-                          {` `}
-                          Required Experience
+                        <div className={clsx(styles["job-ad-tag"])}>
+                          <div>
+                            <WorkHistoryIcon fontSize="inherit" />
+                            {` `}
+                            Required Experience
+                          </div>
+                          <div>{jobDetails.totalExperienceInYears}</div>
                         </div>
-                        <div>{jobDetails.totalExperienceInYears}</div>
                       </div>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Company Description
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.companyDescription}
+                      </Typography>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Company Address
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.companyAddress}
+                      </Typography>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Company Website
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.companyURl}
+                      </Typography>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Contact Email
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.companyEmail}
+                      </Typography>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Contact Phone
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.companyPhoneNumber}
+                      </Typography>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Job Description
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.jobDescription}
+                      </Typography>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Required Skills
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.skillReq}
+                      </Typography>
+                      <Typography variant="h6" color="initial" mt={5}>
+                        Job Location
+                      </Typography>
+                      <Typography variant="h7" color="initial">
+                        {jobDetails.jobLocation}
+                      </Typography>
                     </div>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Company Description
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.companyDescription}
-                    </Typography>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Company Address
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.companyAddress}
-                    </Typography>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Company Website
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.companyURl}
-                    </Typography>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Contact Email
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.companyEmail}
-                    </Typography>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Contact Phone
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.companyPhoneNumber}
-                    </Typography>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Job Description
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.jobDescription}
-                    </Typography>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Required Skills
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.skillReq}
-                    </Typography>
-                    <Typography variant="h6" color="initial" mt={5}>
-                      Job Location
-                    </Typography>
-                    <Typography variant="h7" color="initial">
-                      {jobDetails.jobLocation}
-                    </Typography>
                   </div>
                 </div>
-              </div>
+              )}
             </>
           )}
         </>

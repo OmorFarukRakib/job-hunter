@@ -89,6 +89,7 @@ function JobApplyModal(props) {
     console.log("cv data", cvPdfFile);
     if (cvPdfFile === null) {
       setError("No PDF File is uploaded");
+      return
     }
     const userData = JSON.parse(localStorage.getItem("JS_userData"));
     const token = userData.data.token.accessToken;

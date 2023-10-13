@@ -1,13 +1,13 @@
-import axios from "axios"
-import apiConfig from "../apiConfig"
+import axios from "axios";
+import apiConfig from "../apiConfig";
 
 const downloadCV = async (cvLocation) => {
-    const userData = JSON.parse(localStorage.getItem("JS_userData"));
-    const token = userData.data.token.accessToken;
-    console.log(cvLocation)
-    const cvLoc = encodeURIComponent(cvLocation)
-    console.log('encoded', cvLoc)
-   try {
+  const userData = JSON.parse(localStorage.getItem("JS_userData"));
+  const token = userData.data.token.accessToken;
+  console.log(cvLocation);
+  const cvLoc = encodeURIComponent(cvLocation);
+  console.log("encoded", cvLoc);
+  try {
     const response = await axios({
       method: "GET",
       responseType: "blob",
@@ -21,16 +21,29 @@ const downloadCV = async (cvLocation) => {
         // 'Encode': 'gzip, deflate, br,',
         // 'Connection': "keep-alive",
       },
-    });
+    })
+      .then((response) => {
+        const blob = new Blob([response], { type: "application/pdf" });
+        const conDisposition = response.headers["content-disposition"];
+        const filename = conDisposition
+          ? conDisposition.split("filename=")[1].split("; filename*=")[0]
+          : "cv.pdf";
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Error downloading PDF:", error);
+      });
     console.log("download api res", response);
     const res = response.data;
+  } catch (error) {
+    console.log("error From Catch");
+  }
+};
 
-    
-   } catch (error) {
-    console.log('error From Catch')
-   }
-
-
-}
-
-export default downloadCV
+export default downloadCV;

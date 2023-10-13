@@ -61,9 +61,13 @@ function PasswordResetModal(props) {
   };
   const handleFormDataSubmit = async (e) => {
     e.preventDefault();
-    if(passwordChangeFormData.password !== passwordChangeFormData.confirmPassword) {
-      setErrorMsg('Password does not match!')
-      return
+    setErrorMsg("");
+    setSuccessMsg("");
+    if (
+      passwordChangeFormData.password !== passwordChangeFormData.confirmPassword
+    ) {
+      setErrorMsg("Password does not match!");
+      return;
     }
     setIsSubmitting(true);
     try {
@@ -80,12 +84,16 @@ function PasswordResetModal(props) {
       console.log("email sent code api res", response);
       const res = response.data;
       if (res.success === true) {
+        setErrorMsg("");
         setSuccessMsg("Password Reset Successful!");
       } else {
+        setSuccessMsg("");
         setErrorMsg("Could not reset password! Something Went Wrong!");
       }
     } catch (error) {
       console.log("error in catch", error);
+      setSuccessMsg("");
+
       setErrorMsg("Could not reset password! Something Went Wrong!");
     }
     setIsSubmitting(false);
@@ -129,7 +137,9 @@ function PasswordResetModal(props) {
           onSubmit={handleFormDataSubmit}
           fullWidth
         >
-          <Typography variant="h7" color="initial">Please check your email for the code</Typography>
+          <Typography variant="h7" color="initial">
+            Please check your email for the code
+          </Typography>
           <TextField
             fullWidth
             // type="password"
@@ -162,8 +172,16 @@ function PasswordResetModal(props) {
             control={<Checkbox />}
             label="I have read and agree to the terms"
           /> */}
-          {errorMsg && <Typography variant="h7" color="red">{errorMsg}</Typography>}
-          {successMsg && <Typography variant="h7" color="green">{successMsg}</Typography>}
+          {errorMsg && (
+            <Typography variant="h7" color="red">
+              {errorMsg}
+            </Typography>
+          )}
+          {successMsg && (
+            <Typography variant="h7" color="green">
+              {successMsg}
+            </Typography>
+          )}
           <Button
             type="submit"
             variant="contained"

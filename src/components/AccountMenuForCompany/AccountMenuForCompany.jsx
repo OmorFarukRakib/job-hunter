@@ -32,17 +32,20 @@ export default function AccountMenuForCompany() {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        
         <Tooltip title="Company Account">
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
+            sx={{ ml: 2, background: "#F6953F", width: "3rem", height: "3rem", 
+            "&:hover": {
+                backgroundColor: "#f6943fbc"
+            }
+              }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <PersonIcon/>
+            <PersonIcon />
             {/* <Avatar sx={{ width: 32, height: 32 }}>M</Avatar> */}
           </IconButton>
         </Tooltip>
@@ -82,13 +85,13 @@ export default function AccountMenuForCompany() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={() => handleClose('profile')}>
+        <MenuItem onClick={() => handleClose("profile")}>
           <Avatar /> Profile
         </MenuItem>
         {/* <MenuItem onClick={handleClose}>
           <Avatar /> My account
         </MenuItem> */}
-        <MenuItem onClick={() => handleClose('logout')}>
+        <MenuItem onClick={() => handleClose("logout")}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

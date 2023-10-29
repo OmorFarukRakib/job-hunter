@@ -11,6 +11,7 @@ import AccountMenuForCompany from "../AccountMenuForCompany/AccountMenuForCompan
 import AccountMenuForUser from "../AccountMenuForUser/AccountMenuForUser";
 import AccountMenuForAdmin from "../AccountMenuForAdmin/AccountMenuForAdmin";
 import { Link } from "react-router-dom";
+import { Button, Typography } from "@mui/material";
 const Header = () => {
   const [signinModalShow, setsigninModalShow] = useState(false);
   const [userData, setUserData] = useState(
@@ -46,25 +47,29 @@ const Header = () => {
           <div className={clsx(styles["header-logo-wrapper"])}>
             <img src={logoImg} alt="My Image" />
           </div>
-
-          <div
-            className={clsx(
-              pathname == "" ? [styles["header-menu-btn-active"]] : null,
-              styles["header-menu-btn"]
-            )}
-            // onClick={() => navigate("/")}
-          >
-            <Link
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-              }}
-              to={"/"}
+          {pathname !== "" && (
+            <div
+              className={clsx(
+                pathname == "" ? [styles["header-menu-btn-active"]] : null,
+                styles["header-menu-btn"]
+              )}
+              // onClick={() => navigate("/")}
             >
-              Home
-            </Link>
-          </div>
-          <div
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+                to={"/"}
+              >
+                <Typography variant="h6" color="#643393">
+                  HOME
+                </Typography>
+              </Link>
+            </div>
+          )}
+
+          {/* <div
             className={clsx(
               pathname == "jobs" ? [styles["header-menu-btn-active"]] : null,
               styles["header-menu-btn"]
@@ -80,19 +85,38 @@ const Header = () => {
             >
               Find Jobs
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className={clsx(styles["header-menu-wrapper"])}>
           {userData?.success === true ? (
             <>{renderUserMenu(userData)}</>
           ) : (
             <>
-              <div
+              <Button
+                sx={{
+                  padding: "0.7rem",
+                  borderRadius: "20px",
+                  background: "#F6953F",
+                  // background: "rgb(246,149,63)",
+                  // background: "linear-gradient(90deg, rgba(246,149,63,1) 0%, rgba(100,51,147,1) 65%)",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#f6943fbc",
+
+                    borderColor: "#0062cc",
+                    boxShadow: "none",
+                  },
+                }}
+                onClick={() => setsigninModalShow(true)}
+              >
+                Sign in / Sign up
+              </Button>
+              {/* <div
                 className={clsx(styles["header-menu-btn"])}
                 onClick={() => setsigninModalShow(true)}
               >
                 Sign in/Registration
-              </div>
+              </div> */}
             </>
           )}
           {/* {localStorage.getItem("authToken") === "token" ? (

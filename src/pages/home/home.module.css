@@ -1,12 +1,69 @@
 .home-wrapper{
-    margin-top: 5rem;
+    margin-top: 0rem;
     margin-bottom: 5rem;
     display: grid;
     place-content: center;
     place-items: center;
+   
 }
 
 /* .jobMarketGif-wrapper {
     margin-top: 2rem;
     
 } */
+
+.job-search-wrapper {
+    /* position: absolute; */
+    /* border: 1px solid rgba(0, 0, 0, 0.889); */
+   
+    height: 35rem;
+   
+    width: 100vw;
+    /* border-radius: 10px; */
+    /* padding: 2rem 25rem; */
+    padding: 2rem 20%;
+    /* margin: 25px 10%; */
+    background-color: #230939;
+    /* background-color: #643393; */
+    box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 0.75);
+    
+}
+
+.job-search-field-wrapper {
+
+   /* margin-top: 10rem; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* gap: 5rem; */
+
+}
+
+@media (max-width: 700px) {
+    .job-search-field-wrapper {
+        grid-template-columns: 1fr;
+        /* gap: 1rem; */
+
+    }
+
+    .job-search-bg-cover {
+        margin-bottom: 6rem;
+    }
+        .job-search-wrapper{
+            padding: 2rem 2rem;
+        }
+}
+
+.search-btn-wrapper {
+    width: 20%;
+    display: grid;
+    margin: auto;
+    margin-top: 2rem;
+    /* justify-content: center; */
+}
+
+.search-btn-wrapper>button {
+    /* width: 20rem; */
+    border-radius: 10px;
+}

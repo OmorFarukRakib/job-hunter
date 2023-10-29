@@ -1,6 +1,7 @@
 .header-wrapper{
     /* position: fixed; */
-    height: 3.5rem;
+    /* height: 3.5rem; */
+    height: 5.5rem;
     background-color: white;
     border-bottom: 1px solid white;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
@@ -13,7 +14,14 @@
     left: 0;
     right: 0;
     z-index: 1;
-    
+    padding: 0 15rem;
+    /* background-color: ; */
+}
+
+@media (max-width: 700px) {
+.header-wrapper {
+    padding: 0 1rem;
+}
 }
 
 .header-menu-wrapper{
@@ -41,6 +49,7 @@ font-weight: 500;
 }
 .header-menu-btn:hover{
     background-color: #f2f2f2;
+    border-bottom: 2px solid #F6953F;
 }
 
 

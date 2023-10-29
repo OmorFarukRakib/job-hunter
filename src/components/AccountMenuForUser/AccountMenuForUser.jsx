@@ -34,7 +34,15 @@ export default function AccountMenuForUser() {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
+            sx={{
+              ml: 2,
+              background: "#F6953F",
+              width: "3rem",
+              height: "3rem",
+              "&:hover": {
+                backgroundColor: "#f6943fbc",
+              },
+            }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}

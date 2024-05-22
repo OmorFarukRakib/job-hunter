@@ -45,11 +45,12 @@ const Jobs = () => {
 
   const searchJobListByQueries = (e) => {
     e.preventDefault()
+   
     if (searchQuery.type && searchQuery.place) {
-      // console.log('both exist')
+       console.log('both exist')
      navigate(`/jobs?type=${searchQuery.type}&place=${searchQuery.place}`);
     } else if (searchQuery.type) {
-      // console.log('search query naiw')
+       console.log('search query naiw')
       navigate(`/jobs?type=${searchQuery.type}`);
     } else if (searchQuery.place) {
       navigate(`/jobs?place=${searchQuery.place}`);

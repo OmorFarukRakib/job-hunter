@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import JobCard from "../JobCard/JobCard";
 import { useState } from "react";
 import styles from "./joblist.module.css";
@@ -6,7 +6,7 @@ import axios from "axios";
 import apiConfig from "../../apiConfig";
 import { Grid, Typography } from "@mui/material";
 import RiseLoader from "react-spinners/RiseLoader";
-import { useLocation } from "react-router-dom";
+
 import { useSearchParams } from "react-router-dom";
 
 const JobList = () => {
